@@ -1,4 +1,4 @@
-name: Server CI
+name: Quiz Whiz CI
 
 on:
   push:
@@ -21,5 +21,6 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-      - run: npm install --prefix
-      - run: npm test --prefix
+      - run: npm install
+      - run: npm run build
+      - run: npm test
