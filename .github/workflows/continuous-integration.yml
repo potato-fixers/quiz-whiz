@@ -22,7 +22,5 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - run: npm run install
-      - run: npm run client
-      - run: npm run server
-      - run: cd client && npm test
-      - run: cd ../server && npm test
+      - run: cd client && CI=true npm run ci
+      - run: cd ../server && CI=true npm run ci

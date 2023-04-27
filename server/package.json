@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest --coverage",
+    "ci": "jest",
     "start": "node index.js"
   },
   "author": "",
