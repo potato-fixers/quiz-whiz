@@ -1,6 +1,6 @@
-## Debug Repo Access (Deployed)
+## Debug Can't Push To Github From Ubuntu/EC2
 
-How to Authenticate Github In EC2 Instance 
+### How to Authenticate Github In AWS EC2 Instance 
 
 1. Edit the git config file
     - `vi ~/.gitconfig`
