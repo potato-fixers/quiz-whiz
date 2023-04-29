@@ -8,14 +8,12 @@ on:
 
 jobs:
   deploy:
-    
     runs-on: ubuntu-latest
 
     if: github.event.pull_request.merged == true
-
     steps:
       - name: Checkout Repo
-      - uses: actions/checkout@v3
+        uses: actions/checkout@v3
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
