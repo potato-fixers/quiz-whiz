@@ -11,29 +11,19 @@ jobs:
     
     runs-on: ubuntu-latest
 
-    # strategy:
-    #   matrix:
-    #     node-version: [19.x]
-
     if: github.event.pull_request.merged == true
 
     steps:
       - name: Checkout Repo
       - uses: actions/checkout@v3
 
-      # - name: Use Node.js ${{ matrix.node-version }}
-      #   uses: actions/setup-node@v3
-      #   with:
-      #     node-version: ${{ matrix.node-version }}
-
-    # Configure AWS Creds
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id:${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key:${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1
-     # Deploy with CodeDeploy
+          aws-region:us-east-1
+
       - name: Create CodeDeploy Deployment
         id: deploy
         run: |
