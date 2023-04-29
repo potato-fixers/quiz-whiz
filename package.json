@@ -1,0 +1,22 @@
+{
+  "name": "quiz-whiz",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "client": "cd client && npm run start",
+    "server": "cd server && npm run start",
+    "install": "cd client && npm install && cd ../server && npm install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/potato-fixers/quiz-whiz.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/potato-fixers/quiz-whiz/issues"
+  },
+  "homepage": "https://github.com/potato-fixers/quiz-whiz#readme"
+}
