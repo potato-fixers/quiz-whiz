@@ -11,3 +11,5 @@ RUN cat my-postgres.conf
 # create database + tables (uncomment when ready to set up the db)
 # ADD schema.sql /docker-entrypoint-initdb.d
 # ADD scripts/seed.sh /docker-entrypoint-initdb.d
+
+ENTRYPOINT ["bin", "/bash"]
