@@ -1,10 +1,5 @@
 name: Quiz Whiz CD
 
-# Steps 
-# Deploy to EC2
-# Build Docker Containers
-# Run Containers
-
 on:
   pull_request:
     branches:
