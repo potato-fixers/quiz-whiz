@@ -45,4 +45,4 @@ jobs:
             docker pull gbmyt/quiz-whiz:latest
             docker stop quizwhiz
             docker rm quizwhiz
-            docker run --rm --name quizwhiz -p 3000:3000 -d quizwhiz gbmyt/quiz-whiz:latest
+            docker run -d --rm --name quizwhiz -p 3000:3000 gbmyt/quiz-whiz:latest
