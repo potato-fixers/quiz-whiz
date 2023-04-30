@@ -8,6 +8,7 @@ on:
 
 jobs:
   build:
+    name: Build and Deploy to AWS
     runs-on: ubuntu-latest
 
     if: github.event.pull_request.merged == true
@@ -38,7 +39,7 @@ jobs:
         with:
           host: ${{ secrets.HOST }}
           username: ubuntu
-          password: ${{ secrets.PASSWORD }}
+          key: ${{ secrets.PASSWORD }}
           script: |
             docker login
             docker pull gbmyt/quiz-whiz:latest
