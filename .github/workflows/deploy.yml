@@ -32,3 +32,16 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/quiz-whiz:latest
+
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: ${{ secrets.HOST }}
+          username: ubuntu
+          password: ${{ secrets.KEY }}
+          script: |
+            docker login
+            docker pull gbmyt/quiz-whiz:latest
+            docker stop quizwhiz
+            docker rm quizwhiz
+            docker run --rm --name quizwhiz -p 3000:3000 -d quizwhiz gbmyt/quiz-whiz:latest
