@@ -2,9 +2,13 @@ name: Quiz Whiz CI
 
 on:
   push:
-    branches: [ ci ]
+    branches:
+    - ci
+    - main
   pull_request:
-    branches: [ ci ]
+    branches:
+    - ci
+    - main
 
 jobs:
   build:
