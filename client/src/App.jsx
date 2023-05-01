@@ -1,9 +1,11 @@
 import './styles/App.css';
+import Begin from './components/take-quiz/Begin.jsx';
 
 function App() {
   return (
     <div>
-      <p> hello world - potato fixers</p>
+      <p id="test"> hello world - potato fixers</p>
+      <Begin />
     </div>
   );
 }
