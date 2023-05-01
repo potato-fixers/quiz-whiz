@@ -3,7 +3,6 @@ name: Quiz Whiz CD
 on:
   pull_request:
     branches:
-      - cd-test
       - main
     types: [closed]
 
