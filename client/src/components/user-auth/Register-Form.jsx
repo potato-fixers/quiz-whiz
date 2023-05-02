@@ -10,7 +10,7 @@ export default function RegisterForm() {
   const confirmPassword = useInput('');
   const username = useInput('');
   const bio = useInput('');
-  const [profileImage, setProfileImage] = useState(null);
+  // const [profileImage, setProfileImage] = useState(null);
 
 
   const handleSubmit = (event) => {
