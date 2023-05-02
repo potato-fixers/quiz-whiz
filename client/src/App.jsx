@@ -17,9 +17,7 @@ function App() {
 
           <Route path='/quiz/:id/*' element={<TakeQuiz />}></Route>
 
-          <Route path='dashboard/*' element={<Dashboard />}>
-            <Route path=':tab' element={<Dashboard />}></Route>
-          </Route>
+          <Route path='dashboard/*' element={<Dashboard />}></Route>
 
         </Routes>
     </Router>

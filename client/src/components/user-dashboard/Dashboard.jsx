@@ -7,7 +7,7 @@ import MyQuizzes from './components/MyQuizzes.jsx';
 import Plays from './components/Plays.jsx';
 import Favorites from './components/Favorites.jsx';
 import { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const Dashboard = (props) => {
 
