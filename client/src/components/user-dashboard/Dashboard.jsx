@@ -33,6 +33,7 @@ const Dashboard = (props) => {
 
   useEffect(() => {
     navigate(tabs[activeTab]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeTab]);
 
   return (
