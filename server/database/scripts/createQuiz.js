@@ -8,13 +8,6 @@ const db = new Pool ({
   port: parseInt(process.env.DB_PORT),
 })
 
-PORT=3000
-DB_USER='tigerhong'
-DB_HOST='localhost'
-DB='quizwhiz'
-DB_PASS=''
-DB_PORT=5432
-
 db.query('CREATE TABLE quizzes (id INT, user_id TEXT, category TEXT, difficulty TEXT, quiz_name TEXT, PRIMARY KEY(id))', (err, res) => {
   if (err) {
     console.log('Quiz Table creation failed:', process.env.DB, err)
