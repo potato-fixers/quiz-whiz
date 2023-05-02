@@ -1,11 +1,14 @@
 import '../styles/take-quiz.css';
-import { Typography } from '@mui/material';
+import { Container, Typography, Button } from '@mui/material';
 
 function Summary() {
   return (
     <>
-        <Typography variant="h4">Score</Typography>
-        <Typography variant="h4">Right/Wrong Answers</Typography>
+        <Typography variant="h6">Conditional Message</Typography>
+        <Typography variant="h6">Congrats! if you scored &gt;70% or Aw, Shucks You Should Probably Study</Typography>
+        <Container variant="h4">Review Your Answers</Container>
+        <Button variant="h4">Retake Quiz</Button>
+        <Button variant="h4">More Quizzes</Button>
     </>
   );
 }
