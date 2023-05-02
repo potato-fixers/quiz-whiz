@@ -7,11 +7,13 @@ import Summary from './quiz-components/Summary.jsx';
 
 function TakeQuiz() {
   return (
-    <Routes>
-      <Route path='/start' element={<Begin />}></Route>
-      <Route path='/question' element={<Quiz />}></Route>
-      <Route path='/summary' element={<Summary />}></Route>
-    </Routes>
+    <div className="container">
+      <Routes>
+        <Route path='/start' element={<Begin />}></Route>
+        <Route path='/question' element={<Quiz />}></Route>
+        <Route path='/summary' element={<Summary />}></Route>
+      </Routes>
+    </div>
   );
 }
 

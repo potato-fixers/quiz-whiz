@@ -1,3 +1,6 @@
-#start-q-test {
-    border: 5px solid var(--purple);
-}
+.container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+  }
