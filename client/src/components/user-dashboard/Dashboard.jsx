@@ -11,7 +11,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 
 const Dashboard = (props) => {
 
-  const tabs = ['overview', 'my-quizzes', 'plays', 'favorites'];
+  const tabs = ['', 'my-quizzes', 'plays', 'favorites']; // Overview is default dashboard
 
   const [activeTab, setActiveTab] = useState(0);
   const navigate = useNavigate();
