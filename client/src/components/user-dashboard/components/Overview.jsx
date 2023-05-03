@@ -1,9 +1,4 @@
-import { Typography } from '@mui/material';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
+import { Typography, TableBody, TableCell, TableHead, TableRow, Table } from '@mui/material';
 
 const Overview = (props) => {
 
@@ -18,7 +13,6 @@ const Overview = (props) => {
   return (
     <>
       <Typography variant='h5'>Recent plays</Typography>
-
 
       <Table sx={{ width: '100%' }} aria-label="simple table">
         <TableHead >
