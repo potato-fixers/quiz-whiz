@@ -14,12 +14,8 @@ EXPOSE 8080
 # install deps
 RUN npm run install
 
-# Start server
-# RUN npm run client
-# RUN npm run server
-
+# Run build
 WORKDIR ./client/
 
 CMD ["npm", "run", "build"]
 CMD ["npm", "start"]
-# ENTRYPOINT ["bin/sh"]

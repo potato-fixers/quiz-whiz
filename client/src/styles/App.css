@@ -1,0 +1,30 @@
+ /* Global Application Styles */
+ /* CSS Variable Format: var(--silver) */
+
+ /* Application Colors */
+:root {
+    --white: #ffffff;
+    --black: #000000;
+    --lt-black: rgba(0, 0, 0, .5);
+    --mid-black: rgba(0, 0, 0, .75);
+
+    --purple: #8471FF;
+    --yellow: #F2C547;
+    --pink: #FF7778;
+    --green: #7BB972;
+    --blue: #3FDBFF;
+    --charcoal: #444444;
+    --grey: #CEC9C9;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    font-size: 14px;
+    font-family: 'Roboto', sans-serif;
+}
+
+/* Test Styles Apply to App on Build */
+#test {
+    border: 2px solid var(--yellow);
+}
