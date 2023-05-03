@@ -4,7 +4,6 @@ on:
   pull_request:
     branches:
       - main
-      - cd-test
     types: [closed]
 
 jobs:
@@ -47,3 +46,4 @@ jobs:
             docker stop quizwhiz
             docker rm quizwhiz
             docker run -d --name quizwhiz -p 3000:3000 gbmytabc/quiz-whiz:latest
+  
