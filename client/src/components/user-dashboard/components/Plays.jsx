@@ -13,7 +13,7 @@ const Plays = (props) => {
 
   return (
     <>
-      <Typography variant='h5'>My Quizzes</Typography>
+      <Typography variant='h5'>Plays</Typography>
 
       <FilterBar />
 
