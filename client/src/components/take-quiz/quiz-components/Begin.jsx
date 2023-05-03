@@ -3,7 +3,7 @@ import { Typography } from '@mui/material';
 
 function Begin() {
   return (
-    <Typography variant="h4">Begin Quiz</Typography>
+    <Typography variant="h4">Begin The Quiz?</Typography>
   );
 }
 
