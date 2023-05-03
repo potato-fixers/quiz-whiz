@@ -5,43 +5,35 @@ BEGIN;
 CREATE SCHEMA quizwhiz;
 
 -- ----------------------
--- QUESTIONS TABLE
--- ----------------------
-CREATE TABLE questions(
-	id SERIAL PRIMARY KEY,
-	-- product_id VARCHAR(255) NOT NULL,
-	-- question_body VARCHAR(255),
-	-- question_date BIGSERIAL,
-	-- asker_name VARCHAR(255) NOT NULL,
-	-- asker_email VARCHAR(255) NOT NULL,
-	-- question_helpfulness INT,
-	-- reported BOOLEAN
-);
-
-SAVEPOINT questions_table_created;
-
-CREATE INDEX q_id_index ON questions (id);
-
-SAVEPOINT q_index_created;
-
--- ----------------------
--- QUIZZES TABLE
+-- Quiz Whiz Quizzes
 -- ----------------------
 CREATE TABLE quizzes(
-	id SERIAL PRIMARY KEY,
-	-- product_id VARCHAR(255) NOT NULL,
-	-- question_body VARCHAR(255),
-	-- question_date BIGSERIAL,
-	-- asker_name VARCHAR(255) NOT NULL,
-	-- asker_email VARCHAR(255) NOT NULL,
-	-- question_helpfulness INT,
-	-- reported BOOLEAN
+	id INT, 
+	user_id TEXT, 
+	category TEXT, 
+	difficulty TEXT, 
+	quiz_name TEXT, 
+	PRIMARY KEY(id)
+);
+
+SAVEPOINT quizzes_table_created;
+
+-- ----------------------
+-- Quiz Questions
+-- ----------------------
+CREATE TABLE questions(
+	id INT, 
+	quiz_id INT, 
+	questions TEXT, 
+	PRIMARY KEY(id), 
+	CONSTRAINT fk_questions 
+	FOREIGN KEY(quiz_id) REFERENCES quizzes(id)
 );
 
 SAVEPOINT questions_table_created;
 
-CREATE INDEX q_id_index ON questions (id);
+CREATE INDEX questions_fk_index ON questions (quiz_id);
 
-SAVEPOINT q_index_created;
+SAVEPOINT questions_index_created;
 
 COMMIT;
