@@ -20,5 +20,9 @@
   "bugs": {
     "url": "https://github.com/potato-fixers/quiz-whiz/issues"
   },
-  "homepage": "https://github.com/potato-fixers/quiz-whiz#readme"
+  "homepage": "https://github.com/potato-fixers/quiz-whiz#readme",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "pg": "^8.10.0"
+  }
 }

@@ -1,5 +1,5 @@
-import '../styles/take-quiz.css';
-import { Typography, Button } from '@mui/material';
+import "../styles/take-quiz.css";
+import { Typography, Button } from "@mui/material";
 
 function Begin() {
   return (
