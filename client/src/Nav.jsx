@@ -1,58 +1,37 @@
-import { AppBar, Typography, Toolbar, Button } from '@mui/material';
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { AppBar, Typography, Toolbar, Button } from '@mui/material'
+import { Link } from 'react-router-dom';
 
 const Nav = () => {
 
-  const [destination, setDestination] = useState('/');
-  const navigate = useNavigate();
-
-  const handleClick = (e) => {
-    const elText = e.target.innerText;
-    switch (elText) {
-      case 'Dashboard':
-        setDestination('/dashboard'); // user dashboard page
-        break;
-      case 'Create':
-        setDestination('/') // No route yet
-        break;
-      case 'SIGN UP':
-        setDestination('/register'); // register page
-        break;
-      case 'SIGN IN':
-        setDestination('/login'); // login page
-        break;
-      default:
-        setDestination('/'); // Home/landing page
-        break;
-    }
-  };
-
-  useEffect(() => {
-    navigate(destination);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [destination]);
+  const styles = { color: 'inherit', textDecoration: 'inherit' };
 
   return (
-        <AppBar position='static'>
-            <Toolbar>
-                <Typography variant="h4" onClick={handleClick}>
-                  Quiz Whiz
-                </Typography>
+    <AppBar position='static'>
+      <Toolbar>
+        <Typography variant="h4" >
+          <Link to='/' style={styles}>
+            Quiz Whiz
+           </Link>
+        </Typography>
 
-                <Typography variant='h6' onClick={handleClick}>
-                  Dashboard
-                </Typography>
+        <Typography variant='h6' >
+          <Link to='/dashboard' style={styles}>Dashboard</Link>
+        </Typography>
 
-                <Typography variant='h6' sx={{ flexGrow: 1}} onClick={handleClick}>
-                  Create
-                </Typography>
+        <Typography variant='h6' sx={{ flexGrow: 1 }} >
+          {/* need to update this when create page is ready  */}
+          <Link to='/' style={styles}>Create</Link>
+        </Typography>
 
-                <Button color="inherit" onClick={handleClick}> Sign Up </Button>
-                <Button color="inherit" onClick={handleClick}> Sign In </Button>
-            </Toolbar>
-        </AppBar>
-    );
+        <Button color='inherit' >
+          <Link to='/register' style={styles}>Sign Up</Link>
+        </Button>
+        <Button color='inherit' >
+        <Link to='/login' style={styles}>Sign In</Link>
+        </Button>
+      </Toolbar>
+    </AppBar>
+  );
 };
 
 export default Nav;
