@@ -4,6 +4,7 @@ const app = express();
 const port = process.env.PORT || 8080;
 const path = require('path');
 const dbMethods = require('./database/index.js')
+const { dashboard } = require('./routes');
 
 // =============================================
 //                Middleware
@@ -24,7 +25,7 @@ app.listen(port, () => {
 //               Create A Quiz Route
 // =============================================
 app.post('/create', (err, res) => {
-  // what does the quiz form data look like? 
+  // what does the quiz form data look like?
   console.log('incoming data', req.body)
   // simple db method call using imported function from database index.js
   dbMethods.createQuiz(req.body, (err, result) => {
@@ -35,3 +36,8 @@ app.post('/create', (err, res) => {
     }
   })
 })
+
+// =============================================
+//               Dashboard Routes
+// =============================================
+app.use('/dashboard', dashboard);
