@@ -1,3 +1,4 @@
+import '../styles/create-quiz.css';
 
 const APIQuestions = (props) => {
   return (
