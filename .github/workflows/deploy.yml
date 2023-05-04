@@ -45,5 +45,5 @@ jobs:
             docker pull gbmytabc/quiz-whiz:latest
             docker stop quizwhiz
             docker rm quizwhiz
-            docker container prune
-            docker run -d --rm --name quizwhiz -p 3000:3000 gbmytabc/quiz-whiz:latest
+            docker run -d --name quizwhiz -p 3000:3000 gbmytabc/quiz-whiz:latest
+  

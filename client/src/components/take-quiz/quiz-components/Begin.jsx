@@ -10,8 +10,12 @@ function Begin() {
       <Typography>FROM DATABASE: Quiz Category here</Typography>
       <Typography>FROM DATABASE: Quiz Difficulty here</Typography>
 
-      <Button variant="h4">Begin Quiz</Button>
-      <Button variant="h4">Back to Browse</Button>
+      <Button variant="contained" color="primary">
+        Begin Quiz
+      </Button>
+      <Button variant="contained" color="secondary">
+        Back to Browse
+      </Button>
     </>
   );
 }
