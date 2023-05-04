@@ -1,5 +1,7 @@
-import "../styles/take-quiz.css";
+import { Link } from "react-router-dom";
 import { CssBaseline, Typography, Button } from "@mui/material";
+
+import "../styles/take-quiz.css";
 import Review from "./Review.jsx";
 
 function Summary() {
@@ -11,8 +13,12 @@ function Summary() {
       </Typography>
       <CssBaseline></CssBaseline>
       <Review />
-      <Button variant="h4">Retake Quiz</Button>
-      <Button variant="h4">More Quizzes</Button>
+      <Link to="/quiz/:id/start">
+        <Button variant="contained">Retake Quiz</Button>
+      </Link>
+      <Link to="/dashboard">
+        <Button variant="contained">More Quizzes</Button>
+      </Link>
     </>
   );
 }
