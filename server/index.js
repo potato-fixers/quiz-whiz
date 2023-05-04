@@ -13,7 +13,8 @@ app.use(express.json());
 // =============================================
 //               Route Imports
 // =============================================
-app.use(express.static(path.join(__dirname, '../client/build')));
+app.use('/auth', require('./routes/user-auth-route')); // had to use `/api/cart` bc express assumes the first url param is the product id
+
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
@@ -24,7 +25,7 @@ app.listen(port, () => {
 //               Create A Quiz Route
 // =============================================
 app.post('/create', (err, res) => {
-  // what does the quiz form data look like? 
+  // what does the quiz form data look like?
   console.log('incoming data', req.body)
   // simple db method call using imported function from database index.js
   dbMethods.createQuiz(req.body, (err, result) => {
