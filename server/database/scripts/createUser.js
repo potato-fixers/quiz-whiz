@@ -8,7 +8,7 @@ const createTableQuery = `
     first_name VARCHAR(255) NOT NULL,
     last_name VARCHAR(255) NOT NULL,
     username VARCHAR(255) UNIQUE,
-    profile_img VARCHAR(255),
+    profile_img bytea,
     bio TEXT,
     salt VARCHAR(255) NOT NULL
   );
