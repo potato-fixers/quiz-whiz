@@ -1,5 +1,6 @@
 import "./styles/App.css";
-import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+// import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import { Typography } from "@mui/material";
 import Nav from "./Nav.jsx";
 import TakeQuiz from "./components/take-quiz/TakeQuiz.jsx";
@@ -19,8 +20,8 @@ function App() {
               <Typography variant="h4">Welcome to Quiz Whiz</Typography>
               {/* Using this for Take Quiz Development. Please leave here for now  */}
               {/* <Link to="/quiz/1/start">Take Quiz</Link>
-                  <Link to="/quiz/1/question">Quiz Question</Link>
-                  <Link to="/quiz/1/summary">Quiz Summary</Link> */}
+              <Link to="/quiz/1/question">Quiz Question</Link>
+              <Link to="/quiz/1/summary">Quiz Summary</Link> */}
             </div>
           }
         ></Route>
