@@ -17,7 +17,7 @@ const Plays = (props) => {
 
       <FilterBar />
 
-      <Table sx={{ width: '100%' }} aria-label="simple table">
+      <Table sx={{ width: '100%' }} aria-label='simple table'>
         <TableHead >
           <TableRow>
             <TableCell align='left'>Quiz</TableCell>

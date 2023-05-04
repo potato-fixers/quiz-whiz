@@ -19,7 +19,7 @@ const FilterBar = (props) => {
       <Input size='sm' placeholder='Search by quiz name' value={term} onChange={handleChange} />
       <Select
         size='sm'
-        placeholder="Categories"
+        placeholder='Categories'
         indicator={<KeyboardArrowDown />}
         sx={{
           width: 105,
@@ -31,10 +31,11 @@ const FilterBar = (props) => {
           },
         }}
       >
-      <Option value="edu">Edu</Option>
-      <Option value="music">Music</Option>
-      <Option value="movie">Movie</Option>
-      <Option value="sport">Sport</Option>
+      <Option value='all'>All</Option>
+      <Option value='edu'>Edu</Option>
+      <Option value='music'>Music</Option>
+      <Option value='movie'>Movie</Option>
+      <Option value='sport'>Sport</Option>
     </Select>
     </Stack>
   )

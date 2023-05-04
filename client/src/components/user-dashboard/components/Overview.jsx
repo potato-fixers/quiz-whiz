@@ -14,7 +14,7 @@ const Overview = (props) => {
     <>
       <Typography variant='h5'>Recent plays</Typography>
 
-      <Table sx={{ width: '100%' }} aria-label="simple table">
+      <Table sx={{ width: '100%' }} aria-label='simple table'>
         <TableHead >
           <TableRow>
             <TableCell align='left'>Quiz</TableCell>

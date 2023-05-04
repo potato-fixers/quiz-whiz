@@ -1,5 +1,6 @@
 import { Typography, TableBody, TableCell, TableHead, TableRow, Table } from '@mui/material';
 import FilterBar from './subComponents/FilterBar.jsx';
+import ClearIcon from '@mui/icons-material/Clear';
 
 const MyQuizzes = (props) => {
 
@@ -10,6 +11,11 @@ const MyQuizzes = (props) => {
     {id: 4, quiz: 'quiz 4', category: 'Movie', type: 'Multiple choices', plays: 4, likes: 3,  createdAt: 'mm/dd/yyyyThh:mm:ss'},
     {id: 5, quiz: 'quiz 5', category: 'Sport', type: 'True False', plays: 1, likes: 3,  createdAt: 'mm/dd/yyyyThh:mm:ss'}
   ];
+
+  const handleDelete = (e) => {
+    // handle deleting quiz
+    console.log('delete');
+  };
 
   return (
     <>
@@ -50,6 +56,9 @@ const MyQuizzes = (props) => {
               </TableCell>
               <TableCell align='right' sx={{ border: 0 }} >
                 {row.createdAt}
+              </TableCell>
+              <TableCell align='center' sx={{ border: 0 }}>
+                <ClearIcon onClick={handleDelete}></ClearIcon>
               </TableCell>
             </TableRow>
           ))}
