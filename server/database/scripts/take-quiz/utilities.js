@@ -15,12 +15,9 @@ let DB_PORT = process.env.DB_PORT;
 // Connection String Pattern
 // schema://user:password@host:port/db_name
 // let dbString = `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}`;
-let dbString = `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:5432/${DB_NAME}`;
+let dbString = `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}`;
 let pool = new Pool({ connectionString: dbString });
 pool.connect();
-
-// const baseUrl = `http://${process.env.DB_HOST}:${process.env.SERVER_PORT}/`;
-// const baseUrl = `http://localhost:${process.env.SERVER_PORT}/`;
 
 fetch = async (cb) => {
 
