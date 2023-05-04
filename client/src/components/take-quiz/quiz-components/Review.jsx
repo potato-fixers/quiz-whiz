@@ -1,5 +1,5 @@
 import "../styles/take-quiz.css";
-import { Container, Button } from "@mui/material";
+import { Button } from "@mui/material";
 
 function Review() {
   return (

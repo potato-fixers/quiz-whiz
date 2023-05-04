@@ -33,7 +33,6 @@ function Timer() {
 
   return (
     <div id="timer">
-      {/* Ready...Set....GO! */}
       <Typography variant="h6">Ready...Set....GO!</Typography>
     </div>
   );
