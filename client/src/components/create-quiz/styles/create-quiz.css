@@ -1,3 +1,7 @@
 .categorychosen {
   color: blue;
 }
+
+textarea {
+  resize: none;
+}
