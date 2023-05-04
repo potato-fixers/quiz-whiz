@@ -1,4 +1,5 @@
 import "./styles/App.css";
+// eslint-disable-next-line no-unused-vars
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import { Typography } from "@mui/material";
 import Nav from "./Nav.jsx";
