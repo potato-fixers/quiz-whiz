@@ -35,7 +35,7 @@ function Begin() {
       <Grid item xs={6}>
         <Link to="/dashboard">
           <Button variant="contained" color="secondary">
-            Back to Browse
+            Back to My Quizzes
           </Button>
         </Link>
       </Grid>
