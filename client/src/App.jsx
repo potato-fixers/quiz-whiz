@@ -6,6 +6,7 @@ import TakeQuiz from "./components/take-quiz/TakeQuiz.jsx";
 import Dashboard from "./components/user-dashboard/Dashboard.jsx";
 import Login from "../src/pages/Login";
 import Register from "../src/pages/Register";
+import UserProfilePage from './components/user-profile/UserProfilePage.jsx';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
 
         <Route path="/login/" element={<Login />}></Route>
         <Route path="/register/" element={<Register />}></Route>
+        <Route path="/settings/" element={<UserProfilePage/>}></Route>
       </Routes>
     </Router>
   );
