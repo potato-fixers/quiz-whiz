@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import { Grid, Typography, Button } from "@mui/material";
 import "./styles/take-quiz.css";
 import Pagination from "./Pagination.jsx";
@@ -9,6 +9,7 @@ import Question from "./quiz-components/Question.jsx";
 import Answers from "./quiz-components/Answers.jsx";
 
 function Quiz() {
+  const [page, setPage] = useState(1);
   const [questions, setQuestions] = useState([
     {
       question: "What is the Answer to this Question?",
@@ -28,14 +29,15 @@ function Quiz() {
       incAns1: "True",
     },
   ]);
-  const [page, setPage] = useState(1);
 
   const onPageChange = (val) => {
     console.log("Page changed");
     setPage(val);
   };
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    questions && setQuestions(questions);
+  }, [questions]);
 
   return (
     <>
@@ -52,18 +54,20 @@ function Quiz() {
         </Grid>
 
         <Grid item xs={6}>
-          <Question question={questions[page].question} />
+          <Question question={questions[page - 1].question} />
         </Grid>
 
         <Grid item xs={6}>
-          <Answers answers={questions[page]} />
+          <Answers answers={questions[page - 1]} />
         </Grid>
 
         <Grid item xs={6}>
-          <Typography>2/25 Questions</Typography>
+          <Typography>
+            {page}/{questions.length} Questions
+          </Typography>
         </Grid>
 
-        <Grid item xs={6}>
+        {/* <Grid item xs={6}>
           <Link to="/quiz/:id/question/:id">
             <Button variant="contained" color="primary">
               &lt;
@@ -77,7 +81,7 @@ function Quiz() {
               &gt;
             </Button>
           </Link>
-        </Grid>
+        </Grid> */}
       </Grid>
 
       <Grid justifyContent="center" direction="row" container>
@@ -85,7 +89,7 @@ function Quiz() {
           <Pagination
             onPageChange={onPageChange}
             currentPage={page}
-            totalCount={3}
+            totalQuestions={questions.length}
             pageSize={1}
           />
         </Grid>
