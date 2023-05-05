@@ -13,8 +13,8 @@ const CreateQuiz = (props) => {
 
     // useStates here
     const [quizName, setQuizName] = useState('');
-    const [TFValidation, setTFValidation] = useState(true);
-    const [MCValidation, setMCValidation] = useState(true);
+    const [TFValidation, setTFValidation] = useState(false);
+    const [MCValidation, setMCValidation] = useState(false);
     const [MCInputFields, setMCInputFields] = useState([{question: '', corrAns: '', incAns1: '', incAns2: '', incAns3: ''}, {question: '', corrAns: '', incAns1: '', incAns2: '', incAns3: ''}, {question: '', corrAns: '', incAns1: '', incAns2: '', incAns3: ''}])
     const [TFInputFields, setTFInputFields] = useState([{question: '', corrAns: '', incAns: ''}, {question: '', corrAns: '', incAns: ''}])
     // create state here to update which category is the selected
@@ -71,23 +71,26 @@ const CreateQuiz = (props) => {
     const handleFormChange = (e, index) => {
       e.preventDefault();
       if (e.target.getAttribute('data-type') === 'MC') {
-        if (e.target.value.length < 1) {
-        setMCValidation(false);
-        } else {
-          setMCValidation(true)
-        }
         var MCdata = [...MCInputFields]
         MCdata[index][e.target.name] = e.target.value
         setMCInputFields(MCdata);
-      } else {
-        if (e.target.value.length < 1) {
-          setTFValidation(false);
+        if (e.target.value === '') {
+          console.log('test1')
+          setMCValidation(false);
         } else {
-            setTFValidation(true)
+          setMCValidation(true)
         }
+      } else {
         var TFdata = [...TFInputFields]
         TFdata[index][e.target.name] = e.target.value
         setTFInputFields(TFdata);
+        if (e.target.value === '') {
+          setTFValidation(false);
+        } else {
+          console.log('test')
+          setTFValidation(true)
+        }
+
       }
     }
 
@@ -117,16 +120,10 @@ const CreateQuiz = (props) => {
       e.preventDefault();
       var minQuestions = MCInputFields.length + TFInputFields.length;
       if (e.target.name === 'MCRemoveButton' && minQuestions > 5) {
-        if (MCInputFields.length === 1) {
-          setMCInputFields(false);
-        }
         var MCdata = [...MCInputFields];
         MCdata.splice(index, 1);
         setMCInputFields(MCdata);
       } else if (e.target.name === 'TFRemoveButton' && minQuestions > 5) {
-        if (TFInputFields.length === 1) {
-          setTFValidation(false)
-        }
         var TFdata = [...TFInputFields];
         TFdata.splice(index, 1);
         setTFInputFields(TFdata);
@@ -137,7 +134,7 @@ const CreateQuiz = (props) => {
     }
 
     const questionValidation = (callback) => {
-      console.log(TFInputFields.length, MCInputFields.length)
+      console.log(MCValidation)
       if (TFInputFields.length === 0) {
         for (var i = 0; i < MCInputFields.length; i++) {
           if (MCInputFields[i].question.length < 1) {
@@ -190,6 +187,7 @@ const CreateQuiz = (props) => {
             setMCValidation(false);
           }
         }
+
         for (var j = 0; j < TFInputFields.length; j++) {
           if (TFInputFields[j].question.length < 1) {
             setTFValidation(false);
@@ -211,17 +209,17 @@ const CreateQuiz = (props) => {
       e.preventDefault();
 
       questionValidation( (MC, TF) => {
-        console.log('should be true, false, false', TF, MCValidation, TFValidation)
-        if (!MCValidation && !TFValidation && MC === true) {
-          alert('Please Fill Out All MC Question Fields!!')
-        } else if (!MCValidation && !TFValidation && TF === true) {
-          alert('Please Fill Out All TF Question Fields!!')
+        console.log('should be false, true, true', TF, MCValidation, TFValidation)
+        if (!TFValidation && TF === true) {
+          alert('Please Fill Out All TF Question Fields!');
+        } else if (!MCValidation && MC === true) {
+          alert('Please Fill Out All MC Question Fields!');
         } else if (!MCValidation && TFValidation && !MC && !TF) {
-          alert('Please Fill Out All MC / TF Question Fields!!')
+          alert('Please Fill Out All MC / TF Question Fields or Remove Unused Questions')
         } else if (MCValidation && !TFValidation && !MC && !TF) {
-          alert('Please Fill Out All MC / TF Question Fields!!')
+          alert('Please Fill Out All MC / TF Question Fields or Remove Unused Questions')
         } else if (!MCValidation && !TFValidation && !MC && !TF) {
-          alert('Please Fill Out All MC / TF Question Fields!!')
+          alert('Please Fill Out All MC / TF Question Fields or Remove Unused Questions')
         } else if (!quizName) {
           alert('Please Enter Quiz Name!')
         } else if (!categoryVal) {
@@ -253,7 +251,9 @@ const CreateQuiz = (props) => {
       <MCQuestions inputFields={MCInputFields} setInputFields={setMCInputFields} handleFormChange={handleFormChange} addFields={addFields} removeFields={removeFields} />
       <TFQuestions inputFields={TFInputFields} setInputFields={setTFInputFields} handleFormChange={handleFormChange} addFields={addFields} removeFields={removeFields} />
       <APIQuestions />
-      <button onClick={sendQuiz}> Create Quiz ! </button>
+      <div>
+        <button onClick={ (e) => {setTimeout(sendQuiz(e), 5000)}}> Create Quiz! </button>
+      </div>
     </div>
   );
 }
