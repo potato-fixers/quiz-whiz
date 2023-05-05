@@ -13,4 +13,5 @@ module.exports = {
   delete:  (req, res) => {
     res.send('delete a quiz');
   },
+
 }
