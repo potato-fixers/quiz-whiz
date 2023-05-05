@@ -1,21 +1,21 @@
-.username-box {
+.user-profile-box {
   background-color: #eee;
   padding: 20px;
   margin-bottom: 20px;
 }
 
-.username-box h3 {
+.user-profile-box h3 {
   margin-top: 0;
 }
 
-.username-box p {
+.user-profile-box p {
   margin: 0;
   font-size: 20px;
   font-weight: bold;
   margin-bottom: 10px;
 }
 
-.username-box button {
+.user-profile-box button {
   margin-right: 10px;
 }
 
