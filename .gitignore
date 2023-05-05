@@ -25,6 +25,3 @@ yarn-error.log*
 
 # Environment Variables
 .env
-
-server/database/schema.sql 
-server/database/Dockerfile
