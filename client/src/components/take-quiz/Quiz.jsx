@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
-// import { Link } from "react-router-dom";
-import { Grid, Typography, Button } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import "./styles/take-quiz.css";
 import Pagination from "./Pagination.jsx";
 
@@ -66,22 +65,6 @@ function Quiz() {
             {page}/{questions.length} Questions
           </Typography>
         </Grid>
-
-        {/* <Grid item xs={6}>
-          <Link to="/quiz/:id/question/:id">
-            <Button variant="contained" color="primary">
-              &lt;
-            </Button>
-          </Link>
-        </Grid>
-
-        <Grid item xs={6}>
-          <Link to="/quiz/:id/question/:id">
-            <Button variant="contained" color="primary">
-              &gt;
-            </Button>
-          </Link>
-        </Grid> */}
       </Grid>
 
       <Grid justifyContent="center" direction="row" container>
