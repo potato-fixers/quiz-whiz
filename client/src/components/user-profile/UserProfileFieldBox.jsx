@@ -4,7 +4,7 @@ import './styles/profile.css';
 
 const UserProfileFieldBox = (props) => {
   const [editing, setEditing] = useState(false);
-  const [field, setField] = useState(props.pic);
+  const [field, setField] = useState(props.initial_value);
 
   const handleEditClick = () => {
     setEditing(true);

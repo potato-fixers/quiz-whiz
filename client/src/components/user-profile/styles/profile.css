@@ -1,0 +1,36 @@
+.username-box {
+  background-color: #eee;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.username-box h3 {
+  margin-top: 0;
+}
+
+.username-box p {
+  margin: 0;
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.username-box button {
+  margin-right: 10px;
+}
+
+.editButton {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.cancelSaveButtons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 16px;
+}
+
+.usernameInput {
+  margin-top: 16px;
+}
