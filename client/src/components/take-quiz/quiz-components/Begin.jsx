@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import "../styles/take-quiz.css";
 import { Typography, Button } from "@mui/material";
 
@@ -10,12 +11,17 @@ function Begin() {
       <Typography>FROM DATABASE: Quiz Category here</Typography>
       <Typography>FROM DATABASE: Quiz Difficulty here</Typography>
 
-      <Button variant="contained" color="primary">
-        Begin Quiz
-      </Button>
-      <Button variant="contained" color="secondary">
-        Back to Browse
-      </Button>
+      <Link to="/quiz/:id/question">
+        <Button variant="contained" color="primary">
+          Begin Quiz
+        </Button>
+      </Link>
+
+      <Link to="/dashboard">
+        <Button variant="contained" color="secondary">
+          Back to Browse
+        </Button>
+      </Link>
     </>
   );
 }

@@ -1,12 +1,18 @@
-import '../styles/take-quiz.css';
-import { Typography } from '@mui/material';
+import "../styles/take-quiz.css";
+import { Button } from "@mui/material";
 
 function Answers() {
   return (
     <>
-        <Typography variant="h6">Answer 1</Typography>
-        <Typography variant="h6">Answer 2</Typography>
-        <Typography variant="h6">Answer 3</Typography>
+      <Button variant="contained" color="secondary">
+        Answer 1
+      </Button>
+      <Button variant="contained" color="secondary">
+        Answer 2
+      </Button>
+      <Button variant="contained" color="secondary">
+        Answer 3
+      </Button>
     </>
   );
 }

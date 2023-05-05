@@ -1,8 +1,8 @@
 require("dotenv").config();
 const express = require('express')
 const app = express();
-const port = process.env.PORT || 8080;
-const path = require('path');
+const axios = require('axios');
+const port = process.env.SERVER_PORT || 8080;
 const dbMethods = require('./database/index.js')
 
 // =============================================
@@ -13,7 +13,11 @@ app.use(express.json());
 // =============================================
 //               Route Imports
 // =============================================
-app.use(express.static(path.join(__dirname, '../client/build')));
+app.get('/api', (req, res) => {
+  res.json('Hello Quiz Whiz Backend')  
+});
+
+app.use('/quiz', require('./routes/take-quiz'));
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);

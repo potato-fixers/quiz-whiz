@@ -79,7 +79,7 @@ CREATE TABLE favorites (
     quiz_id INTEGER NOT NULL REFERENCES quizzes(id),
     liked_at DATE NOT NULL DEFAULT CURRENT_DATE,
     CONSTRAINT unique_favorite UNIQUE(user_id, quiz_id)
-  )
+);
 
 SAVEPOINT favorites_table_created;
 
