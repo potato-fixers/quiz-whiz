@@ -3,4 +3,14 @@
     justify-content: center;
     flex-direction: column;
     text-align: center;
-  }
+}
+
+#pagination {
+  display: flex;
+  justify-content: space-between;
+  /* border: 1px solid magenta; */
+}
+
+li {
+  list-style: none;
+}

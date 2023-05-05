@@ -56,7 +56,7 @@ SAVEPOINT users_table_created;
 -- ----------------------
 -- USER SESSIONS TABLE
 -- ----------------------
-CREATE TABLE users_session(
+CREATE TABLE quizzes(
 	id SERIAL PRIMARY KEY,
   session VARCHAR(64) NOT NULL,
   user_id INTEGER NOT NULL REFERENCES users(id),
