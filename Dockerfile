@@ -1,12 +1,11 @@
 # pull the Node image from Docker
 FROM node:alpine
 
-# copy dot env
-COPY .env ./
-COPY ./server/.env ./server
-
 # copy the application files into the container
 COPY ./ ./
+
+# copy dot env
+COPY ./server/.env ./server
 
 # Expose Port 3000
 EXPOSE 3000
@@ -14,10 +13,8 @@ EXPOSE 8080
 
 # install deps
 RUN npm run install
-RUN cd server && npm start
 
-# Run build
+# start the application
 WORKDIR /client/
 
-CMD ["npm", "run", "build"]
 CMD ["npm", "start"]
