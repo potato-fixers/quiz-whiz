@@ -22,9 +22,7 @@ function App() {
         ></Route>
 
         <Route path="/quiz/:id/*" element={<TakeQuiz />}></Route>
-
         <Route path="dashboard/*" element={<Dashboard />}></Route>
-
         <Route path="/login/" element={<Login />}></Route>
         <Route path="/register/" element={<Register />}></Route>
       </Routes>

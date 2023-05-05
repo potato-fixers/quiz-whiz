@@ -1,8 +1,8 @@
 require("dotenv").config();
 const express = require('express')
 const app = express();
-const port = process.env.PORT || 8080;
-const path = require('path');
+const axios = require('axios');
+const port = process.env.SERVER_PORT || 8080;
 const dbMethods = require('./database/index.js')
 const { dashboard } = require('./routes');
 
@@ -14,12 +14,17 @@ app.use(express.json());
 // =============================================
 //               Route Imports
 // =============================================
-app.use(express.static(path.join(__dirname, '../client/build')));
+app.use('/auth', require('./routes/user-auth-route')); // had to use `/api/cart` bc express assumes the first url param is the product id
+
+app.get('/api', (req, res) => {
+  res.json('Hello Quiz Whiz Backend')  
+});
+
+app.use('/quiz', require('./routes/take-quiz'));
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
-
 
 // =============================================
 //               Create A Quiz Route

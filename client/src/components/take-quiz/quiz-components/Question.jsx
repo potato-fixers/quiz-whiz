@@ -1,11 +1,15 @@
-import '../styles/take-quiz.css';
-import { Typography } from '@mui/material';
+// import { useEffect } from "react";
+import "../styles/take-quiz.css";
+import { Typography } from "@mui/material";
 
-function Question() {
+function Question({ question }) {
   return (
-    <>
-        <Typography variant="h4">Question Text</Typography>
-    </>
+    question && (
+      <>
+        <Typography variant="h4">{question}</Typography>
+        {/* <div className="test">Try sticking db data in here</div> */}
+      </>
+    )
   );
 }
 
