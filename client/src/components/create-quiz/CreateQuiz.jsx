@@ -23,41 +23,48 @@ const CreateQuiz = (props) => {
     const [category3, setState3] = useState(false);
     const [category4, setState4] = useState(false);
     const [category5, setState5] = useState(false);
+    const [categoryVal, setCategoryVal] = useState(false);
 
   // useState function
   const onSelect = (e) => {
     e.preventDefault();
 
     if (e.target.name === 'category1') {
+
       setState1(true);
       setState2(false);
       setState3(false);
       setState4(false);
       setState5(false);
+      setCategoryVal(true)
     } else if (e.target.name === 'category2') {
       setState1(false);
       setState2(true);
       setState3(false);
       setState4(false);
       setState5(false);
+      setCategoryVal(true)
     } else if (e.target.name === 'category3') {
       setState1(false);
       setState2(false);
       setState3(true);
       setState4(false);
       setState5(false);
+      setCategoryVal(true)
     } else if (e.target.name === 'category4') {
       setState1(false);
       setState2(false);
       setState3(false);
       setState4(true);
       setState5(false);
+      setCategoryVal(true)
     } else {
       setState1(false);
       setState2(false);
       setState3(false);
       setState4(false);
       setState5(true);
+      setCategoryVal(true)
     }
   }
 
@@ -110,23 +117,63 @@ const CreateQuiz = (props) => {
       e.preventDefault();
       var minQuestions = MCInputFields.length + TFInputFields.length;
       if (e.target.name === 'MCRemoveButton' && minQuestions > 5) {
-        console.log(index)
+        if (MCInputFields.length === 1) {
+          setMCInputFields(false);
+        }
         var MCdata = [...MCInputFields];
         MCdata.splice(index, 1);
         setMCInputFields(MCdata);
-        console.log(MCdata)
       } else if (e.target.name === 'TFRemoveButton' && minQuestions > 5) {
+        if (TFInputFields.length === 1) {
+          setTFValidation(false)
+        }
         var TFdata = [...TFInputFields];
         TFdata.splice(index, 1);
         setTFInputFields(TFdata);
+        console.log(TFInputFields.length)
       } else {
         alert('Minimum Questions Reached!')
       }
     }
 
     const questionValidation = (callback) => {
+      console.log(TFInputFields.length, MCInputFields.length)
+      if (TFInputFields.length === 0) {
         for (var i = 0; i < MCInputFields.length; i++) {
-          console.log(MCInputFields[i]);
+          if (MCInputFields[i].question.length < 1) {
+            setMCValidation(false);
+          }
+          if (MCInputFields[i].corrAns.length < 1) {
+            setMCValidation(false);
+          }
+          if (MCInputFields[i].incAns1.length < 1) {
+            setMCValidation(false);
+          }
+          if (MCInputFields[i].incAns2.length < 1) {
+            setMCValidation(false);
+          }
+          if (MCInputFields[i].incAns3.length < 1) {
+            setMCValidation(false);
+          }
+          callback(true, null)
+        }
+      } else if (MCInputFields.length === 0) {
+        console.log(TFValidation)
+        for (var j = 0; j < TFInputFields.length; j++) {
+          if (TFInputFields[j].question.length < 1) {
+            setTFValidation(false);
+          }
+          if (TFInputFields[j].corrAns.length < 1) {
+            setTFValidation(false);
+          }
+          if (TFInputFields[j].incAns.length < 1) {
+            setTFValidation(false);
+          }
+        }
+        callback(null, true)
+
+      } else {
+        for (var i = 0; i < MCInputFields.length; i++) {
           if (MCInputFields[i].question.length < 1) {
             setMCValidation(false);
           }
@@ -144,7 +191,6 @@ const CreateQuiz = (props) => {
           }
         }
         for (var j = 0; j < TFInputFields.length; j++) {
-          console.log(TFInputFields[j]);
           if (TFInputFields[j].question.length < 1) {
             setTFValidation(false);
           }
@@ -155,33 +201,45 @@ const CreateQuiz = (props) => {
             setTFValidation(false);
           }
         }
-        callback()
+        callback(null, null)
       }
+    }
 
 
     const sendQuiz = (e) => {
 
       e.preventDefault();
 
-      questionValidation( () => {
-        var test = JSON.stringify(MCInputFields.concat(TFInputFields))
-        if (MCValidation && TFValidation && quizName) {
-          console.log('name', quizName, 'quiz info', JSON.parse(test))
-        } else if (MCValidation && !TFValidation) {
-          alert('Please Fill Out All TF Question Fields!!')
-        } else if (!MCValidation && TFValidation) {
+      questionValidation( (MC, TF) => {
+        console.log('should be true, false, false', TF, MCValidation, TFValidation)
+        if (!MCValidation && !TFValidation && MC === true) {
           alert('Please Fill Out All MC Question Fields!!')
-        } else if (!MCValidation && !TFValidation) {
-          alert('Please Fill Out All TF / MC Question Fields!!')
-        }
-
-        if (!quizName) {
+        } else if (!MCValidation && !TFValidation && TF === true) {
+          alert('Please Fill Out All TF Question Fields!!')
+        } else if (!MCValidation && TFValidation && !MC && !TF) {
+          alert('Please Fill Out All MC / TF Question Fields!!')
+        } else if (MCValidation && !TFValidation && !MC && !TF) {
+          alert('Please Fill Out All MC / TF Question Fields!!')
+        } else if (!MCValidation && !TFValidation && !MC && !TF) {
+          alert('Please Fill Out All MC / TF Question Fields!!')
+        } else if (!quizName) {
           alert('Please Enter Quiz Name!')
+        } else if (!categoryVal) {
+          alert('Please Choose Category!')
+        } else {
+          console.log('test')
+          if (TF) {
+            var test = JSON.stringify(TFInputFields)
+            console.log('name', quizName, 'quiz info', JSON.parse(test))
+          } else if (MC) {
+            var test = JSON.stringify(MCInputFields)
+            console.log('name', quizName, 'quiz info', JSON.parse(test))
+          } else {
+            var test = JSON.stringify(MCInputFields.concat(TFInputFields))
+            console.log('name', quizName, 'quiz info', JSON.parse(test))
+          }
         }
 
-        if (!category1 && !category2 && !category3 && !category4 && !category5) {
-          alert('Plase Select Category!')
-        }
       })
     }
 
