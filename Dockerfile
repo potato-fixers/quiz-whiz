@@ -5,7 +5,7 @@ FROM node:alpine
 COPY ./ ./
 
 # copy dot env
-COPY ./server/.env ./server
+COPY /server/.env ./server
 
 # Expose Port 3000
 EXPOSE 3000
@@ -13,8 +13,5 @@ EXPOSE 8080
 
 # install deps
 RUN npm run install
-
-# start the application
-WORKDIR /client/
 
 CMD ["npm", "start"]
