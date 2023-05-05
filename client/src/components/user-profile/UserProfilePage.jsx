@@ -1,8 +1,4 @@
 import './styles/profile.css';
-import UsernameBox from './UsernameBox.jsx';
-import PasswordBox from './PasswordBox.jsx';
-import ProfilePicBox from './ProfilePicBox.jsx';
-import BioBox from './BioBox.jsx';
 import UserProfileFieldBox from './UserProfileFieldBox.jsx';
 
 
