@@ -4,7 +4,7 @@ const controller = require('../controllers/user-auth');
 
 
 router.post('/login', (req, res) => {
-  controller.login(req.body);
+  controller.login(req, res);
   res.status(201).end();
 })
 
