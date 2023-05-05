@@ -1,48 +1,36 @@
 const express = require('express');
 const router = express.Router();
+const controllers = require('../controllers');
 
 // =============================================
 //                Overview
 // =============================================
 
-router.get('/', (req, res) => {
-  res.send('10 most recent played quizzes and counts');
-});
+router.get('/', controllers.overview.get);
 
 // =============================================
 //                My Quizzes
 // =============================================
 
-router.get('/quizzes', (req, res) => {
-  res.send('some created quizzes and total count');
-});
+router.get('/quizzes', controllers.myQuizzes.get);
 
-router.put('/quizzes/:id', (req, res) => { // can also use delete request (TBD)
-  res.send('remove or modify quiz owner to admin');
-});
+// can also use delete request (TBD)
+router.put('/quizzes/:id', constrollers.myQuizzes.delete);
 
 // =============================================
 //                Plays
 // =============================================
 
-router.get('/plays', (req, res) => {
-  res.send('some played quizzes and total count');
-});
+router.get('/plays', constrollers.playedQuizzes.get);
 
 // =============================================
 //                Favorites
 // =============================================
 
-router.get('/favorites', (req, res) => {
-  res.send('some faved quizzes and total count')
-});
+router.get('/favorites', controllers.favorites.get);
 
-router.post('/favorites', (req, res) => {
-  res.send('like a quiz');
-});
+router.post('/favorites', controllers.favorites.like);
 
-router.delete('/favorites/:id', (req, res) => {
-  res.send('delete a quiz');
-});
+router.delete('/favorites/:id',controllers.favorites.delete);
 
 module.exports = router;
