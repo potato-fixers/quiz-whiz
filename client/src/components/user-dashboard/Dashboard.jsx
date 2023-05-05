@@ -1,5 +1,6 @@
 import './styles/dashboard.css';
-import ProfileTop from './components/ProfileTop.jsx';
+import { Container } from '@mui/material';
+import DashTop from './components/DashTop.jsx';
 import TabsBar from './components/TabsBar.jsx';
 import QuizCounts from './components/QuizCounts.jsx';
 import Overview from './components/Overview.jsx';
@@ -37,12 +38,12 @@ const Dashboard = (props) => {
   }, [activeTab]);
 
   return (
-    <div className='dashboard'>
-      <ProfileTop />
+    <Container maxWidth='lg'>
+      <DashTop />
       <TabsBar activeTab={activeTab} setActiveTab={setActiveTab} />
       <QuizCounts activeTab={activeTab} />
       <TabPanel />
-    </div>
+    </Container>
   );
 };
 
