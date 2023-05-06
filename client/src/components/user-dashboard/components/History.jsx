@@ -13,7 +13,7 @@ const Plays = (props) => {
   ];
 
   const handleLike = (e) => {
-    console.log('like/unlike')
+    console.log('like/unlike');
   };
 
   return (
