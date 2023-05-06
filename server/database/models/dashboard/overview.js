@@ -14,25 +14,25 @@ const data = {
     },
     {
       id: 7,
-      quiz_name: 'Quiz E',
+      quiz_name: 'Quiz D',
       score: '90%',
       date: 'May 5th, 2023'
     },
     {
       id: 2,
-      quiz_name: 'Quiz E',
+      quiz_name: 'Quiz C',
       score: '34%',
       date: 'May 4th, 2023'
     },
     {
       id: 5,
-      quiz_name: 'Quiz E',
+      quiz_name: 'Quiz B',
       score: '45%',
       date: 'May 3th, 2023'
     },
     {
       id: 43,
-      quiz_name: 'Quiz E',
+      quiz_name: 'Quiz A',
       score: '56%',
       date: 'May 2th, 2023'
     },
