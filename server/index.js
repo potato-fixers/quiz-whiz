@@ -1,6 +1,7 @@
 require("dotenv").config();
 const express = require('express')
 const app = express();
+const axios = require('axios');
 const port = process.env.SERVER_PORT || 8080;
 const dbMethods = require('./database/index.js')
 const { dashboard } = require('./routes');
