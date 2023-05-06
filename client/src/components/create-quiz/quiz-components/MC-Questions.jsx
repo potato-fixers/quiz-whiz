@@ -1,5 +1,4 @@
 import '../styles/create-quiz.css';
-import { useState, useEffect } from 'react';
 
 const MCQuestions = (props) => {
 

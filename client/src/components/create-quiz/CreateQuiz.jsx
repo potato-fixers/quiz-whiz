@@ -1,5 +1,5 @@
 import './styles/create-quiz.css';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Categories from './quiz-components/Categories.jsx';
 import MCQuestions from './quiz-components/MC-Questions.jsx';
 import TFQuestions from './quiz-components/TF-Questions.jsx';
@@ -23,7 +23,7 @@ const CreateQuiz = (props) => {
     const [category3, setState3] = useState(false);
     const [category4, setState4] = useState(false);
     const [category5, setState5] = useState(false);
-    const [categoryVal, setCategoryVal] = useState(false);
+    const [categoryVal, setCategoryVal] = useState(null);
 
   // useState function
   const onSelect = (e) => {
@@ -36,35 +36,35 @@ const CreateQuiz = (props) => {
       setState3(false);
       setState4(false);
       setState5(false);
-      setCategoryVal(true)
+      setCategoryVal(e.target.name)
     } else if (e.target.name === 'category2') {
       setState1(false);
       setState2(true);
       setState3(false);
       setState4(false);
       setState5(false);
-      setCategoryVal(true)
+      setCategoryVal(e.target.name)
     } else if (e.target.name === 'category3') {
       setState1(false);
       setState2(false);
       setState3(true);
       setState4(false);
       setState5(false);
-      setCategoryVal(true)
+      setCategoryVal(e.target.name)
     } else if (e.target.name === 'category4') {
       setState1(false);
       setState2(false);
       setState3(false);
       setState4(true);
       setState5(false);
-      setCategoryVal(true)
+      setCategoryVal(e.target.name)
     } else {
       setState1(false);
       setState2(false);
       setState3(false);
       setState4(false);
       setState5(true);
-      setCategoryVal(true)
+      setCategoryVal(e.target.name)
     }
   }
 
@@ -170,32 +170,32 @@ const CreateQuiz = (props) => {
         callback(null, true)
 
       } else {
-        for (var i = 0; i < MCInputFields.length; i++) {
-          if (MCInputFields[i].question.length < 1) {
+        for (var k = 0; k < MCInputFields.length; k++) {
+          if (MCInputFields[k].question.length < 1) {
             setMCValidation(false);
           }
-          if (MCInputFields[i].corrAns.length < 1) {
+          if (MCInputFields[k].corrAns.length < 1) {
             setMCValidation(false);
           }
-          if (MCInputFields[i].incAns1.length < 1) {
+          if (MCInputFields[k].incAns1.length < 1) {
             setMCValidation(false);
           }
-          if (MCInputFields[i].incAns2.length < 1) {
+          if (MCInputFields[k].incAns2.length < 1) {
             setMCValidation(false);
           }
-          if (MCInputFields[i].incAns3.length < 1) {
+          if (MCInputFields[k].incAns3.length < 1) {
             setMCValidation(false);
           }
         }
 
-        for (var j = 0; j < TFInputFields.length; j++) {
-          if (TFInputFields[j].question.length < 1) {
+        for (var l = 0; l < TFInputFields.length; l++) {
+          if (TFInputFields[l].question.length < 1) {
             setTFValidation(false);
           }
-          if (TFInputFields[j].corrAns.length < 1) {
+          if (TFInputFields[l].corrAns.length < 1) {
             setTFValidation(false);
           }
-          if (TFInputFields[j].incAns.length < 1) {
+          if (TFInputFields[l].incAns.length < 1) {
             setTFValidation(false);
           }
         }
@@ -227,14 +227,73 @@ const CreateQuiz = (props) => {
         } else {
           console.log('test')
           if (TF) {
-            var test = JSON.stringify(TFInputFields)
-            console.log('name', quizName, 'quiz info', JSON.parse(test))
+
+            var quizDataTF = {
+              quizzes: {
+              user_id: 'admin',
+              name: quizName,
+              category: categoryVal
+              },
+              questions: JSON.stringify(TFInputFields),
+            }
+
+            var optionsTF = {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: quizDataTF,
+            }
+
+            fetch('http://localhost:3000/create', optionsTF)
+            .then( (data) => {
+              console.log('response', data)
+            })
+
           } else if (MC) {
-            var test = JSON.stringify(MCInputFields)
-            console.log('name', quizName, 'quiz info', JSON.parse(test))
+            var quizDataMC = {
+              quizzes: {
+              user_id: 'admin',
+              name: quizName,
+              category: categoryVal
+              },
+              questions: JSON.stringify(MCInputFields),
+            }
+
+            var optionsMC = {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: quizDataMC,
+            }
+
+            fetch('http://localhost:3000/create', optionsMC)
+            .then( (data) => {
+              console.log('response', data)
+            })
           } else {
-            var test = JSON.stringify(MCInputFields.concat(TFInputFields))
-            console.log('name', quizName, 'quiz info', JSON.parse(test))
+            var quizDataMCTF = {
+              quizzes: {
+              user_id: 'admin',
+              name: quizName,
+              category: categoryVal
+              },
+              questions: JSON.stringify(MCInputFields.concat(TFInputFields)),
+            }
+
+            var optionsMCTF = {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: quizDataMCTF,
+            }
+
+            fetch('http://localhost:3000/create', optionsMCTF)
+            .then( (data) => {
+              console.log('response', data)
+            })
           }
         }
 
