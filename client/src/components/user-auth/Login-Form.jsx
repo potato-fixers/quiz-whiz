@@ -1,8 +1,11 @@
 import useInput from './hooks/useInput.jsx';
+// import React, { useContext } from 'react';
+// import { UserContext } from '../global/UserContext';
 
 export default function LoginForm() {
   const username = useInput('');
   const password = useInput('');
+  // const { user } = useContext(UserContext);
 
   const handleSubmit = (event) => {
     event.preventDefault();
