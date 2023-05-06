@@ -4,6 +4,7 @@ const app = express();
 const axios = require('axios');
 const port = process.env.SERVER_PORT || 8080;
 const dbMethods = require('./database/index.js')
+const { dashboard } = require('./routes');
 
 // =============================================
 //                Middleware
@@ -40,3 +41,8 @@ app.post('/create', (err, res) => {
     }
   })
 })
+
+// =============================================
+//               Dashboard Routes
+// =============================================
+app.use('/dashboard', dashboard);
