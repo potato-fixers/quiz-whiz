@@ -1,13 +1,26 @@
-import '../styles/take-quiz.css';
-import { Typography } from '@mui/material';
+import "../styles/take-quiz.css";
+import { Button } from "@mui/material";
 
-function Answers() {
+function Answers({ answers }) {
+  const ans = [];
+
+  Object.keys(answers).forEach((key) => {
+    if (key !== "question") {
+      console.log("key", key);
+      ans.push(answers[key]);
+    }
+  });
+
   return (
-    <>
-        <Typography variant="h6">Answer 1</Typography>
-        <Typography variant="h6">Answer 2</Typography>
-        <Typography variant="h6">Answer 3</Typography>
-    </>
+    ans && (
+      <>
+        {ans.map((key, index) => (
+          <Button key={index} variant="contained" color="secondary">
+            {key}
+          </Button>
+        ))}
+      </>
+    )
   );
 }
 

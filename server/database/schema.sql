@@ -56,7 +56,7 @@ SAVEPOINT users_table_created;
 -- ----------------------
 -- USER SESSIONS TABLE
 -- ----------------------
-CREATE TABLE users_session(
+CREATE TABLE quizzes(
 	id SERIAL PRIMARY KEY,
   session VARCHAR(64) NOT NULL,
   user_id INTEGER NOT NULL REFERENCES users(id),
@@ -79,7 +79,7 @@ CREATE TABLE favorites (
     quiz_id INTEGER NOT NULL REFERENCES quizzes(id),
     liked_at DATE NOT NULL DEFAULT CURRENT_DATE,
     CONSTRAINT unique_favorite UNIQUE(user_id, quiz_id)
-  )
+);
 
 SAVEPOINT favorites_table_created;
 
