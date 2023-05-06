@@ -1,5 +1,6 @@
-import { Typography, TableBody, TableCell, TableHead, TableRow, Table } from '@mui/material';
+import { Typography, TableBody, TableCell, TableHead, TableRow, Table, Stack } from '@mui/material';
 import FilterBar from './subComponents/FilterBar.jsx';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 
 const Plays = (props) => {
 
@@ -11,12 +12,16 @@ const Plays = (props) => {
     {id: 5, quiz: 'quiz 5', plays: 5, bestScore: '36%', bestTime: '', finished: false,  lastPlayed: 'mm/dd/yyyyThh:mm:ss'}
   ];
 
+  const handleLike = (e) => {
+    console.log('like/unlike')
+  };
+
   return (
     <>
-      <Typography variant='h5'>Plays</Typography>
-
-      <FilterBar />
-
+      <Stack direction='row' >
+        <Typography variant='h4' sx={{ flexGrow: 1}}>History</Typography>
+        <FilterBar />
+      </Stack>
       <Table sx={{ width: '100%' }} aria-label='simple table'>
         <TableHead >
           <TableRow>
@@ -50,6 +55,9 @@ const Plays = (props) => {
               </TableCell>
               <TableCell align='right' sx={{ border: 0 }} >
                 {row.lastPlayed}
+              </TableCell>
+              <TableCell align='center' sx={{ border: 0 }}>
+                <FavoriteIcon onClick={handleLike}></FavoriteIcon>
               </TableCell>
             </TableRow>
           ))}
