@@ -1,4 +1,4 @@
-import { Typography, TableBody, TableCell, TableHead, TableRow, Table } from '@mui/material';
+import { Typography, TableBody, TableCell, TableHead, TableRow, Table, Stack } from '@mui/material';
 import FilterBar from './subComponents/FilterBar.jsx';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 
@@ -19,9 +19,10 @@ const Favorites = (props) => {
 
   return (
     <>
-      <Typography variant='h5'>Favorites</Typography>
-
-      <FilterBar />
+      <Stack direction='row' >
+        <Typography variant='h4' sx={{ flexGrow: 1}}>Favorites</Typography>
+        <FilterBar />
+      </Stack>
 
       <Table sx={{ width: '100%' }} aria-label="simple table">
         <TableHead >

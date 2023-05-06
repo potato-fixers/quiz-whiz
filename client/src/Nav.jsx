@@ -19,8 +19,7 @@ const Nav = () => {
         </Typography>
 
         <Typography variant='h6' sx={{ flexGrow: 1 }} >
-          {/* need to update this when create page is ready  */}
-          <Link to='/' style={styles}>Create</Link>
+          <Link to='/createQuiz' style={styles}>Create</Link>
         </Typography>
 
         <Button color='inherit' >
