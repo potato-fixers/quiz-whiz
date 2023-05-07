@@ -17,10 +17,11 @@ app.use(express.json());
 app.use('/auth', require('./routes/user-auth-route')); // had to use `/api/cart` bc express assumes the first url param is the product id
 
 app.get('/api', (req, res) => {
-  res.json('Hello Quiz Whiz Backend')  
+  res.json('Hello Quiz Whiz Backend')
 });
 
 app.use('/quiz', require('./routes/take-quiz'));
+app.use('/settings', require('.routes/user-profile'));
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
