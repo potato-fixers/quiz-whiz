@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const controllers = require('../controllers');
+const controllers = require('../controllers/index.js');
 
-router.post('/create', controllers.create.post)
+router.post('/createQuiz', controllers.create.submit)
 
 
 module.exports = router;

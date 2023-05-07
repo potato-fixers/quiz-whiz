@@ -2,16 +2,17 @@ require("dotenv").config();
 const express = require('express')
 const app = express();
 const axios = require('axios');
-const port = process.env.SERVER_PORT || 8080;
-const dbMethods = require('./database/index.js')
+const port = process.env.SERVER_PORT
 const { dashboard } = require('./routes');
-const { createQuiz } = require ('./routes')
+const { create } = require('./routes/index.js')
+const bodyParser = require('body-parser')
 
 // =============================================
 //                Middleware
 // =============================================
 app.use(express.json());
-
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: false}))
 // =============================================
 //               Route Imports
 // =============================================
@@ -30,7 +31,7 @@ app.listen(port, () => {
 // =============================================
 //               Create A Quiz Route
 // =============================================
-app.use('/create', createQuiz)
+app.use('/create', create);
 
 // =============================================
 //               Dashboard Routes

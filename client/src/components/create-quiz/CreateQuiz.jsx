@@ -75,7 +75,6 @@ const CreateQuiz = (props) => {
         MCdata[index][e.target.name] = e.target.value
         setMCInputFields(MCdata);
         if (e.target.value === '') {
-          console.log('test1')
           setMCValidation(false);
         } else {
           setMCValidation(true)
@@ -87,7 +86,6 @@ const CreateQuiz = (props) => {
         if (e.target.value === '') {
           setTFValidation(false);
         } else {
-          console.log('test')
           setTFValidation(true)
         }
 
@@ -127,14 +125,12 @@ const CreateQuiz = (props) => {
         var TFdata = [...TFInputFields];
         TFdata.splice(index, 1);
         setTFInputFields(TFdata);
-        console.log(TFInputFields.length)
       } else {
         alert('Minimum Questions Reached!')
       }
     }
 
     const questionValidation = (callback) => {
-      console.log(MCValidation)
       if (TFInputFields.length === 0) {
         for (var i = 0; i < MCInputFields.length; i++) {
           if (MCInputFields[i].question.length < 1) {
@@ -155,7 +151,6 @@ const CreateQuiz = (props) => {
           callback(true, null)
         }
       } else if (MCInputFields.length === 0) {
-        console.log(TFValidation)
         for (var j = 0; j < TFInputFields.length; j++) {
           if (TFInputFields[j].question.length < 1) {
             setTFValidation(false);
@@ -209,7 +204,6 @@ const CreateQuiz = (props) => {
       e.preventDefault();
 
       questionValidation( (MC, TF) => {
-        console.log('should be false, true, true', TF, MCValidation, TFValidation)
         if (!TFValidation && TF === true) {
           alert('Please Fill Out All TF Question Fields!');
         } else if (!MCValidation && MC === true) {
@@ -225,7 +219,6 @@ const CreateQuiz = (props) => {
         } else if (!categoryVal) {
           alert('Please Choose Category!')
         } else {
-          console.log('test')
           if (TF) {
 
             var quizDataTF = {
@@ -242,10 +235,10 @@ const CreateQuiz = (props) => {
               headers: {
                 'Content-Type': 'application/json',
               },
-              body: quizDataTF,
+              body: JSON.stringify(quizDataTF),
             }
 
-            fetch('http://localhost:3000/create', optionsTF)
+            fetch('http://localhost:3000/create/createQuiz', optionsTF)
             .then( (data) => {
               console.log('response', data)
             })
@@ -265,10 +258,10 @@ const CreateQuiz = (props) => {
               headers: {
                 'Content-Type': 'application/json',
               },
-              body: quizDataMC,
+              body: JSON.stringify(quizDataMC),
             }
 
-            fetch('http://localhost:3000/create', optionsMC)
+            fetch('http://localhost:3000/create/createQuiz', optionsMC)
             .then( (data) => {
               console.log('response', data)
             })
@@ -287,10 +280,10 @@ const CreateQuiz = (props) => {
               headers: {
                 'Content-Type': 'application/json',
               },
-              body: quizDataMCTF,
+              body: JSON.stringify(quizDataMCTF)
             }
 
-            fetch('http://localhost:3000/create', optionsMCTF)
+            fetch('http://localhost:3000/create/createQuiz', optionsMCTF)
             .then( (data) => {
               console.log('response', data)
             })
