@@ -148,8 +148,8 @@ const CreateQuiz = (props) => {
           if (MCInputFields[i].incAns3.length < 1) {
             setMCValidation(false);
           }
-          callback(true, null)
         }
+        callback(true, null)
       } else if (MCInputFields.length === 0) {
         for (var j = 0; j < TFInputFields.length; j++) {
           if (TFInputFields[j].question.length < 1) {
@@ -239,8 +239,12 @@ const CreateQuiz = (props) => {
             }
 
             fetch('http://localhost:3000/create/createQuiz', optionsTF)
-            .then( (data) => {
-              console.log('response', data)
+            .then( (response) => {
+              if (response.status === 200) {
+                console.log('working')
+                alert('Quiz Succesfully Created!');
+                // window.location.href = 'http:localhost:3000/';
+              }
             })
 
           } else if (MC) {
@@ -262,8 +266,12 @@ const CreateQuiz = (props) => {
             }
 
             fetch('http://localhost:3000/create/createQuiz', optionsMC)
-            .then( (data) => {
-              console.log('response', data)
+            .then( (response) => {
+              if (response.status === 200) {
+                console.log('working')
+                alert('Quiz Succesfully Created!');
+                // window.location.href = 'http:localhost:3000/';
+              }
             })
           } else {
             var quizDataMCTF = {
@@ -284,8 +292,12 @@ const CreateQuiz = (props) => {
             }
 
             fetch('http://localhost:3000/create/createQuiz', optionsMCTF)
-            .then( (data) => {
-              console.log('response', data)
+            .then( (response) => {
+              if (response.status === 200) {
+                console.log('working');
+                alert('Quiz Succesfully Created!');
+                // window.location.href = 'http:localhost:3000/';
+              }
             })
           }
         }

@@ -6,11 +6,12 @@ module.exports = {
     // connect to db methods here
    // database method/interaction
 
-    dbMethods.createQuiz(req.body, (err, res) => {
+    dbMethods.createQuiz(req.body, (err, result) => {
       if (err) {
-        res.sendStatus(400)
+        console.log('failing at res.sendStatus(400)')
+        res.sendStatus(400);
       } else {
-        res.sendStatus(200)
+        res.sendStatus(200);
       }
     })
   }
