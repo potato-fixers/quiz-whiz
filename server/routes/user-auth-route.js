@@ -8,4 +8,9 @@ router.post('/login', (req, res) => {
   res.status(201).end();
 })
 
+router.post('/register', (req, res) => {
+  console.log(req.session)
+  res.status(201).json('yay');
+})
+
 module.exports = router
