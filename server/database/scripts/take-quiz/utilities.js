@@ -2,11 +2,18 @@
 const axios = require('axios');
 const pool = require('../../config/index');
 
-fetch = async (cb) => {
+fetch = async (quizId, cb) => {
+  console.log('Quiz ID is', quizId);
+
+  const query = !quizId ? `
+  SELECT * FROM quizzes LIMIT 5` 
+  : `SELECT * FROM quizzes WHERE id=${quizId}
+  `; 
+
   try {
-    //Test out an endpoint
-    const { rows } = await pool.query('SELECT * FROM quizzes');
-    console.log('FETCH RESULT: ', rows);
+    console.log('Query String Was:', query);
+    const { rows } = await pool.query(query);
+    console.log('Take Quiz Fetch Result: ', rows);
     cb(null,  rows);
   } catch (err) {
     cb(err);
