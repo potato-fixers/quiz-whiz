@@ -1,5 +1,7 @@
 import useInput from './hooks/useInput.jsx';
-// import { useState } from 'react';
+// import axios from 'axios';
+import { useState } from 'react';
+import { useNavigate } from "react-router-dom"
 
 
 export default function RegisterForm() {
@@ -10,15 +12,37 @@ export default function RegisterForm() {
   const confirmPassword = useInput('');
   const username = useInput('');
   const bio = useInput('');
-  // const [profileImage, setProfileImage] = useState(null);
+  const [profileImage, setProfileImage] = useState(null);
+  const navigate = useNavigate();
 
-
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
+    console.log(profileImage);
+
+    try {
+      // await axios.post(`${process.env.REACT_APP_API_URL}/auth/register`,
+      //   { firstName, lastName, email, password, username, bio }
+      // );
+      await Promise.resolve();
+      navigate('/signin');
+    } catch (error) {
+      alert('Uh oh, we have trouble processing your request, please try again later');
+      //to remove at produciton
+      console.log(error);
+    }
   };
 
-  const handleFileChange = (event) => {
+  const handleFileChange = async (event) => {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+
+    reader.onload = (e) => {
+      setProfileImage(e.target.result);
+    }
+
+    reader.readAsDataURL(file);
   };
+
   return (
     <>
       <form onSubmit={handleSubmit}>
@@ -53,7 +77,11 @@ export default function RegisterForm() {
           <label htmlFor="password">Password:</label>
           <input
             type="password"
+            minilength={6}
+            maxLength={20}
+            pattern="(?=.*\d).{8,}"
             id="password"
+            title="Must contain at least one number and be between 8-20 characters long."
             {...password}
             required={true}
           />
@@ -62,7 +90,9 @@ export default function RegisterForm() {
           <label htmlFor="confirmPassword">Confirm Password:</label>
           <input
             type="password"
+            pattern={`^${password.value}$`}
             id="confirmPassword"
+            title="Error: Passwords do not match."
             {...confirmPassword}
             required={true}
           />
@@ -90,6 +120,7 @@ export default function RegisterForm() {
             accept="image/*"
             onChange={handleFileChange}
           />
+          {profileImage && <img src={profileImage} style={{width: '100px', height: '100px'}} alt="upload profile"/>}
         </div>
         <button type="submit">Register</button>
       </form>
