@@ -1,8 +1,10 @@
-import React from "react";
-import { Button } from "@mui/material";
+import React, { useState } from "react";
+import { Button, Dialog } from "@mui/material";
 import { usePagination } from "./hooks/usePagination";
-
+import BasicModal from "./Modal";
 const Pagination = (props) => {
+  const [clicked, setClicked] = useState(false);
+
   const {
     onPageChange,
     totalQuestions,
@@ -42,13 +44,8 @@ const Pagination = (props) => {
         <Button>&lt;</Button>
       </li>
 
-      {paginationRange.map((pageNumber) => {
-        return (
-          <li key={pageNumber} onClick={() => onPageChange(pageNumber)}>
-            <Button>{pageNumber}</Button>
-          </li>
-        );
-      })}
+      <BasicModal message="Home" />
+      <BasicModal message="My Dashboard" />
 
       <li className="arrow right" onClick={onNext}>
         <Button>&gt;</Button>

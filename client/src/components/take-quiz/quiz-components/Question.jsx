@@ -7,7 +7,6 @@ function Question({ question }) {
     question && (
       <>
         <Typography variant="h4">{question}</Typography>
-        {/* <div className="test">Try sticking db data in here</div> */}
       </>
     )
   );
