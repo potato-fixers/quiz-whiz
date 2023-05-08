@@ -1,17 +1,18 @@
 import './styles/dashboard.css';
-import ProfileTop from './components/ProfileTop.jsx';
+import { Container } from '@mui/material';
+import DashTop from './components/DashTop.jsx';
 import TabsBar from './components/TabsBar.jsx';
 import QuizCounts from './components/QuizCounts.jsx';
 import Overview from './components/Overview.jsx';
 import MyQuizzes from './components/MyQuizzes.jsx';
-import Plays from './components/Plays.jsx';
+import History from './components/History.jsx';
 import Favorites from './components/Favorites.jsx';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const Dashboard = (props) => {
 
-  const tabs = ['', 'my-quizzes', 'plays', 'favorites']; // Overview is default dashboard
+  const tabs = ['', 'my-quizzes', 'history', 'favorites']; // Overview is default dashboard
 
   const [activeTab, setActiveTab] = useState(0);
   const navigate = useNavigate();
@@ -23,7 +24,7 @@ const Dashboard = (props) => {
       case 1:
         return <MyQuizzes />;
       case 2:
-        return <Plays />;
+        return <History />;
       case 3:
         return <Favorites />;
       default:
@@ -37,12 +38,12 @@ const Dashboard = (props) => {
   }, [activeTab]);
 
   return (
-    <div className='dashboard'>
-      <ProfileTop />
+    <Container maxWidth='lg'>
+      <DashTop />
       <TabsBar activeTab={activeTab} setActiveTab={setActiveTab} />
       <QuizCounts activeTab={activeTab} />
       <TabPanel />
-    </div>
+    </Container>
   );
 };
 

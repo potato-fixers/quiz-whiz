@@ -1,12 +1,32 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
+import { ThemeProvider, createTheme } from '@mui/material';
+import { UserProvider } from './components/global/UserContext.jsx';
 // import reportWebVitals from './reportWebVitals';
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#8471FF", // purple
+      warning: "#F2C547", // yellow
+      info: "#3FDBFF", // blue
+      success: "#7BB972" // green
+    },
+    secondary: {
+      main: "#FF7778", // pink
+    }
+  }
+});
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <ThemeProvider theme={theme}>
+      <UserProvider>
+        <App />
+      </UserProvider>
+    </ThemeProvider>
   </React.StrictMode>
 );
 

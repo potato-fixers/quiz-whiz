@@ -9,11 +9,11 @@ const TabsBar = (props) => {
   };
 
   return (
-    <Box sx={{ width: '100%', bgcolor: 'background.paper' }}>
+    <Box sx={{ width: 'auto', bgcolor: 'background.paper' }}>
       <Tabs value={props.activeTab} onChange={handleChange} >
         <Tab label="Overview" />
         <Tab label="My Quizzes" />
-        <Tab label="Plays" />
+        <Tab label="History" />
         <Tab label="Favorites" />
       </Tabs>
     </Box>
