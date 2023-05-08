@@ -41,14 +41,18 @@ const Pagination = (props) => {
   return (
     <ul id="pagination">
       <li className="arrow left" onClick={onPrevious}>
-        <Button>&lt;</Button>
+        <Button variant="contained">&lt;</Button>
       </li>
 
       <BasicModal message="Home" />
       <BasicModal message="My Dashboard" />
 
       <li className="arrow right" onClick={onNext}>
-        <Button>&gt;</Button>
+        {currentPage === lastPage ? (
+          <Button variant="contained">Submit</Button>
+        ) : (
+          <Button variant="contained">&gt;</Button>
+        )}
       </li>
     </ul>
   );
