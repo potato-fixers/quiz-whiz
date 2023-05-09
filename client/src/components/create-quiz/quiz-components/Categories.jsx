@@ -1,5 +1,6 @@
 import "../styles/create-quiz.css";
 
+
 const Categories = (props) => {
   return (
     <div className="Categories">
