@@ -43,10 +43,10 @@ jobs:
           key: ${{ secrets.PASSWORD  }}
           script: |
             docker login
+            docker stop quizwhiz
+            docker rm quizwhiz
             docker image rm gbmytabc/quiz-whiz
             docker builder prune -a -f
             docker pull gbmytabc/quiz-whiz:latest
-            docker stop quizwhiz
-            docker rm quizwhiz
             docker run -d --name quizwhiz -p 3000:3000 gbmytabc/quiz-whiz:latest
   
