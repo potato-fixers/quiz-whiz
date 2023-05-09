@@ -6,6 +6,7 @@ const port = process.env.SERVER_PORT
 const { dashboard } = require('./routes');
 const { create } = require('./routes/index.js')
 const bodyParser = require('body-parser')
+const cors = require('cors');
 
 // =============================================
 //                Middleware
@@ -13,6 +14,10 @@ const bodyParser = require('body-parser')
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}))
+app.use(cors(
+  origin: 'http://localhost:3000'
+))
+
 // =============================================
 //               Route Imports
 // =============================================
