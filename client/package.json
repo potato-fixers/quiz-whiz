@@ -16,7 +16,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "start:env": "env-cmd -f ./.env react-scripts start",
+    "start:env": "env-cmd -f ./.env.client react-scripts start",
     "build": "react-scripts build",
     "build:env": "env-cmd -f ./.env react-scripts build",
     "test": "react-scripts test --coverage",
