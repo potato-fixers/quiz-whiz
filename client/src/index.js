@@ -1,8 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './App';
+import { BrowserRouter } from "react-router-dom";
 import { ThemeProvider, createTheme } from '@mui/material';
+
 import { UserProvider } from './components/global/UserContext.jsx';
+
+import App from './App';
 // import reportWebVitals from './reportWebVitals';
 
 const theme = createTheme({
@@ -22,11 +25,13 @@ const theme = createTheme({
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <ThemeProvider theme={theme}>
-      <UserProvider>
-        <App />
-      </UserProvider>
-    </ThemeProvider>
+    <BrowserRouter>
+      <ThemeProvider theme={theme}>
+        <UserProvider>
+          <App />
+        </UserProvider>
+      </ThemeProvider>
+    </BrowserRouter>
   </React.StrictMode>
 );
 

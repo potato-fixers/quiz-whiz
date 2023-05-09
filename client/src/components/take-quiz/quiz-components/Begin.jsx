@@ -1,8 +1,12 @@
 import { Link } from "react-router-dom";
 import "../styles/take-quiz.css";
 import { Grid, Typography, Button } from "@mui/material";
+import useFetch from "../hooks/useFetch";
 
-function Begin() {
+function Begin({ quizId }) {
+  let quizPath = `/quiz/${quizId}/question`;
+  let { quizDetails } = useFetch(quizId);
+
   return (
     <Grid
       alignItems="center"
@@ -17,15 +21,23 @@ function Begin() {
       </Grid>
 
       <Grid item xs={6}>
-        <Typography>Quiz Category</Typography>
+        <Typography>
+          Category:{" "}
+          {typeof quizDetails.category === "string" &&
+            `${quizDetails.category}`.toUpperCase()}
+        </Typography>
       </Grid>
 
       <Grid item xs={6}>
-        <Typography>Quiz Difficulty</Typography>
+        <Typography>
+          Difficulty:{" "}
+          {typeof quizDetails.difficulty === "string" &&
+            `${quizDetails.difficulty}`.toUpperCase()}
+        </Typography>
       </Grid>
 
       <Grid item xs={6}>
-        <Link to="/quiz/:id/question">
+        <Link to={quizPath}>
           <Button variant="contained" color="primary">
             Begin Quiz
           </Button>

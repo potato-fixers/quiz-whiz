@@ -1,10 +1,8 @@
-import React, { useState } from "react";
-import { Button, Dialog } from "@mui/material";
+import React from "react";
+import { Button } from "@mui/material";
 import { usePagination } from "./hooks/usePagination";
 import BasicModal from "./Modal";
 const Pagination = (props) => {
-  const [clicked, setClicked] = useState(false);
-
   const {
     onPageChange,
     totalQuestions,

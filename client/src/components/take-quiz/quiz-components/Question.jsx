@@ -2,7 +2,7 @@
 import "../styles/take-quiz.css";
 import { Typography } from "@mui/material";
 
-function Question({ question }) {
+function Question({ quizId, question }) {
   return (
     question && (
       <>

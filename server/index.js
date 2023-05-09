@@ -16,7 +16,7 @@ app.use(express.json());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(expressSession);
-app.use(cors({origin: 'http://localhost:3000'}))
+app.use(cors({origin: ['http://localhost:3000', "http://ec2-3-83-24-209.compute-1.amazonaws.com:8080"]}))
 
 // =============================================
 //               Route Imports

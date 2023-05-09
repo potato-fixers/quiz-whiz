@@ -2,12 +2,12 @@
 const axios = require('axios');
 const pool = require('../../config/index');
 
-fetch = async (quizId, cb) => {
+fetch = async (quizId, table, cb) => {
   console.log('Quiz ID is', quizId);
 
   const query = !quizId ? `
   SELECT * FROM quizzes LIMIT 5` 
-  : `SELECT * FROM quizzes WHERE id=${quizId}
+  : `SELECT * FROM ${table} WHERE ${table === 'quizzes' ? "id" : "quiz_id"}=${quizId}
   `; 
 
   try {
