@@ -11,6 +11,8 @@ EXPOSE 8080
 # install deps
 RUN npm run install
 
+RUN pm2 start ./server/index.js
+
 # Run build
 WORKDIR /client/
 
