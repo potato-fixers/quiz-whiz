@@ -4,6 +4,7 @@ on:
   pull_request:
     branches:
       - main
+      - cd-test
     types: [closed]
 
 jobs:
@@ -42,6 +43,8 @@ jobs:
           key: ${{ secrets.PASSWORD }}
           script: |
             docker login
+            docker image rm gbmytabc/quiz-whiz
+            docker builder prune -a -f
             docker pull gbmytabc/quiz-whiz:latest
             docker stop quizwhiz
             docker rm quizwhiz
