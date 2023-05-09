@@ -45,7 +45,7 @@ jobs:
             docker login
             docker stop quizwhiz
             docker rm quizwhiz
-            docker image rm gbmytabc/quiz-whiz -f
+            docker rmi -f $(docker images -aq)
             docker builder prune -a -f
             docker pull gbmytabc/quiz-whiz:latest
             docker run -d --name quizwhiz -p 3000:3000 gbmytabc/quiz-whiz:latest
