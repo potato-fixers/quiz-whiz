@@ -1,21 +1,28 @@
 import { Typography, TableBody, TableCell, TableHead, TableRow, Table, Stack } from '@mui/material';
 import FilterBar from './subComponents/FilterBar.jsx';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import { useState, useEffect } from 'react';
 
 const Favorites = (props) => {
 
-  const dummyData = [
-    {id: 1, quiz: 'quiz 1', totalPlays: 1, totalLikes: 23, dateLiked: 'mm/dd/yyyyThh:mm:ss'},
-    {id: 2, quiz: 'quiz 2', totalPlays: 2, totalLikes: 80, dateLiked: 'mm/dd/yyyyThh:mm:ss'},
-    {id: 3, quiz: 'quiz 3', totalPlays: 3, totalLikes: 10, dateLiked: 'mm/dd/yyyyThh:mm:ss'},
-    {id: 4, quiz: 'quiz 4', totalPlays: 4, totalLikes: 75, dateLiked: 'mm/dd/yyyyThh:mm:ss'},
-    {id: 5, quiz: 'quiz 5', totalPlays: 5, totalLikes: 36, dateLiked: 'mm/dd/yyyyThh:mm:ss'}
-  ];
+  const [quizzes, setQuizzes] = useState([]);
+
+  const getQuizzes = async (userId) => {
+    const url = process.env.REACT_APP_API_URI;
+    const response = await fetch(`${url}/dashboard/favorites`);
+    if (response.ok) {
+      setQuizzes(await response.json());
+    }
+  };
 
   const handleUnlike = (e) => {
     // handle unliking quiz
     console.log('unlike')
   };
+
+  useEffect(() => {
+    getQuizzes();
+  }, []);
 
   return (
     <>
@@ -34,12 +41,12 @@ const Favorites = (props) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {dummyData.map((row) => (
+          {quizzes.map((row) => (
             <TableRow
               key={row.id}
             >
               <TableCell align='left' sx={{ border: 0 }}>
-                {row.quiz}
+                {row.quiz_name}
               </TableCell>
               <TableCell align='center' sx={{ border: 0 }}>
                 {row.totalPlays}
@@ -48,7 +55,7 @@ const Favorites = (props) => {
                 {row.totalLikes}
               </TableCell>
               <TableCell align='right' sx={{ border: 0 }}>
-                {row.dateLiked}
+                {row.date}
               </TableCell>
               <TableCell align='center' sx={{ border: 0 }}>
                 <FavoriteIcon onClick={handleUnlike}></FavoriteIcon>
