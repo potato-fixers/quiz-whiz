@@ -5,11 +5,15 @@ import Difficulty from "./quiz-components/Difficulty.jsx"
 import MCQuestions from "./quiz-components/MC-Questions.jsx";
 import TFQuestions from "./quiz-components/TF-Questions.jsx";
 import APIQuestions from "./quiz-components/API-Questions.jsx";
+import { useContext } from 'react'
+import { UserContext } from '../global/UserContext.jsx'
 
 // need useState here for both MC Questions and TF Questions
 // state will be passed down to both components along with update functions.
 
 const CreateQuiz = (props) => {
+
+  const { user } = useContext(UserContext);
 
    // useStates here
    const [quizName, setQuizName] = useState("");
@@ -48,6 +52,7 @@ const CreateQuiz = (props) => {
        setState4(false);
        setState5(false);
        setCategoryVal(e.target.name);
+       console.log(user);
      } else if (e.target.name === "category2") {
        setState1(false);
        setState2(true);
@@ -260,7 +265,7 @@ const CreateQuiz = (props) => {
           if (TF) {
             var quizDataTF = {
               quizzes: {
-              user_id: "admin",
+              user_id: user,
               name: quizName,
               difficulty: difficulty,
               category: categoryVal
@@ -286,7 +291,7 @@ const CreateQuiz = (props) => {
           } else if (MC) {
             var quizDataMC = {
               quizzes: {
-              user_id: "admin",
+              user_id: user,
               name: quizName,
               difficulty: difficulty,
               category: categoryVal
@@ -312,7 +317,7 @@ const CreateQuiz = (props) => {
           } else {
             var quizDataMCTF = {
               quizzes: {
-              user_id: "admin",
+              user_id: user,
               name: quizName,
               difficulty: difficulty,
               category: categoryVal
