@@ -33,7 +33,7 @@ jobs:
           context: .
           file: ./server/Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/quiz-whiz:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/quiz-whiz-server:latest
 
       - name: Deploy to EC2
         uses: appleboy/ssh-action@v0.1.10
