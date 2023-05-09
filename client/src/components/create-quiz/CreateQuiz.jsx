@@ -5,11 +5,6 @@ import MCQuestions from "./quiz-components/MC-Questions.jsx";
 import TFQuestions from "./quiz-components/TF-Questions.jsx";
 import APIQuestions from "./quiz-components/API-Questions.jsx";
 
-const path = require("path");
-require("dotenv").config({
-  path: path.join(__dirname, `../../../.env.client`),
-});
-
 // need useState here for both MC Questions and TF Questions
 // state will be passed down to both components along with update functions.
 
@@ -260,15 +255,14 @@ const CreateQuiz = (props) => {
             body: JSON.stringify(quizDataTF),
           };
 
-          fetch(
-            `${process.env.REACT_APP_API_URI_PROD}/create/createQuiz`,
-            optionsTF
-          ).then((response) => {
-            if (response.status === 200) {
-              alert("Quiz Succesfully Created!");
-              window.location.href = "/";
+          fetch("http://localhost:3000/create/createQuiz", optionsTF).then(
+            (response) => {
+              if (response.status === 200) {
+                alert("Quiz Succesfully Created!");
+                window.location.href = "http:localhost:3000/";
+              }
             }
-          });
+          );
         } else if (MC) {
           var quizDataMC = {
             quizzes: {
@@ -287,15 +281,14 @@ const CreateQuiz = (props) => {
             body: JSON.stringify(quizDataMC),
           };
 
-          fetch(
-            `${process.env.REACT_APP_API_URI_PROD}/create/createQuiz`,
-            optionsMC
-          ).then((response) => {
-            if (response.status === 200) {
-              alert("Quiz Succesfully Created!");
-              window.location.href = "/";
+          fetch("http://localhost:3000/create/createQuiz", optionsMC).then(
+            (response) => {
+              if (response.status === 200) {
+                alert("Quiz Succesfully Created!");
+                window.location.href = "http:localhost:3000/";
+              }
             }
-          });
+          );
         } else {
           var quizDataMCTF = {
             quizzes: {
@@ -314,15 +307,14 @@ const CreateQuiz = (props) => {
             body: JSON.stringify(quizDataMCTF),
           };
 
-          fetch(
-            `${process.env.REACT_APP_API_URI_PROD}/create/createQuiz`,
-            optionsMCTF
-          ).then((response) => {
-            if (response.status === 200) {
-              alert("Quiz Succesfully Created!");
-              window.location.href = "/";
+          fetch("http://localhost:3000/create/createQuiz", optionsMCTF).then(
+            (response) => {
+              if (response.status === 200) {
+                alert("Quiz Succesfully Created!");
+                window.location.href = "http:localhost:3000/";
+              }
             }
-          });
+          );
         }
       }
     });
