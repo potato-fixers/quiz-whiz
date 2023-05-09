@@ -19,26 +19,13 @@ app.use(expressSession);
 app.use(cors({origin: 'http://localhost:3000'}))
 
 // =============================================
-//               Route Imports
+//               Routes
 // =============================================
 app.use('/auth', require('./routes/user-auth-route'));
-
-app.get('/api', (req, res) => {
-  res.json('Hello Quiz Whiz Backend')
-});
-
 app.use('/quiz', require('./routes/take-quiz'));
+app.use('/dashboard', dashboard);
+app.use('/create', create);
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
-
-// =============================================
-//               Create A Quiz Route
-// =============================================
-app.use('/create', create);
-
-// =============================================
-//               Dashboard Routes
-// =============================================
-app.use('/dashboard', dashboard);
