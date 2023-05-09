@@ -52,7 +52,6 @@ const CreateQuiz = (props) => {
        setState4(false);
        setState5(false);
        setCategoryVal(e.target.name);
-       console.log(user);
      } else if (e.target.name === "category2") {
        setState1(false);
        setState2(true);
@@ -281,11 +280,11 @@ const CreateQuiz = (props) => {
               body: JSON.stringify(quizDataTF),
             }
 
-            fetch("http://localhost:8080/create/createQuiz", optionsTF)
+            fetch(`${process.env.REACT_APP_API_URI}/create/createQuiz`, optionsTF)
             .then( (response) => {
               if (response.status === 200) {
                 alert("Quiz Succesfully Created!");
-                window.location.href = process.env.REACT_APP_API_URI;
+                window.location.href = '/';
               }
             })
           } else if (MC) {
@@ -307,11 +306,11 @@ const CreateQuiz = (props) => {
               body: JSON.stringify(quizDataMC),
             }
 
-            fetch("http://localhost:8080/create/createQuiz", optionsMC)
+            fetch(`${process.env.REACT_APP_API_URI}/create/createQuiz`, optionsMC)
             .then( (response) => {
               if (response.status === 200) {
                 alert("Quiz Succesfully Created!");
-                window.location.href = process.env.REACT_APP_API_URI;
+                window.location.href = '/';
               }
             })
           } else {
@@ -333,11 +332,11 @@ const CreateQuiz = (props) => {
               body: JSON.stringify(quizDataMCTF)
             }
 
-            fetch("http://localhost:8080/create/createQuiz", optionsMCTF)
+            fetch(`${process.env.REACT_APP_API_URI}/create/createQuiz`, optionsMCTF)
             .then( (response) => {
               if (response.status === 200) {
                 alert("Quiz Succesfully Created!");
-                window.location.href = process.env.REACT_APP_API_URI;
+                window.location.href = '/';
               }
             })
           }
