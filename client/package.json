@@ -46,5 +46,10 @@
     "@mui/joy": "^5.0.0-alpha.78",
     "@mui/material": "^5.12.2",
     "react-router-dom": "^6.11.0"
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "axios": "axios/dist/node/axios.cjs"
+    }
   }
 }
