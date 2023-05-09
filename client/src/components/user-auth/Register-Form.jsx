@@ -10,14 +10,13 @@ export default function RegisterForm() {
   const email = useInput('');
   const password = useInput('');
   const confirmPassword = useInput('');
-  const username = useInput(null);
+  const username = useInput('');
   const bio = useInput('');
   const [profileImage, setProfileImage] = useState(null);
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(profileImage);
 
     try {
       await axios.post(`${process.env.REACT_APP_API_URL}/auth/register`,

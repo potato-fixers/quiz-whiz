@@ -8,6 +8,7 @@ module.exports = {
       VALUES ('${user.first_name}', '${user.last_name}', '${user.email}', '${user.password}', '${user.username}', '${user.bio}', '${user.profile_img}', '${user.salt}');
     `;
     try {
+      await db.query(`CREATE UNIQUE INDEX ON users (username) WHERE username <> '';`)
       await db.query(query);
       return Promise.resolve('success at creating user')
     } catch (error) {
