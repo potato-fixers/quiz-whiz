@@ -1,9 +1,9 @@
-
+const models = require('../../database/models/index');
 
 module.exports = {
 
   get: (req, res) => {
-    res.send('some created quizzes and total count');
+    res.send(models.myQuizzes.get());
   },
 
   delete: (req, res) => {

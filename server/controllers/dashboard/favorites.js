@@ -1,9 +1,9 @@
-
+const models = require('../../database/models')
 
 module.exports = {
 
   get: (req, res) => {
-    res.send('some faved quizzes and total count')
+    res.send(models.favorites.get())
   },
 
   like: (req, res) => {
