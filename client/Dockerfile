@@ -11,4 +11,4 @@ EXPOSE 3000
 RUN npm install
 
 # Start Server
-CMD ["npm", "run", "start:env"]
+CMD ["npm", "start"]
