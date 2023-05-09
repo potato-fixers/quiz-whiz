@@ -1,21 +1,28 @@
 import { Typography, TableBody, TableCell, TableHead, TableRow, Table, Stack } from '@mui/material';
 import FilterBar from './subComponents/FilterBar.jsx';
 import ClearIcon from '@mui/icons-material/Clear';
+import { useState, useEffect } from 'react';
 
 const MyQuizzes = (props) => {
 
-  const dummyData = [
-    {id: 1, quiz: 'quiz 1', category: 'Edu', type: 'Multiple choices', plays: 3, likes: 3, createdAt: 'mm/dd/yyyyThh:mm:ss'},
-    {id: 2, quiz: 'quiz 2', category: 'Music', type: 'Multiple choices', plays: 1, likes: 3,  createdAt: 'mm/dd/yyyyThh:mm:ss'},
-    {id: 3, quiz: 'quiz 3', category: 'Sport', type: 'Multiple choices', plays: 2, likes: 3,  createdAt: 'mm/dd/yyyyThh:mm:ss'},
-    {id: 4, quiz: 'quiz 4', category: 'Movie', type: 'Multiple choices', plays: 4, likes: 3,  createdAt: 'mm/dd/yyyyThh:mm:ss'},
-    {id: 5, quiz: 'quiz 5', category: 'Sport', type: 'True False', plays: 1, likes: 3,  createdAt: 'mm/dd/yyyyThh:mm:ss'}
-  ];
+  const [quizzes, setQuizzes] = useState([]);
+
+  const getQuizzes = async (userId) => {
+    const url = process.env.REACT_APP_API_URI;
+    const response = await fetch(`${url}/dashboard/quizzes`);
+    if (response.ok) {
+      setQuizzes(await response.json());
+    }
+  };
 
   const handleDelete = (e) => {
     // handle deleting quiz
     console.log('delete');
   };
+
+  useEffect(() => {
+    getQuizzes();
+  }, []);
 
   return (
     <>
@@ -36,12 +43,12 @@ const MyQuizzes = (props) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {dummyData.map((row) => (
+          {quizzes.map((row) => (
             <TableRow
               key={row.id}
             >
               <TableCell align='left' sx={{ border: 0 }}>
-                {row.quiz}
+                {row.quiz_name}
               </TableCell>
               <TableCell align='center' sx={{ border: 0 }}>
                 {row.category}
@@ -56,7 +63,7 @@ const MyQuizzes = (props) => {
                 {row.likes}
               </TableCell>
               <TableCell align='right' sx={{ border: 0 }} >
-                {row.createdAt}
+                {row.created_at}
               </TableCell>
               <TableCell align='center' sx={{ border: 0 }}>
                 <ClearIcon onClick={handleDelete}></ClearIcon>

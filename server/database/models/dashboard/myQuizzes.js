@@ -8,6 +8,7 @@ const data = [
     category: 'Education',
     type: 'Multiple choices',
     plays: 3,
+    likes: 1,
     created_at: 'May 5th, 2023'
   },
   {
@@ -16,6 +17,7 @@ const data = [
     category: 'Music',
     type: 'Multiple choices',
     plays: 23,
+    likes: 12,
     created_at: 'May 23th, 2022'
   },
   {
@@ -24,6 +26,7 @@ const data = [
     category: 'Movie',
     type: 'True/Fasle',
     plays: 34,
+    likes: 15,
     created_at: 'Jan 6th, 2023'
   },
   {
@@ -32,6 +35,7 @@ const data = [
     category: 'Sport',
     type: 'Multiple choices',
     plays: 45,
+    likes: 21,
     created_at: 'May 5th, 2020'
   },
   {
@@ -40,6 +44,7 @@ const data = [
     category: 'Education',
     type: 'Multiple choices',
     plays: 1,
+    likes: 0,
     created_at: 'May 5th, 1999'
   },
 ];
