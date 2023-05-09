@@ -1,21 +1,9 @@
 import { Typography, TableBody, TableCell, TableHead, TableRow, Table } from '@mui/material';
-import { useState, useEffect } from 'react';
+import useQuizzes from '../hooks/useQuizzes';
 
 const Overview = (props) => {
 
-  const [quizzes, setQuizzes] = useState([]);
-
-  const getQuizzes = async (userId) => {
-    const url = process.env.REACT_APP_API_URI;
-    const response = await fetch(`${url}/dashboard/`);
-    if (response.ok) {
-      setQuizzes(await response.json());
-    }
-  };
-
-  useEffect(() => {
-    getQuizzes();
-  }, []);
+  const quizzes = useQuizzes('');
 
   return (
     <>

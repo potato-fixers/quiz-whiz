@@ -1,28 +1,16 @@
 import { Typography, TableBody, TableCell, TableHead, TableRow, Table, Stack } from '@mui/material';
 import FilterBar from './subComponents/FilterBar.jsx';
 import ClearIcon from '@mui/icons-material/Clear';
-import { useState, useEffect } from 'react';
+import useQuizzes from '../hooks/useQuizzes';
 
 const MyQuizzes = (props) => {
 
-  const [quizzes, setQuizzes] = useState([]);
-
-  const getQuizzes = async (userId) => {
-    const url = process.env.REACT_APP_API_URI;
-    const response = await fetch(`${url}/dashboard/quizzes`);
-    if (response.ok) {
-      setQuizzes(await response.json());
-    }
-  };
+  const quizzes = useQuizzes('quizzes');
 
   const handleDelete = (e) => {
     // handle deleting quiz
     console.log('delete');
   };
-
-  useEffect(() => {
-    getQuizzes();
-  }, []);
 
   return (
     <>

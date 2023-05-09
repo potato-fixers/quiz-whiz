@@ -1,27 +1,15 @@
 import { Typography, TableBody, TableCell, TableHead, TableRow, Table, Stack } from '@mui/material';
 import FilterBar from './subComponents/FilterBar.jsx';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import { useState, useEffect } from 'react';
+import useQuizzes from '../hooks/useQuizzes';
 
 const Plays = (props) => {
 
-  const [quizzes, setQuizzes] = useState([]);
-
-  const getQuizzes = async (userId) => {
-    const url = process.env.REACT_APP_API_URI;
-    const response = await fetch(`${url}/dashboard/history`);
-    if (response.ok) {
-      setQuizzes(await response.json());
-    }
-  };
+  const quizzes = useQuizzes('history');
 
   const handleLike = (e) => {
     console.log('like/unlike');
   };
-
-  useEffect(() => {
-    getQuizzes();
-  }, []);
 
   return (
     <>
