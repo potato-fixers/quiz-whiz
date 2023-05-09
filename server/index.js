@@ -5,11 +5,15 @@ const axios = require('axios');
 const port = process.env.SERVER_PORT || 8080;
 const dbMethods = require('./database/index.js')
 const { dashboard } = require('./routes');
+const cors = require('cors');
 
 // =============================================
 //                Middleware
 // =============================================
 app.use(express.json());
+app.use(cors(
+  origin: 'http://localhost:3000'
+))
 
 // =============================================
 //               Route Imports

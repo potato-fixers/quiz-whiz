@@ -54,21 +54,25 @@ CREATE TABLE users(
 SAVEPOINT users_table_created;
 
 -- ----------------------
--- USER SESSIONS TABLE
+-- HISTORY TABLE
 -- ----------------------
-CREATE TABLE quizzes(
-	id SERIAL PRIMARY KEY,
-  session VARCHAR(64) NOT NULL,
-  user_id INTEGER NOT NULL REFERENCES users(id),
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
-  expires_at TIMESTAMP WITH TIME ZONE DEFAULT (CURRENT_TIMESTAMP + INTERVAL '24 hours'),
-  CONSTRAINT session_expiration CHECK (expires_at > created_at)
+CREATE TABLE history (
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER REFERENCES users (id),
+    quiz_id INTEGER REFERENCES quizzes (id),
+    score INTEGER,
+    duration INTERVAL,
+    finished BOOLEAN,
+    date DATE
 );
 
-SAVEPOINT users_session_table_created;
+SAVEPOINT history_table_created;
 
-CREATE INDEX users_session_index ON users_session(user_id);
-SAVEPOINT users_session_index_created;
+CREATE INDEX history_user_id_index ON history(user_id);
+SAVEPOINT history_user_id_indexcreated;
+
+CREATE INDEX history_quiz_id_index ON history(quiz_id);
+SAVEPOINT history_quiz_id_index_created;
 
 -- ----------------------
 -- FAVORITES TABLE
