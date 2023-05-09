@@ -5,7 +5,8 @@ import axios from 'axios';
 
 const UserProfileFieldBox = (props) => {
   const [editing, setEditing] = useState(false);
-  const [field, setField] = useState(props.pic);
+  const [field, setField] = useState(props.initial_value);
+  const [oldPassword, setOldPassword] = useState('Enter current password');
 
   const handleEditClick = () => {
     setEditing(true);
@@ -16,7 +17,7 @@ const UserProfileFieldBox = (props) => {
   };
 
   const handleSaveClick = () => {
-    axios.put(`http://localhost:8080${props.saveRoute}`, {
+    axios.put(`${process.env.REACT_APP_API_URI}${props.saveRoute}`, {
     newUsername: 'new_username'
   }, {
     headers: {
@@ -37,6 +38,10 @@ const UserProfileFieldBox = (props) => {
 };
 
   const handleFieldChange = (event) => {
+    setOldPassword(event.target.value);
+  };
+
+  const handleCurrentPasswordChange = (event) => {
     setField(event.target.value);
   };
 
@@ -45,6 +50,15 @@ const UserProfileFieldBox = (props) => {
       <h3>{props.field_title}</h3>
       {editing ? (
         <>
+          {props.field_title === "Password" ? (
+            <TextField
+              className="input"
+              label="Current password"
+              variant="outlined"
+              value={oldPassword}
+              onChange={handleCurrentPasswordChange}
+            />
+          ) : null}
           <TextField
             className="input"
             label={props.label}
