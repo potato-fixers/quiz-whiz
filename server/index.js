@@ -2,7 +2,7 @@ require("dotenv").config();
 const express = require('express')
 const app = express();
 const axios = require('axios');
-const port = process.env.SERVER_PORT
+const port = process.env.SERVER_PORT | 8080;
 const { dashboard } = require('./routes');
 const expressSession = require('./middlewares/sessions');
 const { create } = require('./routes/index.js')

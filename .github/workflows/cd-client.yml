@@ -1,4 +1,4 @@
-name: Quiz Whiz CD
+name: Quiz Whiz Deploy Client
 
 on:
   pull_request:
@@ -31,7 +31,7 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: .
-          file: ./Dockerfile
+          file: ./client/Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/quiz-whiz:latest
 
