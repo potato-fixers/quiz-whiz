@@ -1,6 +1,7 @@
 import "./styles/create-quiz.css";
 import { useState } from "react";
 import Categories from "./quiz-components/Categories.jsx";
+import Difficulty from "./quiz-components/Difficulty.jsx"
 import MCQuestions from "./quiz-components/MC-Questions.jsx";
 import TFQuestions from "./quiz-components/TF-Questions.jsx";
 import APIQuestions from "./quiz-components/API-Questions.jsx";
@@ -30,6 +31,11 @@ const CreateQuiz = (props) => {
    const [category4, setState4] = useState(false);
    const [category5, setState5] = useState(false);
    const [categoryVal, setCategoryVal] = useState(null);
+   // create state here to update difficulty selection
+   const [easyDiff, setEasyDiff] = useState(false);
+   const [mediumDiff, setMediumDiff] = useState(false);
+   const [hardDiff, setHardDiff] = useState(false);
+   const [difficulty, setDifficulty] = useState(null);
 
    // useState function
    const onSelect = (e) => {
@@ -63,14 +69,29 @@ const CreateQuiz = (props) => {
        setState4(true);
        setState5(false);
        setCategoryVal(e.target.name)
-     } else {
+     } else if (e.target.name === "category5") {
        setState1(false);
        setState2(false);
        setState3(false);
        setState4(false);
        setState5(true);
        setCategoryVal(e.target.name)
-     }
+     } else if (e.target.name === "easy") {
+        setEasyDiff(true)
+        setMediumDiff(false)
+        setHardDiff(false)
+        setDifficulty(e.target.name)
+     } else if (e.target.name === "medium") {
+        setEasyDiff(false)
+        setMediumDiff(true)
+        setHardDiff(false)
+        setDifficulty(e.target.name)
+    } else if (e.target.name === "hard") {
+        setEasyDiff(false)
+        setMediumDiff(false)
+        setHardDiff(true)
+        setDifficulty(e.target.name)
+    }
    };
 
     const handleFormChange = (e, index) => {
@@ -233,12 +254,15 @@ const CreateQuiz = (props) => {
           alert("Please Enter Quiz Name!")
         } else if (!categoryVal) {
           alert("Please Choose Category!")
+        } else if (!difficulty) {
+          alert("Please Select Difficulty!")
         } else {
           if (TF) {
             var quizDataTF = {
               quizzes: {
               user_id: "admin",
               name: quizName,
+              difficulty: difficulty,
               category: categoryVal
               },
               questions: JSON.stringify(TFInputFields),
@@ -252,11 +276,11 @@ const CreateQuiz = (props) => {
               body: JSON.stringify(quizDataTF),
             }
 
-            fetch("http://localhost:3000/create/createQuiz", optionsTF)
+            fetch("http://localhost:8080/create/createQuiz", optionsTF)
             .then( (response) => {
               if (response.status === 200) {
                 alert("Quiz Succesfully Created!");
-                window.location.href = "http:localhost:3000/";
+                window.location.href = process.env.REACT_APP_API_URI;
               }
             })
           } else if (MC) {
@@ -264,6 +288,7 @@ const CreateQuiz = (props) => {
               quizzes: {
               user_id: "admin",
               name: quizName,
+              difficulty: difficulty,
               category: categoryVal
               },
               questions: JSON.stringify(MCInputFields),
@@ -277,11 +302,11 @@ const CreateQuiz = (props) => {
               body: JSON.stringify(quizDataMC),
             }
 
-            fetch("http://localhost:3000/create/createQuiz", optionsMC)
+            fetch("http://localhost:8080/create/createQuiz", optionsMC)
             .then( (response) => {
               if (response.status === 200) {
                 alert("Quiz Succesfully Created!");
-                window.location.href = "http:localhost:3000/";
+                window.location.href = process.env.REACT_APP_API_URI;
               }
             })
           } else {
@@ -289,6 +314,7 @@ const CreateQuiz = (props) => {
               quizzes: {
               user_id: "admin",
               name: quizName,
+              difficulty: difficulty,
               category: categoryVal
               },
               questions: JSON.stringify(MCInputFields.concat(TFInputFields)),
@@ -302,11 +328,11 @@ const CreateQuiz = (props) => {
               body: JSON.stringify(quizDataMCTF)
             }
 
-            fetch("http://localhost:3000/create/createQuiz", optionsMCTF)
+            fetch("http://localhost:8080/create/createQuiz", optionsMCTF)
             .then( (response) => {
               if (response.status === 200) {
                 alert("Quiz Succesfully Created!");
-                window.location.href = "http:localhost:3000/";
+                window.location.href = process.env.REACT_APP_API_URI;
               }
             })
           }
@@ -331,6 +357,12 @@ const CreateQuiz = (props) => {
           category4={category4}
           category5={category5}
           select={onSelect}
+        />
+        <Difficulty
+        easyDiff={easyDiff}
+        mediumDiff={mediumDiff}
+        hardDiff={hardDiff}
+        select={onSelect}
         />
         <MCQuestions
           inputFields={MCInputFields}

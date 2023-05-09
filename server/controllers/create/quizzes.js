@@ -8,7 +8,7 @@ module.exports = {
 
     dbMethods.createQuiz(req.body, (err, result) => {
       if (err) {
-        console.log('failing at res.sendStatus(400)')
+        console.log('failing at res.sendStatus(400)', err)
         res.sendStatus(400);
       } else {
         res.sendStatus(200);
