@@ -1,22 +1,22 @@
 const express = require('express');
-const userProfileRouter = express.Router();
-const userController = require('../controllers/user-profile.js')
+const router = express.Router();
+const userController = require('../controllers/userProfile.js')
 
 
 // Get the necessary user information by ID to populate the user settings page
-userProfileRouter.get('/', userController.getUserInfo);
+router.get('/', userController.getUserInfo);
 
 // Update the username
-userProfileRouter.put('/username', userController.updateUsername);
+router.put('/updateUsername', userController.updateUsername);
 
 // Update the password
-userProfileRouter.put('/password', userController.updatePassword);
+router.put('/updatePassword', userController.updatePassword);
 
 // Update the bio
-userProfileRouter.put('/bio', userController.updateBio);
+router.put('/updateBio', userController.updateBio);
 
 // Update the profile pic
-userProfileRouter.put('/profilepic', userController.updateProfilePic);
+router.put('/updatePic', userController.updateProfilePic);
 
 
-module.exports = userProfileRouter;
+module.exports = router;

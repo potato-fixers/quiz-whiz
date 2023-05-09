@@ -1,6 +1,7 @@
 import { Box, Button, TextField } from '@mui/material';
 import { useState } from 'react';
 import './styles/profile.css';
+import axios from 'axios';
 
 const UserProfileFieldBox = (props) => {
   const [editing, setEditing] = useState(false);
@@ -15,8 +16,25 @@ const UserProfileFieldBox = (props) => {
   };
 
   const handleSaveClick = () => {
-    setEditing(false);
-  };
+    axios.put(`http://localhost:8080${props.saveRoute}`, {
+    newUsername: 'new_username'
+  }, {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+  .then(res => {
+    if (res.status === 200) {
+      console.log('Username updated successfully!');
+    } else {
+      console.error('Failed to update username.');
+    }
+  })
+  .catch(error => {
+    console.error(error);
+  });
+  setEditing(false);
+};
 
   const handleFieldChange = (event) => {
     setField(event.target.value);

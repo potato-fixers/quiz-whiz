@@ -21,7 +21,7 @@ app.get('/api', (req, res) => {
 });
 
 app.use('/quiz', require('./routes/take-quiz'));
-app.use('/settings', require('.routes/user-profile'));
+app.use('/settings', require('./routes/user-profile'));
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
