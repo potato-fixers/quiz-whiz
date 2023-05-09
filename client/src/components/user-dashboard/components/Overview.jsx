@@ -1,14 +1,21 @@
 import { Typography, TableBody, TableCell, TableHead, TableRow, Table } from '@mui/material';
+import { useState, useEffect } from 'react';
 
 const Overview = (props) => {
 
-  const dummyData = [
-    {id: 1, quiz: 'quiz 1', score: 1, lastPlayed: 'mm/dd/yyyyThh:mm:ss'},
-    {id: 2, quiz: 'quiz 2', score: 2, lastPlayed: 'mm/dd/yyyyThh:mm:ss'},
-    {id: 3, quiz: 'quiz 3', score: 3, lastPlayed: 'mm/dd/yyyyThh:mm:ss'},
-    {id: 4, quiz: 'quiz 4', score: 4, lastPlayed: 'mm/dd/yyyyThh:mm:ss'},
-    {id: 5, quiz: 'quiz 5', score: 5, lastPlayed: 'mm/dd/yyyyThh:mm:ss'}
-  ];
+  const [quizzes, setQuizzes] = useState([]);
+
+  const getQuizzes = async (userId) => {
+    const url = process.env.REACT_APP_API_URI;
+    const response = await fetch(`${url}/dashboard/`);
+    if (response.ok) {
+      setQuizzes(await response.json());
+    }
+  };
+
+  useEffect(() => {
+    getQuizzes();
+  }, []);
 
   return (
     <>
@@ -23,18 +30,18 @@ const Overview = (props) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {dummyData.map((row) => (
+          {quizzes.map((quiz) => (
             <TableRow
-              key={row.id}
+              key={quiz.id}
             >
               <TableCell align='left' sx={{ border: 0 }}>
-                {row.quiz}
+                {quiz.quiz_name}
               </TableCell>
               <TableCell align='center' sx={{ border: 0 }}>
-                {row.score}
+                {quiz.score}
               </TableCell>
               <TableCell align='right' sx={{ border: 0 }} >
-                {row.lastPlayed}
+                {quiz.date}
               </TableCell>
             </TableRow>
           ))}
