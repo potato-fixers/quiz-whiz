@@ -17,6 +17,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "build-start": "(react-scripts build) & react-scripts start",
     "test": "react-scripts test --coverage",
     "eject": "react-scripts eject"
   },
