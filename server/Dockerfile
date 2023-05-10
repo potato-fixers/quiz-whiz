@@ -11,4 +11,5 @@ EXPOSE 8080
 RUN npm install
 
 # Start Server
-CMD ["npm", "run", "start:env"]
+CMD ["npm", "start"]
+# CMD ["npm", "run", "start:env"]
