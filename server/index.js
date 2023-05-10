@@ -6,15 +6,12 @@ const port = process.env.SERVER_PORT
 const { dashboard } = require('./routes');
 const expressSession = require('./middlewares/sessions');
 const { create } = require('./routes/index.js')
-const bodyParser = require('body-parser')
 const cors = require('cors');
 
 // =============================================
 //                Middleware
 // =============================================
 app.use(express.json());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}))
 app.use(expressSession);
 app.use(cors({origin: 'http://localhost:3000'}))
 
