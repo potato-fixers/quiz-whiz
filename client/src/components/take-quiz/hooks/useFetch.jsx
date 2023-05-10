@@ -14,7 +14,7 @@ export default function useFetch() {
         url: `http://ec2-3-83-24-209.compute-1.amazonaws.com:8080/quiz/${id}/start`,
       });
       payload && setQuizDetails(payload.data);
-      console.log("Got PAYLOAD", payload.data);
+      // console.log("Got PAYLOAD", payload.data);
     } catch (err) {
       console.log("There was an error getting your quiz", err);
     }
@@ -34,7 +34,6 @@ export default function useFetch() {
   };
 
   useEffect(() => {
-    console.log("Quiz Id from params", id);
     if (id) {
       const data = fetchQuizData(id);
       const questions = fetchQuizQuestions(id);
@@ -44,7 +43,7 @@ export default function useFetch() {
   }, [id]);
 
   useEffect(() => {
-    questions && console.log("Got Quiz Data", questions);
+    // questions && console.log("Got Quiz Data", questions);
   }, [questions, id]);
 
   return {

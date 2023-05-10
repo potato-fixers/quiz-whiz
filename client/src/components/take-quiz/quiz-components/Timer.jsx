@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "../styles/take-quiz.css";
 import { Typography } from "@mui/material";
 
-function Timer() {
+function Timer({ time }) {
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -12,7 +12,7 @@ function Timer() {
 
     if (timer) {
       /* countdown timer for quizzes, starts when Question Page loads  */
-      let timeRemaining = 300000;
+      let timeRemaining = time;
 
       var downloadTimer = setInterval(() => {
         timer.innerHTML = `${Math.floor(

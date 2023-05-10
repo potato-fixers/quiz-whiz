@@ -9,30 +9,30 @@ import Answers from "./quiz-components/Answers.jsx";
 
 import useFetch from "./hooks/useFetch.jsx";
 
-function Quiz({ quizId }) {
+function Quiz({ time, quizId }) {
   const [page, setPage] = useState(1);
-  const { questions, setQuestions } = useFetch(quizId);
+  // const { questions, setQuestions } = useFetch(quizId);
 
-  console.log("Quiz Questions from fetch hook", questions);
-  // const [questions, setQuestions] = useState([
-  //   {
-  //     question: "What is the Answer to this Question?",
-  //     corrAns: "This one",
-  //     incAns1: "Not this 1",
-  //     incAns2: "Not this 2",
-  //     incAns3: "Not this 3",
-  //   },
-  //   {
-  //     question: "What is the Answer to this T/F Question?",
-  //     corrAns: "True",
-  //     incAns1: "False",
-  //   },
-  //   {
-  //     question: "Uno Mas",
-  //     corrAns: "False",
-  //     incAns1: "True",
-  //   },
-  // ]);
+  // console.log("Quiz Questions from fetch hook", questions);
+  const [questions, setQuestions] = useState([
+    {
+      question: "What is the Answer to this Question?",
+      corrAns: "This one",
+      incAns1: "Not this 1",
+      incAns2: "Not this 2",
+      incAns3: "Not this 3",
+    },
+    {
+      question: "What is the Answer to this T/F Question?",
+      corrAns: "True",
+      incAns1: "False",
+    },
+    {
+      question: "Uno Mas",
+      corrAns: "False",
+      incAns1: "True",
+    },
+  ]);
 
   const onPageChange = (val) => {
     console.log("Page changed");
@@ -54,7 +54,7 @@ function Quiz({ quizId }) {
         columnSpacing={{ xs: 1, sm: 2, md: 3 }}
       >
         <Grid item xs={6}>
-          <Timer />
+          <Timer time={time} />
         </Grid>
 
         <Grid item xs={6}>
