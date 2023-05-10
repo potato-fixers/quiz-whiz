@@ -1,6 +1,7 @@
 import { Box, Button, TextField } from '@mui/material';
 import { useState } from 'react';
 import './styles/profile.css';
+import ProfilePicBox from './ProfilePicBox.jsx';
 import axios from 'axios';
 
 const UserProfileFieldBox = (props) => {
@@ -58,14 +59,20 @@ const UserProfileFieldBox = (props) => {
               value={oldPassword}
               onChange={handleCurrentPasswordChange}
             />
-          ) : null}
-          <TextField
-            className="input"
-            label={props.label}
-            variant="outlined"
-            value={field}
-            onChange={handleFieldChange}
-          />
+          ) : null }
+
+          {props.field_title === "Profile Picture" ? (
+            <ProfilePicBox />
+          ) : (
+            <TextField
+              className="input"
+              label={props.label}
+              variant="outlined"
+              value={field}
+              onChange={handleFieldChange}
+            />
+          )}
+
           <div className="cancelSaveButtons">
             <Button variant="contained" onClick={handleCancelClick}>
               Cancel
