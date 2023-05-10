@@ -16,14 +16,15 @@ const FilterBar = (props) => {
           labelId='select-label'
           label='Categories'
           name='category'
+          value={props.category}
           onChange={handleChange}
           size='small'
         >
           <MenuItem value=''>All</MenuItem>
-          <MenuItem value={'education'}>Education</MenuItem>
-          <MenuItem value={'music'}>Music</MenuItem>
-          <MenuItem value={'sport'}>Sport</MenuItem>
-          <MenuItem value={'movie'}>Movie</MenuItem>
+          <MenuItem value='education'>Education</MenuItem>
+          <MenuItem value='music'>Music</MenuItem>
+          <MenuItem value='sport'>Sport</MenuItem>
+          <MenuItem value='movie'>Movie</MenuItem>
         </Select>
       </FormControl>
     </Stack>

@@ -7,7 +7,7 @@ import useFilter from '../hooks/useFilter';
 const MyQuizzes = (props) => {
 
   const quizzes = useQuizzes('quizzes');
-  const { filteredData, handleFilterChange } = useFilter(quizzes);
+  const { filteredData, handleFilterChange, filter } = useFilter(quizzes);
 
   // handle deleting quiz
   const handleDelete = (e) => {
@@ -18,7 +18,7 @@ const MyQuizzes = (props) => {
     <>
       <Stack direction='row' >
         <Typography variant='h4' sx={{ flexGrow: 1}}>My Quizzes</Typography>
-        <FilterBar onFilterChange={handleFilterChange}/>
+        <FilterBar onFilterChange={handleFilterChange} category={filter.category} />
       </Stack>
 
       <Table sx={{ width: '100%' }} aria-label="simple table">

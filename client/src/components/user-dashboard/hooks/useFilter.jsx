@@ -17,6 +17,7 @@ const useFilter = (initialData) => {
   );
 
   return {
+    filter,
     filteredData,
     handleFilterChange
   }
