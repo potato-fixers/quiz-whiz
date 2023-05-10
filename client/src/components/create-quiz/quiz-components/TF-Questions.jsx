@@ -21,6 +21,15 @@ const TFQuestions = (props) => {
                 placeholder='Type Question Here'
                 onChange={(e) => {props.handleFormChange(e, index)}}>
               </textarea>
+              <button
+                name="TFRemoveButton"
+                onClick={(e) => {
+                  props.removeFields(e, index);
+                }}
+              >
+                {" "}
+                X{" "}
+              </button>
               <div name='answers'>
                 <input
                   name='corrAns'
