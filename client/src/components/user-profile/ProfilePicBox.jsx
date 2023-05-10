@@ -12,6 +12,7 @@ const ProfilePicBox = (props) => {
 
   const handleUploadClick = (event) => {
     event.preventDefault();
+    console.log(selectedFile);
     const formData = new FormData();
     formData.append("image", selectedFile);
     axios.put(`${process.env.REACT_APP_API_URI}${props.saveRoute}`, formData, {

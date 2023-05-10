@@ -62,7 +62,7 @@ const UserProfileFieldBox = (props) => {
           ) : null }
 
           {props.field_title === "Profile Picture" ? (
-            <ProfilePicBox />
+            <ProfilePicBox saveRoute={props.saveRoute}/>
           ) : (
             <TextField
               className="input"
