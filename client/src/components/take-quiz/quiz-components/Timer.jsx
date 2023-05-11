@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "../styles/take-quiz.css";
 import { Typography } from "@mui/material";
 
-function Timer({ time }) {
+function Timer({ id, time }) {
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -23,7 +23,7 @@ function Timer({ time }) {
         if (timeRemaining <= 0) {
           clearInterval(downloadTimer);
           timer.innerHTML = "<strong>Oh no! Your Time Is Up!</strong>";
-          navigate("/quiz/:id/summary");
+          navigate(`/quiz/${id}/summary`);
         }
       }, 1000);
     } else {
