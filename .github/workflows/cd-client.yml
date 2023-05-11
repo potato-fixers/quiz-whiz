@@ -1,4 +1,4 @@
-name: Quiz Whiz CD
+name: Quiz Whiz Deploy Client
 
 on:
   pull_request:
@@ -29,21 +29,23 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v4
         with:
-          context: .
-          file: ./Dockerfile
+          context: ./client
+          file: ./client/Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/quiz-whiz:latest
 
       - name: Deploy to EC2
         uses: appleboy/ssh-action@v0.1.10
-        with:
+        with: 
           host: ${{ secrets.HOST }}
           username: ubuntu
-          key: ${{ secrets.PASSWORD }}
+          key: ${{ secrets.PASSWORD  }}
           script: |
             docker login
-            docker pull gbmytabc/quiz-whiz:latest
             docker stop quizwhiz
             docker rm quizwhiz
+            docker rmi -f $(docker images -aq)
+            docker builder prune -a -f
+            docker pull gbmytabc/quiz-whiz:latest
             docker run -d --name quizwhiz -p 3000:3000 gbmytabc/quiz-whiz:latest
   
