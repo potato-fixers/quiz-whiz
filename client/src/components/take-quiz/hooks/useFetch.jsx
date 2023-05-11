@@ -11,7 +11,7 @@ export default function useFetch() {
     try {
       const payload = await axios({
         method: "GET",
-        url: `http://ec2-3-83-24-209.compute-1.amazonaws.com:8080/quiz/${id}/start`,
+        url: `${process.env.REACT_APP_API_URI}/quiz/${id}/start`,
       });
       payload && setQuizDetails(payload.data);
       // console.log("Got PAYLOAD", payload.data);
@@ -24,10 +24,11 @@ export default function useFetch() {
     try {
       const payload = await axios({
         method: "GET",
-        url: `http://ec2-3-83-24-209.compute-1.amazonaws.com:8080/quiz/${id}/question`,
+        url: `${process.env.REACT_APP_API_URI}/quiz/${id}/question`,
       });
-      payload && setQuestions(payload.data);
-      console.log("Got PAYLOAD", payload.data);
+      let quizQs = payload && JSON.parse(payload.data);
+      console.log("Got PAYLOAD", quizQs);
+      quizQs && setQuestions(quizQs);
     } catch (err) {
       console.log("There was an error getting your questions", err);
     }
