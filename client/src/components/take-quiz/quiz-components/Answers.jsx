@@ -6,7 +6,7 @@ function Answers({ answers }) {
 
   Object.keys(answers).forEach((key) => {
     if (key !== "question") {
-      console.log("key", key);
+      // console.log("key", key);
       ans.push(answers[key]);
     }
   });
