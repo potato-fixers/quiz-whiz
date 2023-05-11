@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Grid, Typography } from "@mui/material";
 import "./styles/take-quiz.css";
 import Pagination from "./Pagination.jsx";
@@ -7,11 +7,13 @@ import Timer from "./quiz-components/Timer.jsx";
 import Question from "./quiz-components/Question.jsx";
 import Answers from "./quiz-components/Answers.jsx";
 
-import useFetch from "./hooks/useFetch.jsx";
+import { QuizContext } from "./context/QuizContext";
+// import useFetch from "./hooks/useFetch.jsx";
 
 function Quiz({ time, quizId }) {
   const [page, setPage] = useState(1);
-  const { questions, setQuestions } = useFetch(quizId);
+  const { questions, setQuestions } = useContext(QuizContext);
+  // const { questions, setQuestions, questionAnswers } = useFetch(quizId);
 
   const onPageChange = (val) => {
     setPage(val);
@@ -19,6 +21,7 @@ function Quiz({ time, quizId }) {
 
   useEffect(() => {
     questions && setQuestions(questions);
+    // questions && console.log("Qs (keys?)", questions);
   }, [questions, setQuestions]);
 
   return (
@@ -36,11 +39,15 @@ function Quiz({ time, quizId }) {
         </Grid>
 
         <Grid item xs={6}>
-          <Question quizId={quizId} question={questions[page - 1].question} />
+          <Question
+            quizId={quizId}
+            question={questions[page - 1].question}
+            currentKey={questions[page - 1]}
+          />
         </Grid>
 
         <Grid item xs={6}>
-          <Answers answers={questions[page - 1]} />
+          <Answers page={page} answers={questions[page - 1]} />
         </Grid>
 
         <Grid item xs={6}>

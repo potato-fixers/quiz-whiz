@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import "./styles/take-quiz.css";
 import { Route, Routes } from "react-router-dom";
 
@@ -6,11 +6,13 @@ import Begin from "./quiz-components/Begin.jsx";
 import Quiz from "./Quiz.jsx";
 import Summary from "./quiz-components/Summary.jsx";
 
-import useFetch from "./hooks/useFetch";
+// import useFetch from "./hooks/useFetch";
+import { QuizContext } from "./context/QuizContext";
 
 function TakeQuiz() {
   const [timer, setTimer] = useState(300000);
-  let { id } = useFetch();
+  const { id } = useContext(QuizContext);
+  // let { id } = useFetch();
 
   return (
     <div className="container">

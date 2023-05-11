@@ -8,6 +8,7 @@ import Review from "./Review.jsx";
 function Summary({ quizId }) {
   const [msg, setMsg] = useState("Default -- You Haven't Take a Test");
   const [score, setScore] = useState(0);
+  let answers = [];
 
   useEffect(() => {
     setScore(80);
@@ -22,6 +23,15 @@ function Summary({ quizId }) {
       setMsg("Oh no! You ran out of time. Take another stab at it?");
     }
   }, [score]);
+
+  useEffect(() => {
+    if (localStorage.length) {
+      for (var i = 0; i < localStorage.length; i++) {
+        answers.push(localStorage.key(i));
+      }
+    }
+    answers && console.log("Selected Answers", answers);
+  }, [answers]);
 
   return (
     <Grid
@@ -49,7 +59,7 @@ function Summary({ quizId }) {
       </Grid>
 
       <Grid item xs={6}>
-        <Link to="/quiz/:id/start">
+        <Link to={`/quiz/${quizId}/start`}>
           <Button variant="contained">Retake Quiz</Button>
         </Link>
       </Grid>

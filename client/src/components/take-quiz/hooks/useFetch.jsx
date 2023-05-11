@@ -6,6 +6,7 @@ export default function useFetch() {
   let { id } = useParams();
   const [quizDetails, setQuizDetails] = useState([{}]);
   const [questions, setQuestions] = useState([{}]);
+  const [questionAnswers, setQuestionAnswers] = useState([{}]);
 
   const fetchQuizData = async (id) => {
     try {
@@ -27,8 +28,13 @@ export default function useFetch() {
         url: `${process.env.REACT_APP_API_URI}/quiz/${id}/question`,
       });
       let quizQs = payload && JSON.parse(payload.data);
-      console.log("Got PAYLOAD", quizQs);
+      // console.log("Got PAYLOAD", quizQs);
       quizQs && setQuestions(quizQs);
+
+      for (let i = 0; i < quizQs.length; i++) {
+        setQuestionAnswers((prev) => [...prev, Object.keys(quizQs[i])[i]]);
+      }
+      // questionAnswers && console.log(questionAnswers);
     } catch (err) {
       console.log("There was an error getting your questions", err);
     }
@@ -44,8 +50,8 @@ export default function useFetch() {
   }, [id]);
 
   useEffect(() => {
-    // questions && console.log("Got Quiz Data", questions);
-  }, [questions, id]);
+    id && console.log("Got ID", id);
+  }, [id]);
 
   return {
     id,
@@ -53,5 +59,7 @@ export default function useFetch() {
     setQuestions,
     quizDetails,
     setQuizDetails,
+    questionAnswers,
+    setQuestionAnswers,
   };
 }

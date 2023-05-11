@@ -8,7 +8,7 @@ import Login from "../src/pages/Login";
 import Register from "../src/pages/Register";
 import UserProfilePage from "./components/user-profile/UserProfilePage.jsx";
 import CreateQuiz from "./components/create-quiz/CreateQuiz.jsx";
-
+import { QuizProvider } from "./components/take-quiz/context/QuizContext";
 function App() {
   return (
     <>
@@ -23,7 +23,14 @@ function App() {
           }
         ></Route>
 
-        <Route path="/quiz/:id/*" element={<TakeQuiz />}></Route>
+        <Route
+          path="/quiz/:id/*"
+          element={
+            <QuizProvider>
+              <TakeQuiz />
+            </QuizProvider>
+          }
+        ></Route>
         <Route path="dashboard/*" element={<Dashboard />}></Route>
 
         <Route path="/login/" element={<Login />}></Route>

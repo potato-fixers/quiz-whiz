@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import "../styles/take-quiz.css";
 import {
@@ -9,11 +9,12 @@ import {
   FormControl,
   MenuItem,
 } from "@mui/material";
-import useFetch from "../hooks/useFetch";
 
-function Begin({ setTimer, quizId }) {
-  let quizPath = `/quiz/${quizId}/question`;
-  let { quizDetails } = useFetch(quizId);
+import { QuizContext } from "../context/QuizContext";
+
+function Begin({ setTimer }) {
+  const { quizDetails, id } = useContext(QuizContext);
+  let quizPath = `/quiz/${id}/question`;
   const [countdown, setCountdown] = useState(300000);
 
   const handleChange = (e) => {
