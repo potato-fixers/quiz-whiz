@@ -2,7 +2,7 @@
 const axios = require('axios');
 const pool = require('../../config/index');
 
-fetch = async (quizId, table, cb) => {
+const fetch = async (quizId, table, cb) => {
   console.log('Quiz ID is', quizId);
 
   const query = !quizId ? `
