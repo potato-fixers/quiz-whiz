@@ -2,6 +2,7 @@
 FROM node:alpine
 
 # copy the application files into the container
+COPY ./.env ./
 COPY ./ ./
 
 # Expose Port 8080
@@ -11,4 +12,4 @@ EXPOSE 8080
 RUN npm install
 
 # Start Server
-CMD ["npm", "run", "start:env"]
+CMD ["npm", "run", "start-node"]
