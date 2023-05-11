@@ -5,7 +5,6 @@ module.exports = {
   submit: (req, res) => {
     // connect to db methods here
    // database method/interaction
-   console.log('hitting here?', req.body)
 
     dbMethods.createQuiz(req.body, (err, result) => {
       if (err) {
