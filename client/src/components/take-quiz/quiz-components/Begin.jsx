@@ -7,7 +7,6 @@ import {
   Button,
   Select,
   FormControl,
-  InputLabel,
   MenuItem,
 } from "@mui/material";
 import useFetch from "../hooks/useFetch";
@@ -23,7 +22,7 @@ function Begin({ setTimer, quizId }) {
 
   useEffect(() => {
     countdown && setTimer(countdown);
-  }, [countdown]);
+  }, [countdown, setTimer]);
 
   return (
     <Grid
@@ -35,6 +34,13 @@ function Begin({ setTimer, quizId }) {
       rowSpacing={1}
       columnSpacing={{ xs: 1, sm: 2, md: 3 }}
     >
+      <Grid id="category" item xs={6}>
+        <Typography id="category">
+          {typeof quizDetails.title === "string" &&
+            `${quizDetails.title}`.toUpperCase()}
+        </Typography>
+      </Grid>
+
       <Grid id="category" item xs={6}>
         <Typography>CATEGORY</Typography>
         <Typography id="category">
