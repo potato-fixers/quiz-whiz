@@ -36,12 +36,14 @@ function Review() {
               );
             } else {
               return (
-                <Typography
-                  key={index}
-                  className={a.key === "corrAns" ? "right" : "wrong"}
-                >
-                  #{index + 1} Your Answer: {a.value} <hr />
-                </Typography>
+                <div key={index}>
+                  <Typography
+                    className={a.key === "corrAns" ? "right" : "wrong"}
+                  >
+                    #{index + 1} Your Answer: {a.value}
+                  </Typography>
+                  <hr />
+                </div>
               );
             }
           })}

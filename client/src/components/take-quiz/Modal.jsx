@@ -1,17 +1,22 @@
-import * as React from "react";
+import { useState, useContext } from "react";
+
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 
+import { QuizContext } from "./context/QuizContext";
+
 export default function BasicModal({ message }) {
-  const [open, setOpen] = React.useState(false);
+  const { resetQuiz } = useContext(QuizContext);
+  const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   const handleClick = (e) => {
     if (e.currentTarget.value === "Yes") {
       if (message === "Home") {
+        resetQuiz();
         window.location.href = "/";
       } else {
         window.location.href = "/dashboard";

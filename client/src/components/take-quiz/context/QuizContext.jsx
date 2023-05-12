@@ -1,5 +1,5 @@
 import { useState, useEffect, createContext } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 // Create the context object
@@ -9,12 +9,20 @@ export const QuizContext = createContext();
 export const QuizProvider = ({ children }) => {
   // Set up state variables here
   let { id } = useParams();
+  const navigate = useNavigate();
   const [quizDetails, setQuizDetails] = useState([{}]);
+
+  const [time, setTime] = useState(300000);
+
   const [questions, setQuestions] = useState([{}]);
   const [userAnswers, setUserAnswers] = useState([]);
   const [correctAs, setCorrectAs] = useState(0);
-  const [msg, setMsg] = useState("Default -- You Haven't Take a Test");
+
+  const [finished, setFinished] = useState(false);
+  const [duration, setDuration] = useState(0);
+
   const [score, setScore] = useState(0);
+  const [msg, setMsg] = useState("Whoops, You Haven't Take Any Tests Yet!");
 
   // Set up the Quiz for User
   const fetchQuizData = async (id) => {
@@ -45,9 +53,12 @@ export const QuizProvider = ({ children }) => {
     }
   };
 
-  // Clear Old Answers from Previous Quizzes
-  const clearAnswers = () => {
+  // Clear Old Answers, Duration, Status, and Score from Previous Quizzes
+  const resetQuiz = () => {
     localStorage.clear();
+    setScore(0);
+    setDuration(0);
+    setFinished(false);
   };
 
   // Get User's Answers
@@ -79,6 +90,64 @@ export const QuizProvider = ({ children }) => {
     }
   };
 
+  // const saveHistory = async (payload) => {
+  //   try {
+  //     axios.post(`/${id}`, {
+  //       user_id: payload.user_id,
+  //       score: payload.score,
+  //       quiz_id: payload.id,
+  //       duration: payload.duration,
+  //       finished: payload.finished,
+  //     });
+  //   } catch (err) {
+  //     throw err;
+  //   }
+  // };
+
+  // =============================================
+  //             Quiz Timer Utilities
+  // =============================================
+  const setTimer = (time) => {
+    /* check if element exists  */
+    let timer = document.getElementById("timer");
+
+    if (timer) {
+      /* countdown timer for quizzes, starts when Question Page loads  */
+      let timeRemaining = time;
+
+      var quizTimer = setInterval(() => {
+        let minutes = Math.floor((timeRemaining / 1000 / 60) << 0);
+        let seconds = Math.floor((timeRemaining / 1000) % 60);
+
+        timer.innerHTML = `${minutes} : ${
+          seconds === 0
+            ? "00"
+            : seconds.toString().length < 2
+            ? "0" + seconds
+            : seconds
+        } left`;
+
+        // Decrement Time Remaining by 1 second
+        timeRemaining -= 1000;
+
+        // Time has run out!
+        if (timeRemaining <= 0) {
+          clearInterval(quizTimer);
+          setDuration(time);
+          setMsg("Oh no! Your Time Is Up!");
+          navigate(`/quiz/${id}/summary`);
+        }
+      }, 1000);
+    }
+  };
+
+  const handleTimerChange = (e) => {
+    setTime(e.target.value);
+  };
+
+  // =============================================
+  //           	 Lifecycle Methods
+  // =============================================
   // Update the Quiz Data Based on Current Quiz ID
   useEffect(() => {
     if (id) {
@@ -87,6 +156,7 @@ export const QuizProvider = ({ children }) => {
       setQuizDetails(data);
       setQuestions(questions);
       getUserAnswers();
+      setTimer(time);
     }
   }, [id]);
 
@@ -104,19 +174,37 @@ export const QuizProvider = ({ children }) => {
   // Context to be used in other components
   const ctx = {
     id,
+
     questions,
     setQuestions,
+
     quizDetails,
     setQuizDetails,
-    clearAnswers,
+
+    resetQuiz,
     userAnswers,
     getUserAnswers,
+
     getCorrectAnswerCount,
     correctAs,
+
     msg,
     setMsg,
+
     score,
     setScore,
+
+    // saveHistory,
+
+    finished,
+    setFinished,
+
+    duration,
+    setDuration,
+
+    time,
+    setTimer,
+    handleTimerChange,
   };
 
   // Return the provider component with the context value

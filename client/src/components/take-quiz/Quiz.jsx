@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useContext } from "react";
 import { Grid, Typography } from "@mui/material";
 import "./styles/take-quiz.css";
 import Pagination from "./Pagination.jsx";
@@ -9,9 +9,9 @@ import Answers from "./quiz-components/Answers.jsx";
 
 import { QuizContext } from "./context/QuizContext";
 
-function Quiz({ time }) {
+function Quiz() {
   const [page, setPage] = useState(1);
-  const { id, questions, setQuestions } = useContext(QuizContext);
+  const { id, questions } = useContext(QuizContext);
 
   const onPageChange = (val) => {
     setPage(val);
@@ -29,7 +29,7 @@ function Quiz({ time }) {
           columnSpacing={{ xs: 1, sm: 2, md: 3 }}
         >
           <Grid item xs={6}>
-            <Timer id={id} time={time} />
+            <Timer id={id} />
           </Grid>
 
           <Grid item xs={6}>

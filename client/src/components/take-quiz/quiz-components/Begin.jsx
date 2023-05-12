@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useContext } from "react";
 import { Link } from "react-router-dom";
 import "../styles/take-quiz.css";
 import {
@@ -12,18 +12,9 @@ import {
 
 import { QuizContext } from "../context/QuizContext";
 
-function Begin({ setTimer }) {
-  const { quizDetails, id, clearAnswers } = useContext(QuizContext);
-  let quizPath = `/quiz/${id}/question`;
-  const [countdown, setCountdown] = useState(300000);
-
-  const handleChange = (e) => {
-    setCountdown(e.target.value);
-  };
-
-  useEffect(() => {
-    countdown && setTimer(countdown);
-  }, [countdown, setTimer]);
+function Begin() {
+  const { quizDetails, id, resetQuiz, time, handleTimerChange } =
+    useContext(QuizContext);
 
   return (
     <Grid
@@ -60,12 +51,12 @@ function Begin({ setTimer }) {
 
       <Grid id="set-timer" item xs={6}>
         <FormControl fullWidth>
-          {/* <InputLabel id="countdown">Timer</InputLabel> */}
+          {/* <InputLabel id="time">Timer</InputLabel> */}
           <Select
-            labelId="countdown"
-            id="countdown"
-            value={countdown}
-            onChange={handleChange}
+            labelId="time"
+            id="time"
+            value={time}
+            onChange={handleTimerChange}
           >
             <MenuItem value={30000}>30 Seconds</MenuItem>
             <MenuItem value={60000}>1 Minute</MenuItem>
@@ -85,8 +76,8 @@ function Begin({ setTimer }) {
         </Grid>
 
         <Grid item xs={6}>
-          <Link to={quizPath}>
-            <Button onClick={clearAnswers} variant="contained" color="primary">
+          <Link to={`/quiz/${id}/question`}>
+            <Button onClick={resetQuiz} variant="contained" color="primary">
               Begin Quiz
             </Button>
           </Link>
