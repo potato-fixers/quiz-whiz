@@ -53,16 +53,16 @@ export const QuizProvider = ({ children }) => {
   // Get User's Answers
   const getUserAnswers = () => {
     if (localStorage.length) {
+      const as = [];
       for (var i = 0; i <= localStorage.length; i++) {
         let a = JSON.parse(localStorage.getItem(i));
-
-        if (a) {
-          setUserAnswers((prev) => [...prev, a]);
-        }
+        a && as.push(a);
+        as.length && setUserAnswers(as);
       }
     }
   };
 
+  // Get Total Correctly Answered Quiz Questions
   const getCorrectAnswerCount = () => {
     if (localStorage.length) {
       let count = 0;
@@ -86,17 +86,20 @@ export const QuizProvider = ({ children }) => {
       const questions = fetchQuizQuestions(id);
       setQuizDetails(data);
       setQuestions(questions);
+      getUserAnswers();
     }
   }, [id]);
 
+  // Set Summary Message based on User's Quiz Score
   useEffect(() => {
-    if (id) {
-      const data = fetchQuizData(id);
-      const questions = fetchQuizQuestions(id);
-      setQuizDetails(data);
-      setQuestions(questions);
+    if (score > 60) {
+      setMsg("Congratulations, You Passed! Try out one of our other quizzes?");
+    } else if (score <= 60) {
+      setMsg("Oh no! You didn't pass, would you like to try again?");
+    } else {
+      setMsg("Oh no! You ran out of time. Take another stab at it?");
     }
-  }, [id]);
+  }, [score, setMsg]);
 
   // Context to be used in other components
   const ctx = {
