@@ -58,6 +58,7 @@ function Quiz({ time }) {
         <Grid justifyContent="center" direction="row" container>
           <Grid item xs={6}>
             <Pagination
+              quizId={id}
               onPageChange={onPageChange}
               currentPage={page}
               totalQuestions={questions.length}

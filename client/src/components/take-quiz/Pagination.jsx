@@ -2,6 +2,7 @@ import React from "react";
 import { Button } from "@mui/material";
 import { usePagination } from "./hooks/usePagination";
 import BasicModal from "./Modal";
+
 const Pagination = (props) => {
   const {
     onPageChange,
@@ -28,7 +29,7 @@ const Pagination = (props) => {
     if (currentPage !== lastPage) {
       onPageChange(currentPage + 1);
     } else {
-      window.location.href = "/quiz/:id/summary";
+      window.location.href = `/quiz/${props.quizId}/summary`;
     }
   };
 
