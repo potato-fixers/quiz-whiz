@@ -25,7 +25,11 @@ function Summary({ quizId }) {
   useEffect(() => {
     getCorrectAnswerCount();
     let score = (correctAs / localStorage.length) * 100;
-    setScore(Math.floor(score));
+    if (isNaN(score)) {
+      setScore(0);
+    } else {
+      setScore(Math.floor(score));
+    }
   }, [userAnswers, correctAs]);
 
   return (
@@ -37,10 +41,6 @@ function Summary({ quizId }) {
       rowSpacing={1}
       columnSpacing={{ xs: 1, sm: 2, md: 3 }}
     >
-      <Grid item xs={6}>
-        <Typography variant="h6">Conditional Message</Typography>
-      </Grid>
-
       <Grid item xs={6}>
         <Typography variant="h6">{msg && msg}</Typography>
       </Grid>
@@ -62,7 +62,7 @@ function Summary({ quizId }) {
       </Grid>
 
       <Grid item xs={6}>
-        <Link to="/dashboard">
+        <Link to="/">
           <Button onClick={clearAnswers} variant="contained">
             More Quizzes
           </Button>

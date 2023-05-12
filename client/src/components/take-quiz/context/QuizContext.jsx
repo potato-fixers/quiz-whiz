@@ -93,7 +93,7 @@ export const QuizProvider = ({ children }) => {
   // Set Summary Message based on User's Quiz Score
   useEffect(() => {
     if (score > 60) {
-      setMsg("Congratulations, You Passed! Try out one of our other quizzes?");
+      setMsg("Congratulations, You Passed!");
     } else if (score <= 60) {
       setMsg("Oh no! You didn't pass, would you like to try again?");
     } else {

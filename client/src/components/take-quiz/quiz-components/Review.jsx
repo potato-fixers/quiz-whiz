@@ -1,6 +1,7 @@
 import { useState, useContext } from "react";
+
 import "../styles/take-quiz.css";
-import { Container, Button, Typography } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import { QuizContext } from "../context/QuizContext";
 
 function Review() {
@@ -22,7 +23,7 @@ function Review() {
           userAnswers.map((a, index) => {
             if (a.key !== "corrAns") {
               return (
-                <Typography
+                <div
                   key={index}
                   className={a.key === "corrAns" ? "right" : "wrong"}
                 >
@@ -31,7 +32,7 @@ function Review() {
                     Correct Answer: {questions[index]["corrAns"]}
                   </Typography>
                   <hr />
-                </Typography>
+                </div>
               );
             } else {
               return (
