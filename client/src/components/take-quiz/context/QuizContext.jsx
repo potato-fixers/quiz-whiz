@@ -1,6 +1,8 @@
-import { useState, useEffect, createContext } from "react";
+import { useState, useEffect, useContext, createContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+
+import { UserContext } from "../../global/UserContext";
 
 // Create the context object
 export const QuizContext = createContext();
@@ -9,7 +11,11 @@ export const QuizContext = createContext();
 export const QuizProvider = ({ children }) => {
   // Set up state variables here
   let { id } = useParams();
+  const { isLoggedIn } = useContext(UserContext);
+
   const navigate = useNavigate();
+  const [open, setOpen] = useState(false);
+
   const [quizDetails, setQuizDetails] = useState([{}]);
 
   const [time, setTime] = useState(300000);
@@ -115,6 +121,17 @@ export const QuizProvider = ({ children }) => {
       /* countdown timer for quizzes, starts when Question Page loads  */
       let timeRemaining = time;
 
+      let minutes = Math.floor((timeRemaining / 1000 / 60) << 0);
+      let seconds = Math.floor((timeRemaining / 1000) % 60);
+
+      timer.innerHTML = `${minutes} : ${
+        seconds === 0
+          ? "00"
+          : seconds.toString().length < 2
+          ? "0" + seconds
+          : seconds
+      } left`;
+
       var quizTimer = setInterval(() => {
         let minutes = Math.floor((timeRemaining / 1000 / 60) << 0);
         let seconds = Math.floor((timeRemaining / 1000) % 60);
@@ -134,7 +151,7 @@ export const QuizProvider = ({ children }) => {
         if (timeRemaining <= 0) {
           clearInterval(quizTimer);
           setDuration(time);
-          setMsg("Oh no! Your Time Is Up!");
+          timer.innerHTML = "<strong>Oh no! Your Time Is Up!</strong>";
           navigate(`/quiz/${id}/summary`);
         }
       }, 1000);
@@ -144,6 +161,25 @@ export const QuizProvider = ({ children }) => {
   const handleTimerChange = (e) => {
     setTime(e.target.value);
   };
+
+  // =============================================
+  //             Quiz Modal Utils
+  // =============================================
+  const abandonQuiz = (e, message) => {
+    if (e.currentTarget.value === "Yes") {
+      if (message === "Home") {
+        resetQuiz();
+        window.location.href = "/";
+      } else {
+        window.location.href = isLoggedIn ? "/dashboard" : "/";
+      }
+    } else {
+      setOpen(false);
+    }
+  };
+
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   // =============================================
   //           	 Lifecycle Methods
@@ -156,7 +192,7 @@ export const QuizProvider = ({ children }) => {
       setQuizDetails(data);
       setQuestions(questions);
       getUserAnswers();
-      setTimer(time);
+      // setTimer(time);
     }
   }, [id]);
 
@@ -165,9 +201,11 @@ export const QuizProvider = ({ children }) => {
     if (score > 60) {
       setMsg("Congratulations, You Passed!");
     } else if (score <= 60) {
-      setMsg("Oh no! You didn't pass, would you like to try again?");
-    } else {
-      setMsg("Oh no! You ran out of time. Take another stab at it?");
+      if (!finished) {
+        setMsg("Oh no! You ran out of time. Would you like to try again?");
+      } else {
+        setMsg("Oh no! You didn't pass, would you like to try again?");
+      }
     }
   }, [score, setMsg]);
 
@@ -205,6 +243,11 @@ export const QuizProvider = ({ children }) => {
     time,
     setTimer,
     handleTimerChange,
+
+    abandonQuiz,
+    open,
+    handleOpen,
+    handleClose,
   };
 
   // Return the provider component with the context value

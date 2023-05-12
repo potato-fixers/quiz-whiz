@@ -8,23 +8,8 @@ import Modal from "@mui/material/Modal";
 import { QuizContext } from "./context/QuizContext";
 
 export default function BasicModal({ message }) {
-  const { resetQuiz } = useContext(QuizContext);
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-
-  const handleClick = (e) => {
-    if (e.currentTarget.value === "Yes") {
-      if (message === "Home") {
-        resetQuiz();
-        window.location.href = "/";
-      } else {
-        window.location.href = "/dashboard";
-      }
-    } else {
-      setOpen(false);
-    }
-  };
+  const { open, handleOpen, handleClose, abandonQuiz } =
+    useContext(QuizContext);
 
   return (
     <div>
@@ -43,10 +28,18 @@ export default function BasicModal({ message }) {
             be saved.
           </Typography>
 
-          <Button variant="contained" value="Yes" onClick={handleClick}>
+          <Button
+            variant="contained"
+            value="Yes"
+            onClick={(e) => abandonQuiz(e, message)}
+          >
             Yes
           </Button>
-          <Button variant="contained" value="No" onClick={handleClick}>
+          <Button
+            variant="contained"
+            value="No"
+            onClick={(e) => abandonQuiz(e, message)}
+          >
             No
           </Button>
         </Box>

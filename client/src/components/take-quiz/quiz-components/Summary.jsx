@@ -24,13 +24,13 @@ function Summary({ quizId }) {
     score,
     setScore,
 
-    saveHistory,
+    // saveHistory,
 
-    finished,
-    setFinished,
+    // finished,
+    // setFinished,
 
-    duration,
-    setDuration,
+    // duration,
+    // setDuration,
   } = useContext(QuizContext);
   const { user, isLoggedIn } = useContext(UserContext);
 
@@ -65,7 +65,9 @@ function Summary({ quizId }) {
       // };
       // saveHistory(payload);
     } else {
-      console.log("Thanks for trying us out");
+      console.log(
+        "Thanks for trying us out. Create an Account to Take More Quizzes"
+      );
     }
   }, [userAnswers, correctAs]);
 
