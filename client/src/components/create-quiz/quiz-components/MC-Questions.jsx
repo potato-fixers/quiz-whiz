@@ -4,6 +4,10 @@ const MCQuestions = (props) => {
   return (
     <div className="MCQuestions">
       <form>
+      <button name="MCButton" onClick={props.addFields}>
+          {" "}
+          Add More MC Questions!{" "}
+        </button>
         {props.inputFields.map((input, index) => {
           return (
             <div key={index}>
@@ -73,10 +77,6 @@ const MCQuestions = (props) => {
             </div>
           );
         })}
-        <button name="MCButton" onClick={props.addFields}>
-          {" "}
-          Add More MC Questions!{" "}
-        </button>
       </form>
     </div>
   );
