@@ -97,3 +97,11 @@ li {
   color: var(--charcoal);
   border-radius: 15px;
 }
+
+.right {
+  color: var(--green);
+}
+
+.wrong {
+  color: var(--red);
+}

@@ -5,7 +5,7 @@ import { QuizContext } from "../context/QuizContext";
 
 function Review() {
   const [visible, setVisible] = useState(false);
-  const { userAnswers } = useContext(QuizContext);
+  const { questions, userAnswers } = useContext(QuizContext);
 
   const handleClick = () => {
     setVisible(!visible);
@@ -17,12 +17,33 @@ function Review() {
         <Button onClick={handleClick} variant="contained" color="info">
           Review Your Answers
         </Button>
+
         {visible &&
-          userAnswers.map((a, index) => (
-            <Container key={index}>
-              <Typography>{a.value}</Typography>
-            </Container>
-          ))}
+          userAnswers.map((a, index) => {
+            if (a.key !== "corrAns") {
+              return (
+                <Typography
+                  key={index}
+                  className={a.key === "corrAns" ? "right" : "wrong"}
+                >
+                  #{index + 1} Your Answer: {a.value}{" "}
+                  <Typography sx={{ color: "var(--charcoal)" }}>
+                    Correct Answer: {questions[index]["corrAns"]}
+                  </Typography>
+                  <hr />
+                </Typography>
+              );
+            } else {
+              return (
+                <Typography
+                  key={index}
+                  className={a.key === "corrAns" ? "right" : "wrong"}
+                >
+                  #{index + 1} Your Answer: {a.value} <hr />
+                </Typography>
+              );
+            }
+          })}
       </>
     )
   );
