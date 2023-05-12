@@ -9,13 +9,13 @@ const QuizCounts = (props) => {
     favorites: 0
   });
 
-  const getCounts = () => {
-    // API call here
-    setCounts({
-      quizzes: 0,
-      plays: 0,
-      favorites: 0
-    });
+  const getCounts = async (userId) => {
+    const url = process.env.REACT_APP_API_URI;
+    const response = await fetch(`${url}/dashboard/counts`)
+    if (response.ok) {
+      const data = await response.json();
+      setCounts(data);
+    }
   };
 
   useEffect(() => {
