@@ -7,14 +7,20 @@ import Review from "./Review.jsx";
 import { QuizContext } from "../context/QuizContext";
 
 function Summary({ quizId }) {
-  const { clearAnswers } = useContext(QuizContext);
-  const [msg, setMsg] = useState("Default -- You Haven't Take a Test");
-  const [score, setScore] = useState(0);
-  const [answers, setAnswers] = useState([]);
-  const [correct, setCorrect] = useState(0);
+  const {
+    clearAnswers,
+    userAnswers,
+    getUserAnswers,
+    getCorrectAnswerCount,
+    correctAs,
+    msg,
+    setMsg,
+    score,
+    setScore,
+  } = useContext(QuizContext);
 
   useEffect(() => {
-    setScore(80);
+    getUserAnswers();
   }, []);
 
   useEffect(() => {
@@ -25,23 +31,17 @@ function Summary({ quizId }) {
     } else {
       setMsg("Oh no! You ran out of time. Take another stab at it?");
     }
+  }, [score, setMsg]);
+
+  useEffect(() => {
+    getCorrectAnswerCount();
+    let score = (correctAs / localStorage.length) * 100;
+    setScore(Math.floor(score));
+  }, [userAnswers, correctAs, getCorrectAnswerCount, setScore]);
+
+  useEffect(() => {
+    console.log("Score is:", score + "%");
   }, [score]);
-
-  useEffect(() => {
-    if (localStorage.length) {
-      console.log(localStorage.length);
-      for (var i = 0; i < localStorage.length; i++) {
-        let a = JSON.parse(localStorage.getItem(i));
-        if (a && a.key === "corrAns") {
-          setCorrect((prev) => prev + 1);
-        }
-      }
-    }
-  }, []);
-
-  useEffect(() => {
-    correct && correct > 0 && console.log("Right Answers", correct);
-  }, [correct]);
 
   return (
     <Grid
@@ -61,11 +61,11 @@ function Summary({ quizId }) {
       </Grid>
 
       <Grid item xs={6}>
-        <Typography variant="h4">Score%</Typography>
+        <Typography variant="h4">{score && score}%</Typography>
       </Grid>
 
       <Grid item xs={6}>
-        <Review answers={answers} />
+        <Review answers={userAnswers} />
       </Grid>
 
       <Grid item xs={6}>

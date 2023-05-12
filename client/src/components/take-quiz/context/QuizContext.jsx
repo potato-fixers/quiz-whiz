@@ -11,7 +11,12 @@ export const QuizProvider = ({ children }) => {
   let { id } = useParams();
   const [quizDetails, setQuizDetails] = useState([{}]);
   const [questions, setQuestions] = useState([{}]);
+  const [userAnswers, setUserAnswers] = useState([]);
+  const [correctAs, setCorrectAs] = useState(0);
+  const [msg, setMsg] = useState("Default -- You Haven't Take a Test");
+  const [score, setScore] = useState(0);
 
+  // Set up the Quiz for User
   const fetchQuizData = async (id) => {
     try {
       const payload = await axios({
@@ -40,10 +45,41 @@ export const QuizProvider = ({ children }) => {
     }
   };
 
+  // Clear Old Answers from Previous Quizzes
   const clearAnswers = () => {
     localStorage.clear();
   };
 
+  // Get User's Answers
+  const getUserAnswers = () => {
+    if (localStorage.length) {
+      for (var i = 0; i <= localStorage.length; i++) {
+        let a = JSON.parse(localStorage.getItem(i));
+
+        if (a) {
+          setUserAnswers((prev) => [...prev, a]);
+        }
+      }
+    }
+  };
+
+  const getCorrectAnswerCount = () => {
+    if (localStorage.length) {
+      let count = 0;
+
+      for (var i = 0; i <= localStorage.length; i++) {
+        let a = JSON.parse(localStorage.getItem(i));
+
+        if (a && a.key === "corrAns") {
+          count++;
+        }
+      }
+
+      setCorrectAs(count);
+    }
+  };
+
+  // Update the Quiz Data Based on Current Quiz ID
   useEffect(() => {
     if (id) {
       const data = fetchQuizData(id);
@@ -62,7 +98,7 @@ export const QuizProvider = ({ children }) => {
     }
   }, [id]);
 
-  // Create the context value object with the state and functions
+  // Context to be used in other components
   const ctx = {
     id,
     questions,
@@ -70,6 +106,14 @@ export const QuizProvider = ({ children }) => {
     quizDetails,
     setQuizDetails,
     clearAnswers,
+    userAnswers,
+    getUserAnswers,
+    getCorrectAnswerCount,
+    correctAs,
+    msg,
+    setMsg,
+    score,
+    setScore,
   };
 
   // Return the provider component with the context value

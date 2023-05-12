@@ -17,10 +17,6 @@ function Quiz({ time }) {
     setPage(val);
   };
 
-  useEffect(() => {
-    questions.length > 1 && console.log("Qs (keys?)", questions);
-  }, [questions, setQuestions]);
-
   if (questions.length > 1) {
     return (
       <>
