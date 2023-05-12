@@ -13,7 +13,7 @@ import {
 import { QuizContext } from "../context/QuizContext";
 
 function Begin({ setTimer }) {
-  const { quizDetails, id } = useContext(QuizContext);
+  const { quizDetails, id, clearAnswers } = useContext(QuizContext);
   let quizPath = `/quiz/${id}/question`;
   const [countdown, setCountdown] = useState(300000);
 
@@ -86,7 +86,7 @@ function Begin({ setTimer }) {
 
         <Grid item xs={6}>
           <Link to={quizPath}>
-            <Button variant="contained" color="primary">
+            <Button onClick={clearAnswers} variant="contained" color="primary">
               Begin Quiz
             </Button>
           </Link>

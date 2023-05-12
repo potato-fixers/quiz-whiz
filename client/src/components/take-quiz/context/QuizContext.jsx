@@ -40,6 +40,10 @@ export const QuizProvider = ({ children }) => {
     }
   };
 
+  const clearAnswers = () => {
+    localStorage.clear();
+  };
+
   useEffect(() => {
     if (id) {
       const data = fetchQuizData(id);
@@ -65,6 +69,7 @@ export const QuizProvider = ({ children }) => {
     setQuestions,
     quizDetails,
     setQuizDetails,
+    clearAnswers,
   };
 
   // Return the provider component with the context value

@@ -9,10 +9,10 @@ function Answers({ page, answers }) {
     let selected = Object.values(e.currentTarget.firstChild)[0].stateNode.data;
     keys.forEach((key, index) => {
       if (answers[index] === selected) {
-        selected = key;
+        selected = { key: key, value: selected };
       }
     });
-    localStorage.setItem(`${page}`, selected);
+    localStorage.setItem(`${page}`, JSON.stringify(selected));
   };
 
   return (

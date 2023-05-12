@@ -1,14 +1,17 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import { Grid, Typography, Button } from "@mui/material";
 
 import "../styles/take-quiz.css";
 import Review from "./Review.jsx";
+import { QuizContext } from "../context/QuizContext";
 
 function Summary({ quizId }) {
+  const { clearAnswers } = useContext(QuizContext);
   const [msg, setMsg] = useState("Default -- You Haven't Take a Test");
   const [score, setScore] = useState(0);
-  let answers = [];
+  const [answers, setAnswers] = useState([]);
+  const [correct, setCorrect] = useState(0);
 
   useEffect(() => {
     setScore(80);
@@ -26,12 +29,19 @@ function Summary({ quizId }) {
 
   useEffect(() => {
     if (localStorage.length) {
+      console.log(localStorage.length);
       for (var i = 0; i < localStorage.length; i++) {
-        answers.push(localStorage.key(i));
+        let a = JSON.parse(localStorage.getItem(i));
+        if (a && a.key === "corrAns") {
+          setCorrect((prev) => prev + 1);
+        }
       }
     }
-    answers && console.log("Selected Answers", answers);
-  }, [answers]);
+  }, []);
+
+  useEffect(() => {
+    correct && correct > 0 && console.log("Right Answers", correct);
+  }, [correct]);
 
   return (
     <Grid
@@ -55,18 +65,22 @@ function Summary({ quizId }) {
       </Grid>
 
       <Grid item xs={6}>
-        <Review />
+        <Review answers={answers} />
       </Grid>
 
       <Grid item xs={6}>
         <Link to={`/quiz/${quizId}/start`}>
-          <Button variant="contained">Retake Quiz</Button>
+          <Button onClick={clearAnswers} variant="contained">
+            Retake Quiz
+          </Button>
         </Link>
       </Grid>
 
       <Grid item xs={6}>
         <Link to="/dashboard">
-          <Button variant="contained">More Quizzes</Button>
+          <Button onClick={clearAnswers} variant="contained">
+            More Quizzes
+          </Button>
         </Link>
       </Grid>
     </Grid>
