@@ -6,13 +6,11 @@ import Begin from "./quiz-components/Begin.jsx";
 import Quiz from "./Quiz.jsx";
 import Summary from "./quiz-components/Summary.jsx";
 
-// import useFetch from "./hooks/useFetch";
 import { QuizContext } from "./context/QuizContext";
 
 function TakeQuiz() {
   const [timer, setTimer] = useState(300000);
   const { id } = useContext(QuizContext);
-  // let { id } = useFetch();
 
   return (
     <div className="container">
