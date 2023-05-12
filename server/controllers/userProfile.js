@@ -21,7 +21,8 @@ const getUserInfo = (req, res) => {
 const updateUsername = (req, res) => {
   try {
     // update username
-    res.status(200).send('Username Updated Successfully');
+    console.log('username update log');
+    res.status(200).send('Username Updated Successfully on server');
   } catch (err) {
     console.error(err);
     res.status(500).send('Server Error while updating username');
@@ -31,7 +32,8 @@ const updateUsername = (req, res) => {
 const updatePassword = (req, res) => {
   try {
     // update password
-    res.status(200).send('Password Updated Successfully');
+    console.log('password update log');
+    res.status(200).send('Password Updated Successfully on server');
   } catch (err) {
     console.error(err);
     res.status(500).send('Server Error while updating password');
@@ -41,7 +43,8 @@ const updatePassword = (req, res) => {
 const updateBio = (req, res) => {
   try {
     // update bio
-    res.status(200).send('Bio Updated Successfully');
+    console.log('bio update log');
+    res.status(200).send('Bio Updated Successfully on server');
   } catch (err) {
     console.error(err);
     res.status(500).send('Server Error while updating bio');
@@ -51,7 +54,8 @@ const updateBio = (req, res) => {
 const updateProfilePic = (req, res) => {
   try {
     // update profile pic
-    res.status(200).send('Profile Pic Updated Successfully');
+    console.log('profile pic update log');
+    res.status(200).send('Profile Pic Updated Successfully on server');
   } catch (err) {
     console.error(err);
     res.status(500).send('Server Error while updating profile pic');
