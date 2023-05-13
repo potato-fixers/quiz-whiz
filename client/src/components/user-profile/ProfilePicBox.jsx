@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './styles/profile.css';
-import { Button, TextField, Avatar } from '@mui/material';
+import { Button } from '@mui/material';
 import axios from 'axios';
 
 
