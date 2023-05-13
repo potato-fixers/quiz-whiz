@@ -30,7 +30,7 @@ function Answers({ page, answers }) {
                 {answers[index]}
               </Button>
             );
-          }
+          } else return "";
         })}
       </>
     )
