@@ -13,6 +13,7 @@ const cors = require('cors');
 // =============================================
 app.use(express.json());
 app.use(expressSession);
+// app.use(cors({origin: 'http://localhost:3000'})) // Uncomment this for local testing
 app.use(cors({origin: `${process.env.API_URL}`}))
 
 // =============================================
