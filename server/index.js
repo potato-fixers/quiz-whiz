@@ -2,51 +2,28 @@ require("dotenv").config();
 const express = require('express')
 const app = express();
 const axios = require('axios');
-const port = process.env.SERVER_PORT || 8080;
-const dbMethods = require('./database/index.js')
+const port = process.env.SERVER_PORT | 8080;
 const { dashboard } = require('./routes');
+const expressSession = require('./middlewares/sessions');
+const { create } = require('./routes/index.js')
 const cors = require('cors');
 
 // =============================================
-//                Middleware
+//                Middleware 
 // =============================================
 app.use(express.json());
-app.use(cors(
-  origin: 'http://localhost:3000'
-))
+app.use(expressSession);
+// app.use(cors({origin: 'http://localhost:3000'})) // Uncomment this for local testing
+app.use(cors({origin: `${process.env.API_URL}`}))
 
 // =============================================
-//               Route Imports
+//               Routes
 // =============================================
-app.use('/auth', require('./routes/user-auth-route')); // had to use `/api/cart` bc express assumes the first url param is the product id
-
-app.get('/api', (req, res) => {
-  res.json('Hello Quiz Whiz Backend')
-});
-
+app.use('/auth', require('./routes/user-auth-route'));
 app.use('/quiz', require('./routes/take-quiz'));
+app.use('/dashboard', dashboard);
+app.use('/create', create);
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
-
-// =============================================
-//               Create A Quiz Route
-// =============================================
-app.post('/create', (err, res) => {
-  // what does the quiz form data look like?
-  console.log('incoming data', req.body)
-  // simple db method call using imported function from database index.js
-  dbMethods.createQuiz(req.body, (err, result) => {
-    if (err) {
-      res.status(400).send(err)
-    } else {
-      res.status(200).send(result);
-    }
-  })
-})
-
-// =============================================
-//               Dashboard Routes
-// =============================================
-app.use('/dashboard', dashboard);
