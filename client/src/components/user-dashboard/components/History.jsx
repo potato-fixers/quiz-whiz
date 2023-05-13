@@ -2,14 +2,32 @@ import { Typography, TableBody, TableCell, TableHead, TableRow, Table, Stack } f
 import FilterBar from './subComponents/FilterBar.jsx';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import useQuizzes from '../hooks/useQuizzes';
-import useFilter from '../hooks/useFilter'
+import useFilter from '../hooks/useFilter';
+import useSort from '../hooks/useSort';
+
 const Plays = (props) => {
 
   const quizzes = useQuizzes('history');
   const { filteredData, handleFilterChange, filter } = useFilter(quizzes);
+  const { sortedData, sortData } = useSort(filteredData);
+
+  const headersMapping = {
+    'Quiz': 'quiz_name',
+    'Category': 'category',
+    'Plays': 'plays',
+    'Best Score': 'score',
+    'Best Time': 'duration',
+    'Finished?': 'finished',
+    'Last Played': 'date'
+  };
 
   const handleLike = (e) => {
     console.log('like/unlike');
+  };
+
+  const handleClick = (e) => {
+    const key = headersMapping[e.target.innerText];
+    sortData(key);
   };
 
   return (
@@ -21,17 +39,17 @@ const Plays = (props) => {
       <Table sx={{ width: '100%' }} aria-label='simple table'>
         <TableHead >
           <TableRow>
-            <TableCell align='left'>Quiz</TableCell>
-            <TableCell align='center'>Category</TableCell>
-            <TableCell align='center'>Plays</TableCell>
-            <TableCell align='center'>Best Score</TableCell>
-            <TableCell align='center'>Best Time</TableCell>
-            <TableCell align='center'>Finished?</TableCell>
-            <TableCell align='right'>Last Played</TableCell>
+            <TableCell align='left' onClick={handleClick} >Quiz</TableCell>
+            <TableCell align='center' onClick={handleClick} >Category</TableCell>
+            <TableCell align='center' onClick={handleClick} >Plays</TableCell>
+            <TableCell align='center' onClick={handleClick} >Best Score</TableCell>
+            <TableCell align='center' onClick={handleClick} >Best Time</TableCell>
+            <TableCell align='center' onClick={handleClick} >Finished?</TableCell>
+            <TableCell align='right' onClick={handleClick} >Last Played</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {filteredData.map((row) => (
+          {sortedData.map((row) => (
             <TableRow
               key={row.id}
             >

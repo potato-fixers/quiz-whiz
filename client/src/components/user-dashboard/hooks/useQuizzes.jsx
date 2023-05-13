@@ -3,12 +3,15 @@ import { useState, useEffect } from 'react';
 const useQuizzes = (tab) => {
   const [quizzes, setQuizzes] = useState([]);
 
-  const getQuizzes = async (userId) => {
+  const getQuizzes = (userId) => {
     const url = process.env.REACT_APP_API_URI;
-    const response = await fetch(`${url}/dashboard/${tab}`);
-    if (response.ok) {
-      setQuizzes(await response.json());
-    }
+    fetch(`${url}/dashboard/${tab}`)
+    .then( async (res) => {
+      setQuizzes(await res.json());
+    })
+    .catch(err => {
+      console.error(err.stack);
+    });
   };
 
   useEffect(() => {
