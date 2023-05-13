@@ -14,6 +14,7 @@ CREATE TABLE quizzes(
   category TEXT, 
   difficulty TEXT, 
   quiz_name TEXT, 
+  created_at DATE NOT NULL DEFAULT CURRENT_DATE,
   PRIMARY KEY(id)
 );
 
@@ -23,7 +24,7 @@ SAVEPOINT quizzes_table_created;
 -- QUESTIONS TABLE
 -- ----------------------
 CREATE TABLE questions(
-  id INT, 
+  id SERIAL 
   quiz_id INT, 
   questions TEXT, 
   PRIMARY KEY(id), 
