@@ -4,45 +4,46 @@ import "../styles/create-quiz.css";
 const Categories = (props) => {
   return (
     <div className="Categories">
+      <h1> Choose Your Category </h1>
       <button
-        name="category1"
-        className={`category${props.category1 ? "chosen" : ""}`}
+        name="Art"
+        className={`category${props.art ? "chosen" : ""}`}
         onClick={props.select}
       >
         {" "}
-        Category 1{" "}
+        Art{" "}
       </button>
       <button
-        name="category2"
-        className={`category${props.category2 ? "chosen" : ""}`}
+        name="General Knowledge"
+        className={`category${props.general ? "chosen" : ""}`}
         onClick={props.select}
       >
         {" "}
-        Category 2{" "}
+        General Knowledge{" "}
       </button>
       <button
-        name="category3"
-        className={`category${props.category3 ? "chosen" : ""}`}
+        name="History"
+        className={`category${props.history ? "chosen" : ""}`}
         onClick={props.select}
       >
         {" "}
-        Category 3{" "}
+        History{" "}
       </button>
       <button
-        name="category4"
-        className={`category${props.category4 ? "chosen" : ""}`}
+        name="Politics"
+        className={`category${props.politics ? "chosen" : ""}`}
         onClick={props.select}
       >
         {" "}
-        Category 4{" "}
+        Politics{" "}
       </button>
       <button
-        name="category5"
-        className={`category${props.category5 ? "chosen" : ""}`}
+        name="Sports"
+        className={`category${props.sports ? "chosen" : ""}`}
         onClick={props.select}
       >
         {" "}
-        Category 5{" "}
+        Sports{" "}
       </button>
     </div>
   );
