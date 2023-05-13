@@ -7,7 +7,7 @@ import Timer from "./quiz-components/Timer.jsx";
 import Question from "./quiz-components/Question.jsx";
 import Answers from "./quiz-components/Answers.jsx";
 
-import useFetch from "./hooks/useFetch.jsx";
+// import useFetch from "./hooks/useFetch.jsx";
 
 function Quiz({ time, quizId }) {
   const [page, setPage] = useState(1);

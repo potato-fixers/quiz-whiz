@@ -7,7 +7,6 @@ import {
   Button,
   Select,
   FormControl,
-  InputLabel,
   MenuItem,
 } from "@mui/material";
 import useFetch from "../hooks/useFetch";
