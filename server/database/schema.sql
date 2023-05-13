@@ -7,6 +7,7 @@ CREATE SCHEMA quizwhiz;
 -- ----------------------
 -- QUIZZES TABLE
 -- ----------------------
+
 CREATE TABLE quizzes(
   id SERIAL, 
   user_id TEXT, 

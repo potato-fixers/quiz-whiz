@@ -12,7 +12,7 @@ import { useNavigate } from 'react-router-dom';
 
 const Dashboard = (props) => {
 
-  const tabs = ['', 'my-quizzes', 'history', 'favorites']; // Overview is default dashboard
+  const tabs = ['', 'quizzes', 'history', 'favorites']; // Overview is default dashboard
 
   const [activeTab, setActiveTab] = useState(0);
   const navigate = useNavigate();
@@ -38,10 +38,10 @@ const Dashboard = (props) => {
   }, [activeTab]);
 
   return (
-    <Container maxWidth='lg'>
+    <Container maxWidth='xl'>
       <DashTop />
       <TabsBar activeTab={activeTab} setActiveTab={setActiveTab} />
-      <QuizCounts activeTab={activeTab} />
+      <QuizCounts activeTab={activeTab}/>
       <TabPanel />
     </Container>
   );
