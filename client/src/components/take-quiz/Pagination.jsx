@@ -1,8 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Button } from "@mui/material";
 import { usePagination } from "./hooks/usePagination";
+import BasicModal from "./Modal";
+import { UserContext } from "../global/UserContext";
 
 const Pagination = (props) => {
+  const { isLoggedIn } = useContext(UserContext);
+
   const {
     onPageChange,
     totalQuestions,
@@ -28,7 +32,7 @@ const Pagination = (props) => {
     if (currentPage !== lastPage) {
       onPageChange(currentPage + 1);
     } else {
-      window.location.href = "/quiz/:id/summary";
+      window.location.href = `/quiz/${props.quizId}/summary`;
     }
   };
 
@@ -39,19 +43,21 @@ const Pagination = (props) => {
   return (
     <ul id="pagination">
       <li className="arrow left" onClick={onPrevious}>
-        <Button>&lt;</Button>
+        <Button variant="contained">&lt;</Button>
       </li>
 
-      {paginationRange.map((pageNumber) => {
-        return (
-          <li key={pageNumber} onClick={() => onPageChange(pageNumber)}>
-            <Button>{pageNumber}</Button>
-          </li>
-        );
-      })}
+      {isLoggedIn ? (
+        <BasicModal message="My Dashboard" />
+      ) : (
+        <BasicModal message="Back Home" />
+      )}
 
       <li className="arrow right" onClick={onNext}>
-        <Button>&gt;</Button>
+        {currentPage === lastPage ? (
+          <Button variant="contained">Submit</Button>
+        ) : (
+          <Button variant="contained">&gt;</Button>
+        )}
       </li>
     </ul>
   );

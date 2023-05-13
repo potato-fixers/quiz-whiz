@@ -2,12 +2,11 @@
 import "../styles/take-quiz.css";
 import { Typography } from "@mui/material";
 
-function Question({ question }) {
+function Question({ quizId, question, currentKey }) {
   return (
     question && (
       <>
         <Typography variant="h4">{question}</Typography>
-        {/* <div className="test">Try sticking db data in here</div> */}
       </>
     )
   );

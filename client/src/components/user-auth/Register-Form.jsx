@@ -19,7 +19,7 @@ export default function RegisterForm() {
     event.preventDefault();
 
     try {
-      await axios.post(`${process.env.REACT_APP_API_URL}/auth/register`,
+      await axios.post(`${process.env.REACT_APP_API_URI}/auth/register`,
         {
           first_name: firstName.value,
           last_name: lastName.value,
@@ -30,7 +30,7 @@ export default function RegisterForm() {
           profile_img: profileImage
         }
       );
-      navigate('/signin');
+      navigate('/login');
     } catch (error) {
       alert('Uh oh, we have trouble processing your request, please try again later');
       //to remove at produciton

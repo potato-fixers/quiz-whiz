@@ -2,15 +2,37 @@
 const axios = require('axios');
 const pool = require('../../config/index');
 
-const fetch = async (cb) => {
+const fetch = async (quizId, table, cb) => {
+  // console.log('Quiz ID is', quizId);
+
+  const query = !quizId ? `
+  SELECT * FROM quizzes LIMIT 5` 
+  : `SELECT * FROM ${table} WHERE ${table === 'quizzes' ? "id" : "quiz_id"}=${quizId}
+  `; 
+
   try {
-    //Test out an endpoint
-    const { rows } = await pool.query('SELECT * FROM quizzes');
-    console.log('FETCH RESULT: ', rows);
+    console.log('Query String Was:', query);
+    const { rows } = await pool.query(query);
+    console.log('Take Quiz Fetch Result: ', rows);
     cb(null,  rows);
   } catch (err) {
     cb(err);
   }
 };
 
-module.exports = fetch;
+const saveScore = async (payload, cb) => {
+  console.log('Quiz Payload from saveScore util', payload);
+
+  const query = `INSERT INTO history("user_id", "quiz_id", "score", "duration", "finished") VALUES('${payload.user_id}', '${payload.quiz_id}', '${payload.score}', '${payload.duration}', '${payload.finished}')`; 
+
+  try {
+    console.log('Query String Was:', query);
+    // const { rows } = await pool.query(query);
+    // console.log('Take Quiz Save Score Result: ', rows);
+    cb(null,  rows);
+  } catch (err) {
+    cb(err);
+  }
+};
+
+module.exports = { fetch, saveScore };
