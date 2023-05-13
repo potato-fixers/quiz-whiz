@@ -12,7 +12,7 @@ let DB_PORT = process.env.DB_PORT;
 // Connection String Pattern
 // schema://user:password@host:port/db_name
 // let dbString = `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}`;
-let dbString = `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}`;
+let dbString = `postgres://${DB_USER}:${DB_PASSWORD}@$postgres:${DB_PORT}/${DB_NAME}`;
 let pool = new Pool({ connectionString: dbString });
 
 module.exports = pool;
