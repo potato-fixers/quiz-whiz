@@ -3,7 +3,6 @@ require('dotenv').config({ path: path.join(__dirname, `../../.env.server`) });
 const { Pool } = require('pg');
 
 // DB Connection Config
-let DB_URL = process.env.DB_URL;
 let DB_USER = process.env.DB_USER;
 let DB_PASSWORD = process.env.DB_PASSWORD;
 let DB_HOST = process.env.DB_HOST;

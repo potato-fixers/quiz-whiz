@@ -4,6 +4,7 @@ on:
   pull_request:
     branches:
       - main
+      - cd-test
     types: [closed]
 
 jobs:
@@ -41,11 +42,9 @@ jobs:
           username: ubuntu
           key: ${{ secrets.PASSWORD  }}
           script: |
+            echo "${{ secrets.CLIENT_ENV_FILE }}" > /home/ubuntu/quiz-whiz/client/.env
             docker login
             docker stop quizwhiz
             docker rm quizwhiz
-            docker rmi -f $(docker images -aq)
-            docker builder prune -a -f
-            docker pull gbmytabc/quiz-whiz:latest
-            docker run -d --name quizwhiz -p 3000:3000 gbmytabc/quiz-whiz:latest
+            docker run -d --name quizwhiz -p 3000:3000 --env-file /home/ubuntu/quiz-whiz/client/.env gbmytabc/quiz-whiz:latest
   
