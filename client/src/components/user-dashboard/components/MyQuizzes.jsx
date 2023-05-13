@@ -1,17 +1,33 @@
 import { Typography, TableBody, TableCell, TableHead, TableRow, Table, Stack } from '@mui/material';
-import FilterBar from './subComponents/FilterBar.jsx';
+import FilterBar from './subComponents/FilterBar';
 import ClearIcon from '@mui/icons-material/Clear';
 import useQuizzes from '../hooks/useQuizzes';
 import useFilter from '../hooks/useFilter';
+import useSort from '../hooks/useSort';
 
 const MyQuizzes = (props) => {
 
   const quizzes = useQuizzes('quizzes');
   const { filteredData, handleFilterChange, filter } = useFilter(quizzes);
+  const { sortedData, sortData } = useSort(filteredData);
+
+  const headersMapping = {
+    'Quiz': 'quiz_name',
+    'Category': 'category',
+    'Type': 'type',
+    'Plays': 'plays',
+    'Likes': 'likes',
+    'Created At': 'created_at'
+  };
 
   // handle deleting quiz
   const handleDelete = (e) => {
     console.log('delete');
+  };
+
+  const handleClick = (e) => {
+    const key = headersMapping[e.target.innerText];
+    sortData(key);
   };
 
   return (
@@ -24,16 +40,16 @@ const MyQuizzes = (props) => {
       <Table sx={{ width: '100%' }} aria-label="simple table">
         <TableHead >
           <TableRow>
-            <TableCell align='left'>Quiz</TableCell>
-            <TableCell align='center'>Category</TableCell>
-            <TableCell align='center'>Type</TableCell>
-            <TableCell align='center'>Plays</TableCell>
-            <TableCell align='center'>Likes</TableCell>
-            <TableCell align='right'>Created At</TableCell>
+            <TableCell align='left' onClick={handleClick} >Quiz</TableCell>
+            <TableCell align='center' onClick={handleClick} >Category</TableCell>
+            <TableCell align='center' onClick={handleClick} >Type</TableCell>
+            <TableCell align='center' onClick={handleClick} >Plays</TableCell>
+            <TableCell align='center' onClick={handleClick} >Likes</TableCell>
+            <TableCell align='right' onClick={handleClick} >Created At</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {filteredData.map((row) => (
+          {sortedData.map((row) => (
             <TableRow
               key={row.id}
             >
