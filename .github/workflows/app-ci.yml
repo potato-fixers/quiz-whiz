@@ -5,7 +5,6 @@ on:
     branches:
     - ci
     - main
-    - ci-test-npm-i
   pull_request:
     branches:
     - ci
