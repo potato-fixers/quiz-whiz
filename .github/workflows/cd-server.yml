@@ -42,10 +42,9 @@ jobs:
           username: ubuntu
           key: ${{ secrets.SERVER_KEY  }}
           script: |
-            pwd
-            touch /home/ubuntu/quiz-whiz/server/.env
             echo "${{ secrets.SERVER_ENV_FILE }}" > /home/ubuntu/quiz-whiz/server/.env
-            cat .env
+            cat /home/ubuntu/quiz-whiz/server/.env
+            echo "${{ secrets.SERVER_DOCKERFILE }}" > /home/ubuntu/quiz-whiz/server/Dockerfile
             docker login
             docker stop quizwhiz-server
             docker rm quizwhiz-server
