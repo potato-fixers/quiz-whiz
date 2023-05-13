@@ -2,10 +2,11 @@ import { Typography, TableBody, TableCell, TableHead, TableRow, Table, Stack } f
 import FilterBar from './subComponents/FilterBar.jsx';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import useQuizzes from '../hooks/useQuizzes';
-
+import useFilter from '../hooks/useFilter'
 const Plays = (props) => {
 
   const quizzes = useQuizzes('history');
+  const { filteredData, handleFilterChange, filter } = useFilter(quizzes);
 
   const handleLike = (e) => {
     console.log('like/unlike');
@@ -15,12 +16,13 @@ const Plays = (props) => {
     <>
       <Stack direction='row' >
         <Typography variant='h4' sx={{ flexGrow: 1}}>History</Typography>
-        <FilterBar />
+        <FilterBar onFilterChange={handleFilterChange} category={filter.category} />
       </Stack>
       <Table sx={{ width: '100%' }} aria-label='simple table'>
         <TableHead >
           <TableRow>
             <TableCell align='left'>Quiz</TableCell>
+            <TableCell align='center'>Category</TableCell>
             <TableCell align='center'>Plays</TableCell>
             <TableCell align='center'>Best Score</TableCell>
             <TableCell align='center'>Best Time</TableCell>
@@ -29,12 +31,15 @@ const Plays = (props) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {quizzes.map((row) => (
+          {filteredData.map((row) => (
             <TableRow
               key={row.id}
             >
               <TableCell align='left' sx={{ border: 0 }}>
                 {row.quiz_name}
+              </TableCell>
+              <TableCell align='center' sx={{ border: 0 }}>
+                {row.category}
               </TableCell>
               <TableCell align='center' sx={{ border: 0 }}>
                 {row.plays}

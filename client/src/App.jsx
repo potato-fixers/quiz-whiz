@@ -1,6 +1,7 @@
 import "./styles/App.css";
 import { Route, Routes } from "react-router-dom";
-import { Typography } from "@mui/material";
+import { Route, Routes } from "react-router-dom";
+
 import Nav from "./Nav.jsx";
 import TakeQuiz from "./components/take-quiz/TakeQuiz.jsx";
 import Dashboard from "./components/user-dashboard/Dashboard.jsx";
@@ -14,6 +15,7 @@ function App() {
     <>
       <Nav />
       <Routes>
+        <Route path="/*" element={<Landing />}></Route>
         <Route
           path="/*"
           element={
