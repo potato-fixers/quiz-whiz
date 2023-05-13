@@ -4,14 +4,11 @@ FROM node:alpine
 # copy the application files into the container
 COPY ./ ./
 
-# Expose Port 3000
-EXPOSE 3000
+# Expose Port 8080
 EXPOSE 8080
 
 # install deps
-RUN npm run install
+RUN npm install
 
-# Run build
-WORKDIR /client/
-
-CMD ["npm", "start"]
+# Start Server
+CMD ["npm", "run", "start-node"]

@@ -1,5 +1,5 @@
 const bcrypt = require("bcrypt");
-// const users = require("../database/models/index")
+const { users } = require("../../database/models/index");
 
 const saltRounds = 9;
 const memoryFactor = 256;
@@ -13,13 +13,20 @@ module.exports = {
   },
 
   register: async (req, res) => {
-    //salt password
     try {
+      //salt password
       salt = await bcrypt.genSalt(saltRounds);
-      hash = await bcrypt.hash(password, salt, null, memoryFactor, parallelismFactor);
+      hash = await bcrypt.hash(req.body.password, salt, null, memoryFactor, parallelismFactor);
       //store hash including generated salt
+      req.body.password = hash;
+      req.body.salt = salt;
+      //create account
+      await users.createAcc(req.body);
+      res.status(201).end();
     } catch (err) {
       console.log(err);
+      res.status(409).end();
     }
+    return;
   }
 }

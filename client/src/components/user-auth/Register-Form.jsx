@@ -1,5 +1,5 @@
 import useInput from './hooks/useInput.jsx';
-// import axios from 'axios';
+import axios from 'axios';
 import { useState } from 'react';
 import { useNavigate } from "react-router-dom"
 
@@ -17,13 +17,19 @@ export default function RegisterForm() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(profileImage);
 
     try {
-      // await axios.post(`${process.env.REACT_APP_API_URL}/auth/register`,
-      //   { firstName, lastName, email, password, username, bio }
-      // );
-      await Promise.resolve();
+      await axios.post(`${process.env.REACT_APP_API_URL}/auth/register`,
+        {
+          first_name: firstName.value,
+          last_name: lastName.value,
+          email: email.value,
+          password: password.value,
+          username: username.value,
+          bio: bio.value,
+          profile_img: profileImage
+        }
+      );
       navigate('/signin');
     } catch (error) {
       alert('Uh oh, we have trouble processing your request, please try again later');
@@ -120,7 +126,7 @@ export default function RegisterForm() {
             accept="image/*"
             onChange={handleFileChange}
           />
-          {profileImage && <img src={profileImage} style={{width: '100px', height: '100px'}} alt="upload profile"/>}
+          {profileImage && <img src={profileImage} style={{ width: '100px', height: '100px' }} alt="upload profile" />}
         </div>
         <button type="submit">Register</button>
       </form>
