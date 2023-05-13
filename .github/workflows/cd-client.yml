@@ -42,6 +42,8 @@ jobs:
           username: ubuntu
           key: ${{ secrets.PASSWORD }}
           script: |
+            echo "${{ secrets.CLIENT_ENV_FILE }}" > ./quiz-whiz/client/.env
+            cat .env
             docker login
             docker pull gbmytabc/quiz-whiz:latest
             docker stop quizwhiz
