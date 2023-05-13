@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "@mui/material";
 import { usePagination } from "./hooks/usePagination";
-
+import BasicModal from "./Modal";
 const Pagination = (props) => {
   const {
     onPageChange,
@@ -39,19 +39,18 @@ const Pagination = (props) => {
   return (
     <ul id="pagination">
       <li className="arrow left" onClick={onPrevious}>
-        <Button>&lt;</Button>
+        <Button variant="contained">&lt;</Button>
       </li>
 
-      {paginationRange.map((pageNumber) => {
-        return (
-          <li key={pageNumber} onClick={() => onPageChange(pageNumber)}>
-            <Button>{pageNumber}</Button>
-          </li>
-        );
-      })}
+      <BasicModal message="Home" />
+      <BasicModal message="My Dashboard" />
 
       <li className="arrow right" onClick={onNext}>
-        <Button>&gt;</Button>
+        {currentPage === lastPage ? (
+          <Button variant="contained">Submit</Button>
+        ) : (
+          <Button variant="contained">&gt;</Button>
+        )}
       </li>
     </ul>
   );
