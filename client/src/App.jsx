@@ -1,6 +1,6 @@
 import "./styles/App.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import { Typography } from "@mui/material";
+// import { Typography } from "@mui/material";
 import Nav from "./Nav.jsx";
 import TakeQuiz from "./components/take-quiz/TakeQuiz.jsx";
 import Dashboard from "./components/user-dashboard/Dashboard.jsx";
