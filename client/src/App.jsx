@@ -8,24 +8,28 @@ import Login from "../src/pages/Login";
 import Register from "../src/pages/Register";
 import UserProfilePage from './components/user-profile/UserProfilePage.jsx';
 import CreateQuiz from './components/create-quiz/CreateQuiz.jsx';
-import Landing from './components/home-landing/Landing.jsx'
+import Landing from './components/home-landing/Landing.jsx';
+import { UserProvider } from './components/global/UserContext.jsx';
+
 
 function App() {
   return (
-    <Router>
-      <Nav />
-      <Routes>
-        <Route path="/*" element={<Landing />}></Route>
+    <UserProvider>
+      <Router>
+        <Nav />
+        <Routes>
+          <Route path="/*" element={<Landing />}></Route>
 
-        <Route path="/quiz/:id/*" element={<TakeQuiz />}></Route>
-        <Route path="dashboard/*" element={<Dashboard />}></Route>
+          <Route path="/quiz/:id/*" element={<TakeQuiz />}></Route>
+          <Route path="dashboard/*" element={<Dashboard />}></Route>
 
-        <Route path="/login/" element={<Login />}></Route>
-        <Route path="/register/" element={<Register />}></Route>
-        <Route path="/settings/" element={<UserProfilePage/>}></Route>
-        <Route path='/createQuiz/' element={<CreateQuiz />}></Route>
-      </Routes>
-    </Router>
+          <Route path="/login/" element={<Login />}></Route>
+          <Route path="/register/" element={<Register />}></Route>
+          <Route path="/settings/" element={<UserProfilePage />}></Route>
+          <Route path='/createQuiz/' element={<CreateQuiz />}></Route>
+        </Routes>
+      </Router>
+    </UserProvider>
   );
 }
 
