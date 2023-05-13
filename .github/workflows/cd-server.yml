@@ -1,4 +1,4 @@
-name: Quiz Whiz CD
+name: Quiz Whiz Deploy Server
 
 on:
   pull_request:
@@ -29,21 +29,25 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v4
         with:
-          context: .
-          file: ./Dockerfile
+          context: ./server
+          file: ./server/Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/quiz-whiz:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/quizwhiz-server:latest
 
       - name: Deploy to EC2
         uses: appleboy/ssh-action@v0.1.10
         with:
-          host: ${{ secrets.HOST }}
+          host: ${{ secrets.SERVER_HOST }}
           username: ubuntu
-          key: ${{ secrets.PASSWORD }}
+          key: ${{ secrets.SERVER_KEY  }}
           script: |
+            echo "${{ secrets.SERVER_ENV_FILE }}" > /home/ubuntu/quiz-whiz/server/.env
             docker login
-            docker pull gbmytabc/quiz-whiz:latest
-            docker stop quizwhiz
-            docker rm quizwhiz
-            docker run -d --name quizwhiz -p 3000:3000 gbmytabc/quiz-whiz:latest
+            docker stop quizwhiz-server
+            docker rm quizwhiz-server
+            docker rmi -f $(docker images -aq)
+            docker builder prune -a -f
+            docker pull gbmytabc/quizwhiz-server:latest
+            docker run -d --name quizwhiz-server -p 8080:8080 gbmytabc/quizwhiz-server:latest
+            docker cp /home/ubuntu/quiz-whiz/server/.env quizwhiz-server:/.
   

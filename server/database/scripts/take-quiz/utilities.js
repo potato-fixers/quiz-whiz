@@ -2,7 +2,7 @@
 const axios = require('axios');
 const pool = require('../../config/index');
 
-fetch = async (cb) => {
+const fetch = async (cb) => {
   try {
     //Test out an endpoint
     const { rows } = await pool.query('SELECT * FROM quizzes');
