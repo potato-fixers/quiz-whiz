@@ -1,57 +1,56 @@
-import { Box, Button, TextField } from '@mui/material';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import './styles/profile.css';
+import { Button } from '@mui/material';
+import axios from 'axios';
+
+
+
 
 const ProfilePicBox = (props) => {
-  const [editing, setEditing] = useState(false);
-  const [profilePic, setProfilePic] = useState('pic');
+  // TODO: Update this with the logged in userid.
+  const userid = 1;
 
-  const handleEditClick = () => {
-    setEditing(true);
+  const [selectedFile, setSelectedFile] = useState(null);
+
+  const handleFileChange = (event) => {
+    setSelectedFile(event.target.files[0]);
   };
 
-  const handleCancelClick = () => {
-    setEditing(false);
-  };
-
-  const handleSaveClick = () => {
-    setEditing(false);
-  };
-
-  const handleUsernameChange = (event) => {
-    setProfilePic(event.target.value);
+  const handleUploadClick = (event) => {
+    event.preventDefault();
+    console.log(selectedFile);
+    const formData = new FormData();
+    formData.append("image", selectedFile);
+    axios.put(`${process.env.REACT_APP_API_URI}${props.saveRoute}`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+      params: {
+        id: userid
+      }
+    })
+    .then(res => {
+      if (res.status === 200) {
+        console.log('Photo updated successfully!');
+      } else {
+        console.error('Failed to update photo.');
+      }
+    })
+    .catch(error => {
+      console.error(error);
+    });
   };
 
   return (
-    <Box className="username-box">
-      <h3>Profile Picture</h3>
-      {editing ? (
-        <>
-          <TextField
-            className="usernameInput"
-            label="Username"
-            variant="outlined"
-            value={profilePic}
-            onChange={handleUsernameChange}
-          />
-          <div className="cancelSaveButtons">
-            <Button variant="contained" onClick={handleCancelClick}>
-              Cancel
-            </Button>
-            <Button variant="contained" color="primary" onClick={handleSaveClick}>
-              Save
-            </Button>
-          </div>
-        </>
-      ) : (
-        <>
-          <p>{profilePic}</p>
-          <Button className="editButton" variant="contained" onClick={handleEditClick}>
-            Edit
-          </Button>
-        </>
-      )}
-    </Box>
+    <>
+      { props.img ? (
+        <img className="user-profile-image" src={props.img} alt="User profile" />
+      ) : <> </>}
+      <input type="file" onChange={handleFileChange} />
+      <Button variant="contained" color="primary" onClick={handleUploadClick}>
+        Upload
+      </Button>
+    </>
   );
 }
 

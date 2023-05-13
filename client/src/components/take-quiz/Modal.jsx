@@ -1,25 +1,15 @@
-import * as React from "react";
+import { useContext } from "react";
+
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 
-export default function BasicModal({ message }) {
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+import { QuizContext } from "./context/QuizContext";
 
-  const handleClick = (e) => {
-    if (e.currentTarget.value === "Yes") {
-      if (message === "Home") {
-        window.location.href = "/";
-      } else {
-        window.location.href = "/dashboard";
-      }
-    } else {
-      setOpen(false);
-    }
-  };
+export default function BasicModal({ message }) {
+  const { open, handleOpen, handleClose, abandonQuiz } =
+    useContext(QuizContext);
 
   return (
     <div>
@@ -38,10 +28,18 @@ export default function BasicModal({ message }) {
             be saved.
           </Typography>
 
-          <Button variant="contained" value="Yes" onClick={handleClick}>
+          <Button
+            variant="contained"
+            value="Yes"
+            onClick={(e) => abandonQuiz(e, message)}
+          >
             Yes
           </Button>
-          <Button variant="contained" value="No" onClick={handleClick}>
+          <Button
+            variant="contained"
+            value="No"
+            onClick={(e) => abandonQuiz(e, message)}
+          >
             No
           </Button>
         </Box>

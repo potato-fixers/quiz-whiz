@@ -64,7 +64,7 @@ li {
   font-size: 2.5rem;
 }
 
-#countdown {
+#time {
   width: 12rem;
   border-radius: 30px;
 }
@@ -96,4 +96,12 @@ li {
   padding: 20px;
   color: var(--charcoal);
   border-radius: 15px;
+}
+
+.right {
+  color: var(--green);
+}
+
+.wrong {
+  color: var(--red);
 }

@@ -14,17 +14,25 @@ import UserProfilePage from "./components/user-profile/UserProfilePage.jsx";
 import TakeQuiz from "./components/take-quiz/TakeQuiz.jsx";
 import CreateQuiz from "./components/create-quiz/CreateQuiz.jsx";
 
+import { QuizProvider } from "./components/take-quiz/context/QuizContext";
 function App() {
   return (
     <Router>
       <Nav />
       <Routes>
         <Route path="/*" element={<Landing />}></Route>
-        <Route path="/quiz/:id/*" element={<TakeQuiz />}></Route>
-        <Route path="dashboard/*" element={<Dashboard />}></Route>
         <Route path="/login/" element={<Login />}></Route>
         <Route path="/register/" element={<Register />}></Route>
         <Route path="/settings/" element={<UserProfilePage />}></Route>
+        <Route path="dashboard/*" element={<Dashboard />}></Route>
+        <Route
+          path="/quiz/:id/*"
+          element={
+            <QuizProvider>
+              <TakeQuiz />
+            </QuizProvider>
+          }
+        ></Route>
         <Route path="/createQuiz/" element={<CreateQuiz />}></Route>
       </Routes>
     </Router>

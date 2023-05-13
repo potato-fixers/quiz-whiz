@@ -1,27 +1,61 @@
-import { useState, useEffect } from "react";
+import "../styles/take-quiz.css";
+
+import { useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import { Grid, Typography, Button } from "@mui/material";
 
-import "../styles/take-quiz.css";
 import Review from "./Review.jsx";
 
+import { QuizContext } from "../context/QuizContext";
+import { UserContext } from "../../global/UserContext";
+
 function Summary({ quizId }) {
-  const [msg, setMsg] = useState("Default -- You Haven't Take a Test");
-  const [score, setScore] = useState(0);
+  const {
+    resetQuiz,
+
+    userAnswers,
+    getUserAnswers,
+
+    correctAs,
+    msg,
+
+    score,
+    calculateScore,
+
+    // saveHistory,
+
+    finished,
+    setFinished,
+
+    duration,
+    formatDuration,
+  } = useContext(QuizContext);
+  const { user, isLoggedIn } = useContext(UserContext);
 
   useEffect(() => {
-    setScore(80);
+    getUserAnswers();
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
-    if (score > 60) {
-      setMsg("Congratulations, You Passed! Try out one of our other quizzes?");
-    } else if (score <= 60) {
-      setMsg("Oh no! You didn't pass, would you like to try again?");
-    } else {
-      setMsg("Oh no! You ran out of time. Take another stab at it?");
+    calculateScore();
+    setFinished(true);
+
+    if (isLoggedIn) {
+      // add score to user quiz history
+      let payload = {
+        user: user,
+        score: score,
+        quiz_id: quizId,
+        duration: formatDuration(duration),
+        finished: finished,
+      };
+      console.log("Saving your score", payload);
+
+      // saveHistory(payload);
     }
-  }, [score]);
+    // eslint-disable-next-line
+  }, [userAnswers, correctAs]);
 
   return (
     <Grid
@@ -33,30 +67,30 @@ function Summary({ quizId }) {
       columnSpacing={{ xs: 1, sm: 2, md: 3 }}
     >
       <Grid item xs={6}>
-        <Typography variant="h6">Conditional Message</Typography>
-      </Grid>
-
-      <Grid item xs={6}>
         <Typography variant="h6">{msg && msg}</Typography>
       </Grid>
 
       <Grid item xs={6}>
-        <Typography variant="h4">Score%</Typography>
+        <Typography variant="h4">{score && score}%</Typography>
       </Grid>
 
       <Grid item xs={6}>
-        <Review />
+        <Review userAnswers={userAnswers} />
       </Grid>
 
       <Grid item xs={6}>
-        <Link to="/quiz/:id/start">
-          <Button variant="contained">Retake Quiz</Button>
+        <Link to={`/quiz/${quizId}/start`}>
+          <Button onClick={resetQuiz} variant="contained">
+            Retake Quiz
+          </Button>
         </Link>
       </Grid>
 
       <Grid item xs={6}>
-        <Link to="/dashboard">
-          <Button variant="contained">More Quizzes</Button>
+        <Link to="/">
+          <Button onClick={resetQuiz} variant="contained">
+            More Quizzes
+          </Button>
         </Link>
       </Grid>
     </Grid>
