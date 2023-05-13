@@ -5,7 +5,7 @@ import { Grid, Typography, Button } from "@mui/material";
 import "../styles/take-quiz.css";
 import Review from "./Review.jsx";
 
-function Summary() {
+function Summary({ quizId }) {
   const [msg, setMsg] = useState("Default -- You Haven't Take a Test");
   const [score, setScore] = useState(0);
 

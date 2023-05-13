@@ -7,8 +7,13 @@ import Timer from "./quiz-components/Timer.jsx";
 import Question from "./quiz-components/Question.jsx";
 import Answers from "./quiz-components/Answers.jsx";
 
-function Quiz() {
+// import useFetch from "./hooks/useFetch.jsx";
+
+function Quiz({ time, quizId }) {
   const [page, setPage] = useState(1);
+  // const { questions, setQuestions } = useFetch(quizId);
+
+  // console.log("Quiz Questions from fetch hook", questions);
   const [questions, setQuestions] = useState([
     {
       question: "What is the Answer to this Question?",
@@ -49,11 +54,11 @@ function Quiz() {
         columnSpacing={{ xs: 1, sm: 2, md: 3 }}
       >
         <Grid item xs={6}>
-          <Timer />
+          <Timer time={time} />
         </Grid>
 
         <Grid item xs={6}>
-          <Question question={questions[page - 1].question} />
+          <Question quizId={quizId} question={questions[page - 1].question} />
         </Grid>
 
         <Grid item xs={6}>
