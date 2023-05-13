@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const fetch = require("../database/scripts/take-quiz/utilities");
+const { fetch } = require("../database/scripts/take-quiz/utilities");
 
 router.get('/', (req, res) => {
   res.send('Hello Take Quiz on 8080')
