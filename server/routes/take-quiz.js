@@ -9,7 +9,8 @@ router.get('/', (req, res) => {
 // Title might be cleaner in the URL slug than the quiz ID. Get team input
 // router.get('/:quiz_title/start', (req, res) => {
 router.get('/:id/start', (req, res) => {
-  fetch((err, payload) => {
+  let id = req.params.id;
+  fetch(id, "quizzes", (err, payload) => {
     if (err) {
       console.log('Error from /quiz/:id/question', err);
       res.status(500).json(err);
@@ -25,7 +26,8 @@ router.get('/:id/start', (req, res) => {
 });
 
 router.get('/:id/question', (req, res) => {
-  fetch((err, payload) => {
+  let id = req.params.id;
+  fetch(id, "questions", (err, payload) => {
     if (err) {
       console.log('Error from /quiz/:id/question', err);
       res.status(500).json(err);
@@ -37,7 +39,8 @@ router.get('/:id/question', (req, res) => {
 });
 
 router.get('/:id/summary', (req, res) => {
-  fetch((err, payload) => {
+  let id = req.params.id;
+  fetch(id, "quizzes", (err, payload) => {
     if (err) {
       console.log('Error from /quiz/:id/question', err);
       res.status(500).json(err);
