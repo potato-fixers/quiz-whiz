@@ -5,6 +5,7 @@ on:
     branches:
     - ci
     - main
+    - ci-test-npm-i
   pull_request:
     branches:
     - ci
@@ -25,6 +26,6 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-      - run: npm install
+      - run: npm run install-all
       - run: npm run build
       - run: npm test
