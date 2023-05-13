@@ -5,12 +5,14 @@ const { authentication } = require('../controllers/');
 
 router.post('/login', (req, res) => {
   authentication.login(req, res);
-  res.status(201).end();
-})
+});
 
 router.post('/register', (req, res) => {
-  console.log(req.session)
   authentication.register(req, res);
+});
+
+router.get('/session', (req, res) => {
+  authentication.getSession(req, res);
 })
 
 module.exports = router

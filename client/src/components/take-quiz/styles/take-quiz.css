@@ -11,6 +11,89 @@
   /* border: 1px solid magenta; */
 }
 
+.flex {
+  display: flex;
+}
+
+.ms {
+  margin: 2rem;
+}
+
+.mst {
+  margin-top: 2rem;
+}
+
+.msb {
+  margin-bottom: 2rem;
+}
+
+.mm {
+  margin: 4rem;
+}
+
+.mmt {
+  margin-top: 4rem;
+}
+
+.mmb {
+  margin-bottom: 4rem;
+}
+
+.ml {
+  margin: 6rem;
+}
+
+.mlt {
+  margin-top: 6rem;
+}
+
+.mlb {
+  margin-bottom: 6rem;
+}
+
 li {
   list-style: none;
+}
+
+#abandon-quiz {
+  width: 1200px;
+  margin-top: 14rem;
+}
+
+#category {
+  font-size: 2.5rem;
+}
+
+#countdown {
+  width: 12rem;
+  border-radius: 30px;
+}
+
+#quiz-grid {
+  padding: 8.5rem 0 5rem 0;
+}
+
+#category,
+#difficulty {
+  padding: 0 0 1rem 0;
+}
+
+#set-timer {
+  padding: 0;
+  margin-top: 5rem;
+  /* border: 1px solid red; */
+}
+
+#take-quiz-modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400;
+  background-color: var(--white);
+  border: 2px solid var(--yellow);
+  box-shadow: 24;
+  padding: 20px;
+  color: var(--charcoal);
+  border-radius: 15px;
 }
