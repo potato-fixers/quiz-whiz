@@ -1,10 +1,12 @@
+// Global Styles
 import "./styles/App.css";
 
+// React Imports
 import { Route, Routes } from "react-router-dom";
-import { Typography } from "@mui/material";
 
+// Components
 import Nav from "./Nav.jsx";
-import Landing from './components/home-landing/Landing.jsx'
+import Landing from "./components/home-landing/Landing.jsx";
 import Dashboard from "./components/user-dashboard/Dashboard.jsx";
 import Login from "../src/pages/Login";
 import Register from "../src/pages/Register";
