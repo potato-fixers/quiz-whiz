@@ -4,16 +4,16 @@ const app = express();
 const axios = require('axios');
 const port = process.env.SERVER_PORT
 const { dashboard } = require('./routes');
-const expressSession = require('./middlewares/sessions');
-const { create } = require('./routes/index.js')
-const cors = require('cors');
+const { expressSession, cors, logger } = require('./middlewares/index');
+const { create } = require('./routes/index.js');
 
 // =============================================
 //                Middleware
 // =============================================
 app.use(express.json());
+app.use(cors)
 app.use(expressSession);
-app.use(cors({origin: 'http://localhost:3000'}))
+app.use(logger)
 
 // =============================================
 //               Route Imports
