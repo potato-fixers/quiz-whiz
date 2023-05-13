@@ -43,8 +43,8 @@ jobs:
           key: ${{ secrets.PASSWORD }}
           script: |
             pwd
-            touch home/ubuntu/quiz-whiz/client/.env
-            echo "${{ secrets.CLIENT_ENV_FILE }}" > home/ubuntu/quiz-whiz/client/.env
+            touch /home/ubuntu/quiz-whiz/client/.env
+            echo "${{ secrets.CLIENT_ENV_FILE }}" > /home/ubuntu/quiz-whiz/client/.env
             cat .env
             docker login
             docker pull gbmytabc/quiz-whiz:latest
