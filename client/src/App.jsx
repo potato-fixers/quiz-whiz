@@ -10,8 +10,6 @@ import UserProfilePage from './components/user-profile/UserProfilePage.jsx';
 import CreateQuiz from './components/create-quiz/CreateQuiz.jsx';
 import Landing from './components/home-landing/Landing.jsx'
 
-
-
 function App() {
   return (
     <Router>
@@ -27,7 +25,6 @@ function App() {
         <Route path="/settings/" element={<UserProfilePage/>}></Route>
         <Route path='/createQuiz/' element={<CreateQuiz />}></Route>
       </Routes>
-
     </Router>
   );
 }

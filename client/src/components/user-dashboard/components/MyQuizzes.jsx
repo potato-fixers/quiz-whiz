@@ -1,19 +1,16 @@
 import { Typography, TableBody, TableCell, TableHead, TableRow, Table, Stack } from '@mui/material';
 import FilterBar from './subComponents/FilterBar.jsx';
 import ClearIcon from '@mui/icons-material/Clear';
+import useQuizzes from '../hooks/useQuizzes';
+import useFilter from '../hooks/useFilter';
 
 const MyQuizzes = (props) => {
 
-  const dummyData = [
-    {id: 1, quiz: 'quiz 1', category: 'Edu', type: 'Multiple choices', plays: 3, likes: 3, createdAt: 'mm/dd/yyyyThh:mm:ss'},
-    {id: 2, quiz: 'quiz 2', category: 'Music', type: 'Multiple choices', plays: 1, likes: 3,  createdAt: 'mm/dd/yyyyThh:mm:ss'},
-    {id: 3, quiz: 'quiz 3', category: 'Sport', type: 'Multiple choices', plays: 2, likes: 3,  createdAt: 'mm/dd/yyyyThh:mm:ss'},
-    {id: 4, quiz: 'quiz 4', category: 'Movie', type: 'Multiple choices', plays: 4, likes: 3,  createdAt: 'mm/dd/yyyyThh:mm:ss'},
-    {id: 5, quiz: 'quiz 5', category: 'Sport', type: 'True False', plays: 1, likes: 3,  createdAt: 'mm/dd/yyyyThh:mm:ss'}
-  ];
+  const quizzes = useQuizzes('quizzes');
+  const { filteredData, handleFilterChange, filter } = useFilter(quizzes);
 
+  // handle deleting quiz
   const handleDelete = (e) => {
-    // handle deleting quiz
     console.log('delete');
   };
 
@@ -21,7 +18,7 @@ const MyQuizzes = (props) => {
     <>
       <Stack direction='row' >
         <Typography variant='h4' sx={{ flexGrow: 1}}>My Quizzes</Typography>
-        <FilterBar />
+        <FilterBar onFilterChange={handleFilterChange} category={filter.category} />
       </Stack>
 
       <Table sx={{ width: '100%' }} aria-label="simple table">
@@ -36,12 +33,12 @@ const MyQuizzes = (props) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {dummyData.map((row) => (
+          {filteredData.map((row) => (
             <TableRow
               key={row.id}
             >
               <TableCell align='left' sx={{ border: 0 }}>
-                {row.quiz}
+                {row.quiz_name}
               </TableCell>
               <TableCell align='center' sx={{ border: 0 }}>
                 {row.category}
@@ -56,7 +53,7 @@ const MyQuizzes = (props) => {
                 {row.likes}
               </TableCell>
               <TableCell align='right' sx={{ border: 0 }} >
-                {row.createdAt}
+                {row.created_at}
               </TableCell>
               <TableCell align='center' sx={{ border: 0 }}>
                 <ClearIcon onClick={handleDelete}></ClearIcon>

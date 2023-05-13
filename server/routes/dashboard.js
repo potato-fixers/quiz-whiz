@@ -33,4 +33,10 @@ router.post('/favorites', controllers.favorites.like);
 
 router.delete('/favorites/:id',controllers.favorites.delete);
 
+// =============================================
+//                Favorites
+// =============================================
+
+router.get('/counts', controllers.counts.get);
+
 module.exports = router;
