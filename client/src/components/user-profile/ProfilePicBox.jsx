@@ -40,8 +40,6 @@ const ProfilePicBox = (props) => {
     });
   };
 
-  // console.log('this is the img', props.img ? props.img.toString('base64') : "null");
-  console.log('this is the img', props.img);
   return (
     <>
     { props.img ? (

@@ -61,8 +61,6 @@ const updateProfilePic = (req, res) => {
   const { filename, mimetype, buffer } = req.file;
   const byteaBuffer = Buffer.from(buffer, 'binary');
 
-  console.log('this is the userid', req.query.id);
-
   User.updateProfilePic(id, byteaBuffer, (err, data) => {
     if (err) {
       console.log(err);

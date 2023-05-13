@@ -17,7 +17,6 @@ function UserProfilePage() {
       }
     })
     .then(response => {
-      console.log(response.data);
       setUserData(response.data[0]);
     })
     .catch(error => {
