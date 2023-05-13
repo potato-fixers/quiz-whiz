@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter } from "react-router-dom";
 import { ThemeProvider, createTheme } from '@mui/material';
 
 import { UserProvider } from './components/global/UserContext.jsx';
@@ -25,13 +24,11 @@ const theme = createTheme({
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
       <ThemeProvider theme={theme}>
         <UserProvider>
           <App />
         </UserProvider>
       </ThemeProvider>
-    </BrowserRouter>
   </React.StrictMode>
 );
 

@@ -2,7 +2,7 @@
 import "./styles/App.css";
 
 // React Imports
-import { Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 // Components
 import Nav from "./Nav.jsx";
@@ -16,7 +16,7 @@ import CreateQuiz from "./components/create-quiz/CreateQuiz.jsx";
 
 function App() {
   return (
-    <>
+    <Router>
       <Nav />
       <Routes>
         <Route path="/*" element={<Landing />}></Route>
@@ -27,7 +27,7 @@ function App() {
         <Route path="/settings/" element={<UserProfilePage />}></Route>
         <Route path="/createQuiz/" element={<CreateQuiz />}></Route>
       </Routes>
-    </>
+    </Router>
   );
 }
 
