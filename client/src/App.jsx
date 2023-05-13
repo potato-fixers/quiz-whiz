@@ -14,10 +14,11 @@ import { UserProvider } from './components/global/UserContext.jsx';
 
 function App() {
   return (
-    <Router>
-      <Nav />
-      <Routes>
-        <Route path="/*" element={<Landing />}></Route>
+    <UserProvider>
+      <Router>
+        <Nav />
+        <Routes>
+          <Route path="/*" element={<Landing />}></Route>
 
           <Route path="/quiz/:id/*" element={<TakeQuiz />}></Route>
           <Route path="dashboard/*" element={<Dashboard />}></Route>
