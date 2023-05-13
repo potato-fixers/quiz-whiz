@@ -16,21 +16,19 @@ function Summary({ quizId }) {
     userAnswers,
     getUserAnswers,
 
-    getCorrectAnswerCount,
     correctAs,
-
     msg,
 
     score,
-    setScore,
+    calculateScore,
 
     // saveHistory,
 
-    // finished,
-    // setFinished,
+    finished,
+    setFinished,
 
-    // duration,
-    // setDuration,
+    duration,
+    formatDuration,
   } = useContext(QuizContext);
   const { user, isLoggedIn } = useContext(UserContext);
 
@@ -38,37 +36,24 @@ function Summary({ quizId }) {
     getUserAnswers();
   }, []);
 
-  const calculateScore = () => {
-    getCorrectAnswerCount();
-
-    let score = (correctAs / localStorage.length) * 100;
-
-    if (isNaN(score)) {
-      setScore(0);
-    } else {
-      setScore(Math.floor(score));
-    }
-  };
-
   useEffect(() => {
     calculateScore();
-    if (isLoggedIn) {
-      console.log("Saving your score");
+    setFinished(true);
 
-      // add score to user quiz history
-      // let payload = {
-      //   user: user,
-      //   score: score,
-      //   quiz_id: quizId,
-      //   duration: duration,
-      //   finished: finished | false,
-      // };
-      // saveHistory(payload);
-    } else {
-      console.log(
-        "Thanks for trying us out. Create an Account to Take More Quizzes"
-      );
-    }
+    // if (isLoggedIn) {
+
+    // add score to user quiz history
+    let payload = {
+      user: user,
+      score: score,
+      quiz_id: quizId,
+      duration: formatDuration(duration),
+      finished: finished,
+    };
+    console.log("Saving your score", payload);
+
+    // saveHistory(payload);
+    // }
   }, [userAnswers, correctAs]);
 
   return (

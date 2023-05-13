@@ -96,6 +96,17 @@ export const QuizProvider = ({ children }) => {
     }
   };
 
+  const calculateScore = () => {
+    getCorrectAnswerCount();
+
+    let score = (correctAs / localStorage.length) * 100;
+
+    if (isNaN(score)) {
+      setScore(0);
+    } else {
+      setScore(Math.floor(score));
+    }
+  };
   // const saveHistory = async (payload) => {
   //   try {
   //     axios.post(`/${id}`, {
@@ -118,24 +129,13 @@ export const QuizProvider = ({ children }) => {
     let timer = document.getElementById("timer");
 
     if (timer) {
-      /* countdown timer for quizzes, starts when Question Page loads  */
+      // Set up the Timer
       let timeRemaining = time;
+      let dur = 0;
+      let minutes = Math.ceil((timeRemaining / 1000 / 60) << 0);
+      let seconds = Math.ceil((timeRemaining / 1000) % 60);
 
-      let minutes = Math.floor((timeRemaining / 1000 / 60) << 0);
-      let seconds = Math.floor((timeRemaining / 1000) % 60);
-
-      timer.innerHTML = `${minutes} : ${
-        seconds === 0
-          ? "00"
-          : seconds.toString().length < 2
-          ? "0" + seconds
-          : seconds
-      } left`;
-
-      var quizTimer = setInterval(() => {
-        let minutes = Math.floor((timeRemaining / 1000 / 60) << 0);
-        let seconds = Math.floor((timeRemaining / 1000) % 60);
-
+      let updateTimerString = (minutes, seconds) => {
         timer.innerHTML = `${minutes} : ${
           seconds === 0
             ? "00"
@@ -143,15 +143,26 @@ export const QuizProvider = ({ children }) => {
             ? "0" + seconds
             : seconds
         } left`;
+      };
+
+      updateTimerString(minutes, seconds);
+
+      // Update the Timer Based On Time Remaining
+      var quizTimer = setInterval(() => {
+        minutes = Math.floor((timeRemaining / 1000 / 60) << 0);
+        seconds = Math.floor((timeRemaining / 1000) % 60);
+
+        updateTimerString(minutes, seconds);
 
         // Decrement Time Remaining by 1 second
         timeRemaining -= 1000;
+        dur += 1000;
 
-        // Time has run out!
+        // Handle User ran out of time before finishing the quiz
         if (timeRemaining <= 0) {
+          setDuration(dur);
           clearInterval(quizTimer);
-          setDuration(time);
-          timer.innerHTML = "<strong>Oh no! Your Time Is Up!</strong>";
+          setFinished(false);
           navigate(`/quiz/${id}/summary`);
         }
       }, 1000);
@@ -162,13 +173,22 @@ export const QuizProvider = ({ children }) => {
     setTime(e.target.value);
   };
 
+  const formatDuration = (duration) => {
+    let min = Math.ceil((duration / 1000 / 60) << 0);
+    let sec = Math.ceil((duration / 1000) % 60);
+
+    return `00:${min.toString().length < 2 ? "0" + min : min}:${
+      sec === 0 ? "00" : sec.toString().length < 2 ? "0" + sec : sec
+    }`;
+  };
+
   // =============================================
   //             Quiz Modal Utils
   // =============================================
   const abandonQuiz = (e, message) => {
     if (e.currentTarget.value === "Yes") {
+      resetQuiz();
       if (message === "Home") {
-        resetQuiz();
         window.location.href = "/";
       } else {
         window.location.href = isLoggedIn ? "/dashboard" : "/";
@@ -177,7 +197,6 @@ export const QuizProvider = ({ children }) => {
       setOpen(false);
     }
   };
-
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -192,9 +211,12 @@ export const QuizProvider = ({ children }) => {
       setQuizDetails(data);
       setQuestions(questions);
       getUserAnswers();
-      // setTimer(time);
     }
   }, [id]);
+
+  useEffect(() => {
+    duration > 0 && console.log("Duration:", duration);
+  }, [duration]);
 
   // Set Summary Message based on User's Quiz Score
   useEffect(() => {
@@ -207,7 +229,7 @@ export const QuizProvider = ({ children }) => {
         setMsg("Oh no! You didn't pass, would you like to try again?");
       }
     }
-  }, [score, setMsg]);
+  }, [finished, score, setMsg, duration]);
 
   // Context to be used in other components
   const ctx = {
@@ -230,7 +252,7 @@ export const QuizProvider = ({ children }) => {
     setMsg,
 
     score,
-    setScore,
+    calculateScore,
 
     // saveHistory,
 
@@ -238,7 +260,7 @@ export const QuizProvider = ({ children }) => {
     setFinished,
 
     duration,
-    setDuration,
+    formatDuration,
 
     time,
     setTimer,
