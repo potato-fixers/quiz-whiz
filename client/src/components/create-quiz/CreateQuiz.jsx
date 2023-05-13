@@ -45,35 +45,35 @@ const CreateQuiz = (props) => {
    const onSelect = (e) => {
      e.preventDefault();
 
-     if (e.target.name === "category1") {
+     if (e.target.name === "Art") {
        setState1(true);
        setState2(false);
        setState3(false);
        setState4(false);
        setState5(false);
        setCategoryVal(e.target.name);
-     } else if (e.target.name === "category2") {
+     } else if (e.target.name === "General Knowledge") {
        setState1(false);
        setState2(true);
        setState3(false);
        setState4(false);
        setState5(false);
        setCategoryVal(e.target.name);
-     } else if (e.target.name === "category3") {
+     } else if (e.target.name === "History") {
        setState1(false);
        setState2(false);
        setState3(true);
        setState4(false);
        setState5(false);
        setCategoryVal(e.target.name);
-     } else if (e.target.name === "category4") {
+     } else if (e.target.name === "Politics") {
        setState1(false);
        setState2(false);
        setState3(false);
        setState4(true);
        setState5(false);
        setCategoryVal(e.target.name)
-     } else if (e.target.name === "category5") {
+     } else if (e.target.name === "Sports") {
        setState1(false);
        setState2(false);
        setState3(false);
@@ -355,18 +355,18 @@ const CreateQuiz = (props) => {
           ></input>
         </div>
         <Categories
-          category1={category1}
-          category2={category2}
-          category3={category3}
-          category4={category4}
-          category5={category5}
+          art={category1}
+          general={category2}
+          history={category3}
+          politics={category4}
+          sports={category5}
           select={onSelect}
         />
         <Difficulty
-        easyDiff={easyDiff}
-        mediumDiff={mediumDiff}
-        hardDiff={hardDiff}
-        select={onSelect}
+          easyDiff={easyDiff}
+          mediumDiff={mediumDiff}
+          hardDiff={hardDiff}
+          select={onSelect}
         />
         <MCQuestions
           inputFields={MCInputFields}
@@ -382,8 +382,7 @@ const CreateQuiz = (props) => {
           addFields={addFields}
           removeFields={removeFields}
         />
-        <APIQuestions />
-        <div>
+        <div name='createQuiz'>
           <button
             onClick={(e) => {
               setTimeout(sendQuiz(e), 5000);
@@ -393,6 +392,10 @@ const CreateQuiz = (props) => {
             Create Quiz!{" "}
           </button>
         </div>
+        <APIQuestions
+          category={categoryVal}
+          difficulty={difficulty}
+        />
       </div>
     );
   }

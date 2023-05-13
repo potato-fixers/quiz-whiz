@@ -4,6 +4,7 @@ import "../styles/create-quiz.css";
 const Difficulty = (props) => {
   return (
     <div className="Diffictuly">
+       <h1> Choose Your Difficutly </h1>
       <button
         name="easy"
         className={`category${props.easyDiff ? "chosen" : ""}`}
