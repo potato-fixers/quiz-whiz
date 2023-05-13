@@ -30,7 +30,7 @@ export default function RegisterForm() {
           profile_img: profileImage
         }
       );
-      navigate('/signin');
+      navigate('/login');
     } catch (error) {
       alert('Uh oh, we have trouble processing your request, please try again later');
       //to remove at produciton

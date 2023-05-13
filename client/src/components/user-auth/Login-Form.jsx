@@ -1,16 +1,33 @@
 import useInput from './hooks/useInput.jsx';
-// import React, { useContext } from 'react';
-// import { UserContext } from '../global/UserContext';
+import axios from 'axios';
+import { useNavigate } from "react-router-dom";
+import { UserContext } from '../global/UserContext';
+import { useContext } from 'react';
 
 export default function LoginForm() {
-  const username = useInput('');
+  const navigate = useNavigate();
+  const email = useInput('');
   const password = useInput('');
-  // const { user } = useContext(UserContext);
+  const { login } = useContext(UserContext);
 
-  const handleSubmit = (event) => {
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
     // TODO: Handle form submission
-    console.log(username.value, password.value)
+    try {
+      var { data }= await axios.post(`${process.env.REACT_APP_API_URL}/auth/login`, {
+        email: email.value,
+        password: password.value,
+      }, {
+        withCredentials: true
+      });
+      login(data);
+      navigate('/dashboard');
+    } catch (err) {
+      alert('Incorrect username and password, please try again!')
+      //to remove at production;
+      console.log(err);
+    }
   }
 
   return (
@@ -18,8 +35,8 @@ export default function LoginForm() {
       <h2> login form </h2>
       <form onSubmit={handleSubmit}>
         <label>
-          Username:
-          <input type="text" {...username} />
+          Email:
+          <input type="text" {...email} />
         </label>
         <label>
           Password:
