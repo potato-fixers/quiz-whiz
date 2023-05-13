@@ -40,20 +40,19 @@ function Summary({ quizId }) {
     calculateScore();
     setFinished(true);
 
-    // if (isLoggedIn) {
+    if (isLoggedIn) {
+      // add score to user quiz history
+      let payload = {
+        user: user,
+        score: score,
+        quiz_id: quizId,
+        duration: formatDuration(duration),
+        finished: finished,
+      };
+      console.log("Saving your score", payload);
 
-    // add score to user quiz history
-    let payload = {
-      user: user,
-      score: score,
-      quiz_id: quizId,
-      duration: formatDuration(duration),
-      finished: finished,
-    };
-    console.log("Saving your score", payload);
-
-    // saveHistory(payload);
-    // }
+      // saveHistory(payload);
+    }
   }, [userAnswers, correctAs]);
 
   return (
