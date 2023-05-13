@@ -34,6 +34,7 @@ function Summary({ quizId }) {
 
   useEffect(() => {
     getUserAnswers();
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
@@ -53,6 +54,7 @@ function Summary({ quizId }) {
 
       // saveHistory(payload);
     }
+    // eslint-disable-next-line
   }, [userAnswers, correctAs]);
 
   return (
