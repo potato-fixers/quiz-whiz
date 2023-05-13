@@ -1,9 +1,14 @@
 import React, { useState } from 'react';
 import './styles/profile.css';
-import { Button, TextField } from '@mui/material';
+import { Button, TextField, Avatar } from '@mui/material';
 import axios from 'axios';
 
+
+
+
 const ProfilePicBox = (props) => {
+  const userid = 1;
+
   const [selectedFile, setSelectedFile] = useState(null);
 
   const handleFileChange = (event) => {
@@ -19,12 +24,15 @@ const ProfilePicBox = (props) => {
       headers: {
         "Content-Type": "multipart/form-data",
       },
+      params: {
+        id: userid
+      }
     })
     .then(res => {
       if (res.status === 200) {
-        console.log('Username updated successfully!');
+        console.log('Photo updated successfully!');
       } else {
-        console.error('Failed to update username.');
+        console.error('Failed to update photo.');
       }
     })
     .catch(error => {
@@ -32,8 +40,14 @@ const ProfilePicBox = (props) => {
     });
   };
 
+  // console.log('this is the img', props.img ? props.img.toString('base64') : "null");
+  console.log('this is the img', props.img);
   return (
     <>
+    { props.img ? (
+
+      <img className="user-profile-image" src={props.img} alt="User profile" />
+    ) : <> </>}
       <input type="file" onChange={handleFileChange} />
       <Button variant="contained" color="primary" onClick={handleUploadClick}>
         Upload

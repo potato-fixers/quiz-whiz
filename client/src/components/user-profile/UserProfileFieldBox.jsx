@@ -6,8 +6,13 @@ import axios from 'axios';
 
 const UserProfileFieldBox = (props) => {
   const [editing, setEditing] = useState(false);
-  const [field, setField] = useState(props.initial_value);
+
+  // console.log('props.initial_value:', props.initial_value);
+  // console.log('props.default_value:', props.default_value);
+
+  const [field, setField] = useState(props.initial_value ? props.initial_value : props.default_value);
   const [oldPassword, setOldPassword] = useState('Enter current password');
+
 
   const handleEditClick = () => {
     setEditing(true);
@@ -62,7 +67,7 @@ const UserProfileFieldBox = (props) => {
           ) : null }
 
           {props.field_title === "Profile Picture" ? (
-            <ProfilePicBox saveRoute={props.saveRoute}/>
+            <ProfilePicBox saveRoute={props.saveRoute} img={props.initial_value_pic}/>
           ) : (
             <TextField
               className="input"
