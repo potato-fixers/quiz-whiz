@@ -9,6 +9,7 @@ let createQuiz = (data, callback) => {
   db.query(quizzesQuery, (err, res) => {
     if (err) {
       callback(err, null)
+      console.log(err);
     } else {
       var id = res.rows[0].id
       console.log('hit')

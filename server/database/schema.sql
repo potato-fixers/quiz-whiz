@@ -9,11 +9,11 @@ CREATE SCHEMA quizwhiz;
 -- ----------------------
 
 CREATE TABLE quizzes(
-  id SERIAL, 
-  user_id TEXT, 
-  category TEXT, 
-  difficulty TEXT, 
-  quiz_name TEXT, 
+  id SERIAL,
+  user_id TEXT,
+  category TEXT,
+  difficulty TEXT,
+  quiz_name TEXT,
   created_at DATE NOT NULL DEFAULT CURRENT_DATE,
   PRIMARY KEY(id)
 );
@@ -24,12 +24,12 @@ SAVEPOINT quizzes_table_created;
 -- QUESTIONS TABLE
 -- ----------------------
 CREATE TABLE questions(
-  id SERIAL 
-  quiz_id INT, 
-  questions TEXT, 
-  PRIMARY KEY(id), 
-  CONSTRAINT fk_questions 
-  FOREIGN KEY(quiz_id) 
+  id SERIAL,
+  quiz_id INT,
+  questions TEXT,
+  PRIMARY KEY(id),
+  CONSTRAINT fk_questions
+  FOREIGN KEY(quiz_id)
   REFERENCES quizzes(id)
 );
 

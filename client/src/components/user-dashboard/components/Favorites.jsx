@@ -3,16 +3,30 @@ import FilterBar from './subComponents/FilterBar.jsx';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import useQuizzes from '../hooks/useQuizzes';
 import useFilter from '../hooks/useFilter';
+import useSort from '../hooks/useSort';
 
 const Favorites = (props) => {
 
   const quizzes = useQuizzes('favorites');
   const { filteredData, handleFilterChange, filter } = useFilter(quizzes);
+  const { sortedData, sortData } = useSort(filteredData);
 
+    const headersMapping = {
+    'Quiz': 'quiz_name',
+    'Category': 'category',
+    'Total Plays': 'totalPlays',
+    'Total Likes': 'totalLikes',
+    'Date Liked': 'date',
+  };
 
   const handleUnlike = (e) => {
     // handle unliking quiz
     console.log('unlike')
+  };
+
+    const handleClick = (e) => {
+    const key = headersMapping[e.target.innerText];
+    sortData(key);
   };
 
   return (
@@ -25,15 +39,15 @@ const Favorites = (props) => {
       <Table sx={{ width: '100%' }} aria-label="simple table">
         <TableHead >
           <TableRow>
-            <TableCell align='left'>Quiz</TableCell>
-            <TableCell align='center'>Category</TableCell>
-            <TableCell align='center'>Total Plays</TableCell>
-            <TableCell align='center'>Total Likes</TableCell>
-            <TableCell align='right'>Date Liked</TableCell>
+            <TableCell align='left' onClick={handleClick} >Quiz</TableCell>
+            <TableCell align='center' onClick={handleClick} >Category</TableCell>
+            <TableCell align='center' onClick={handleClick} >Total Plays</TableCell>
+            <TableCell align='center' onClick={handleClick} >Total Likes</TableCell>
+            <TableCell align='right' onClick={handleClick} >Date Liked</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {filteredData.map((row) => (
+          {sortedData.map((row) => (
             <TableRow
               key={row.id}
             >
