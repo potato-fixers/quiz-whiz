@@ -13,7 +13,8 @@ const cors = require('cors');
 // =============================================
 app.use(express.json());
 app.use(expressSession);
-app.use(cors({origin: ['http://localhost:3000', "http://ec2-3-83-24-209.compute-1.amazonaws.com:8080"]}))
+// app.use(cors({origin: 'http://localhost:3000'})) // Uncomment this for local testing
+app.use(cors({origin: `${process.env.API_URL}`}))
 
 // =============================================
 //               Routes
