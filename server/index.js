@@ -9,7 +9,7 @@ const { create } = require('./routes/index.js')
 const cors = require('cors');
 
 // =============================================
-//                Middleware 
+//                Middleware
 // =============================================
 app.use(express.json());
 app.use(expressSession);

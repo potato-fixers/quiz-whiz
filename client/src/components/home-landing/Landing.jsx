@@ -1,9 +1,11 @@
 import './styles/home.css';
 import CategoryList from './components/CategoryList.jsx';
 import QuizList from './components/QuizList.jsx';
-import freeQuiz from './mock_data/freeQuiz.js'
+import freeQuiz from './mock_data/freeQuiz.js';
+// import axios from 'axios';
 
 import { useState, useEffect } from 'react';
+
 
 const Landing = (props) => {
 
@@ -12,6 +14,12 @@ const Landing = (props) => {
 
   useEffect(() => {
     setQuizzes(freeQuiz);
+    fetch(`${process.env.REACT_APP_API_URI}/get/getSample`)
+      .then(res => {
+        if (res.status === 200) {
+          console.log(res.data);
+        }
+      })
   }, []);
 
   return (

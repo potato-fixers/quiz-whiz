@@ -7,3 +7,4 @@ exports.counts = require('./dashboard/counts');
 exports.authentication = require('./authentication/user-auth')
 
 exports.create = require('./create/quizzes')
+exports.getSample = require('./landing/getSample');
