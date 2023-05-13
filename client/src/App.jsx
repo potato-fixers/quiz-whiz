@@ -18,6 +18,10 @@ function App() {
       <Routes>
         <Route path="/*" element={<Landing />}></Route>
 
+        <Route path="/login/" element={<Login />}></Route>
+        <Route path="/register/" element={<Register />}></Route>
+        <Route path="/settings/" element={<UserProfilePage />}></Route>
+        <Route path="dashboard/*" element={<Dashboard />}></Route
         <Route
           path="/quiz/:id/*"
           element={
@@ -26,11 +30,6 @@ function App() {
             </QuizProvider>
           }
         ></Route>
-        <Route path="dashboard/*" element={<Dashboard />}></Route>
-
-        <Route path="/login/" element={<Login />}></Route>
-        <Route path="/register/" element={<Register />}></Route>
-        <Route path="/settings/" element={<UserProfilePage />}></Route>
         <Route path="/createQuiz/" element={<CreateQuiz />}></Route>
       </Routes>
     </>
