@@ -2,7 +2,7 @@
 import "./styles/App.css";
 
 // React Imports
-import { Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 // Components
 import Nav from "./Nav.jsx";
@@ -17,7 +17,7 @@ import CreateQuiz from "./components/create-quiz/CreateQuiz.jsx";
 import { QuizProvider } from "./components/take-quiz/context/QuizContext";
 function App() {
   return (
-    <>
+    <Router>
       <Nav />
       <Routes>
         <Route path="/*" element={<Landing />}></Route>
@@ -35,7 +35,7 @@ function App() {
         ></Route>
         <Route path="/createQuiz/" element={<CreateQuiz />}></Route>
       </Routes>
-    </>
+    </Router>
   );
 }
 

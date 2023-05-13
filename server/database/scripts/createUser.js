@@ -10,13 +10,21 @@ const createTableQuery = `
     username VARCHAR(255) UNIQUE,
     profile_img bytea,
     bio TEXT,
-    salt VARCHAR(255) NOT NULL
   );
+`;
+
+const createPartialIndex = `
+  CREATE UNIQUE INDEX ON users (username)
+  WHERE username <> '';
 `;
 
 db.query(createTableQuery)
 .then (() => {
   console.log('success at creating users table')
+  return db.query(createPartialIndex)
+})
+.then(() => {
+  console.log('suceess at creating partial index for usernames')
 })
 .catch((err) => {
   console.error(err);
