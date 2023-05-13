@@ -22,7 +22,7 @@ function Begin({ setTimer, quizId }) {
 
   useEffect(() => {
     countdown && setTimer(countdown);
-  }, [countdown]);
+  }, [countdown, setTimer]);
 
   return (
     <Grid
