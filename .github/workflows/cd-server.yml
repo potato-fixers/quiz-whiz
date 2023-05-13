@@ -49,5 +49,5 @@ jobs:
             docker rmi -f $(docker images -aq)
             docker builder prune -a -f
             docker pull gbmytabc/quizwhiz-server:latest
-            docker run -d --name quizwhiz-server -p 8080:8080 gbmytabc/quizwhiz-server:latest
+            docker run -d --name quizwhiz-server -p 8080:8080 --env-file /home/ubuntu/quiz-whiz/server/.env gbmytabc/quizwhiz-server:latest
   
