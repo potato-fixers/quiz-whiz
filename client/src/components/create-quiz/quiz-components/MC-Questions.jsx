@@ -3,6 +3,7 @@ import "../styles/create-quiz.css";
 const MCQuestions = (props) => {
   return (
     <div className="MCQuestions">
+      <h1> Enter MC Questions Here </h1>
       <form>
       <button name="MCButton" onClick={props.addFields}>
           {" "}

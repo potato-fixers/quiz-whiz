@@ -1,7 +1,7 @@
 const cors = require('cors');
 
 module.exports = cors({
-  origin: 'http://localhost:3000',
+  origin: `${process.env.API_URL}`,
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true
 });
