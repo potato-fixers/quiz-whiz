@@ -2,7 +2,7 @@ require("dotenv").config();
 const express = require('express')
 const app = express();
 const axios = require('axios');
-const port = process.env.SERVER_PORT
+const port = process.env.SERVER_PORT;
 const { dashboard } = require('./routes');
 const expressSession = require('./middlewares/sessions');
 const { create } = require('./routes/index.js')
@@ -13,7 +13,7 @@ const cors = require('cors');
 // =============================================
 app.use(express.json());
 app.use(expressSession);
-app.use(cors({origin: 'http://localhost:3000'}))
+app.use(cors({origin: `${process.env.API_URL}`}))
 
 // =============================================
 //               Route Imports
