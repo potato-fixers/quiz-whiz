@@ -5,6 +5,7 @@ const data = [
   {
     id: 1,
     quiz_name: 'Quiz E',
+    category: 'Music',
     plays: 13,
     score: '73%',
     duration: 300, // seconds or ms
@@ -14,6 +15,7 @@ const data = [
   {
     id: 7,
     quiz_name: 'Quiz D',
+    category: 'Sport',
     plays: 2,
     score: '90%',
     duration: 240, // seconds
@@ -23,6 +25,7 @@ const data = [
   {
     id: 2,
     quiz_name: 'Quiz C',
+    category: 'Education',
     plays: 1,
     score: '34%',
     duration: null,
@@ -32,6 +35,7 @@ const data = [
   {
     id: 5,
     quiz_name: 'Quiz B',
+    category: 'Sport',
     plays: '3',
     score: '45%',
     duration: 300,
@@ -41,6 +45,7 @@ const data = [
   {
     id: 43,
     quiz_name: 'Quiz A',
+    category: 'Music',
     plays: 5,
     score: '56%',
     duration: 500,

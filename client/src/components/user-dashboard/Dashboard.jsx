@@ -38,7 +38,7 @@ const Dashboard = (props) => {
   }, [activeTab]);
 
   return (
-    <Container maxWidth='lg'>
+    <Container maxWidth='xl'>
       <DashTop />
       <TabsBar activeTab={activeTab} setActiveTab={setActiveTab} />
       <QuizCounts activeTab={activeTab}/>

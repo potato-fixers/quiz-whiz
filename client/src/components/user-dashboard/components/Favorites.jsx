@@ -2,10 +2,13 @@ import { Typography, TableBody, TableCell, TableHead, TableRow, Table, Stack } f
 import FilterBar from './subComponents/FilterBar.jsx';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import useQuizzes from '../hooks/useQuizzes';
+import useFilter from '../hooks/useFilter';
 
 const Favorites = (props) => {
 
   const quizzes = useQuizzes('favorites');
+  const { filteredData, handleFilterChange, filter } = useFilter(quizzes);
+
 
   const handleUnlike = (e) => {
     // handle unliking quiz
@@ -16,25 +19,29 @@ const Favorites = (props) => {
     <>
       <Stack direction='row' >
         <Typography variant='h4' sx={{ flexGrow: 1}}>Favorites</Typography>
-        <FilterBar />
+        <FilterBar onFilterChange={handleFilterChange} category={filter.category} />
       </Stack>
 
       <Table sx={{ width: '100%' }} aria-label="simple table">
         <TableHead >
           <TableRow>
             <TableCell align='left'>Quiz</TableCell>
+            <TableCell align='center'>Category</TableCell>
             <TableCell align='center'>Total Plays</TableCell>
             <TableCell align='center'>Total Likes</TableCell>
             <TableCell align='right'>Date Liked</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {quizzes.map((row) => (
+          {filteredData.map((row) => (
             <TableRow
               key={row.id}
             >
               <TableCell align='left' sx={{ border: 0 }}>
                 {row.quiz_name}
+              </TableCell>
+              <TableCell align='center' sx={{ border: 0 }}>
+                {row.category}
               </TableCell>
               <TableCell align='center' sx={{ border: 0 }}>
                 {row.totalPlays}
