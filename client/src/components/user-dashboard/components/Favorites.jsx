@@ -1,4 +1,5 @@
 import { Typography, TableBody, TableCell, TableHead, TableRow, Table, Stack } from '@mui/material';
+import { Link } from 'react-router-dom';
 import FilterBar from './subComponents/FilterBar.jsx';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import useQuizzes from '../hooks/useQuizzes';
@@ -24,7 +25,7 @@ const Favorites = (props) => {
     console.log('unlike')
   };
 
-    const handleClick = (e) => {
+  const handleClick = (e) => {
     const key = headersMapping[e.target.innerText];
     sortData(key);
   };
@@ -51,8 +52,8 @@ const Favorites = (props) => {
             <TableRow
               key={row.id}
             >
-              <TableCell align='left' sx={{ border: 0 }}>
-                {row.quiz_name}
+              <TableCell align='left' sx={{ border: 0 }} >
+                <Link to={`/quiz/${row.id}/start`}> {row.quiz_name} </Link>
               </TableCell>
               <TableCell align='center' sx={{ border: 0 }}>
                 {row.category}
