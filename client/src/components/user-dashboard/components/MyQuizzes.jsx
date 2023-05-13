@@ -2,13 +2,15 @@ import { Typography, TableBody, TableCell, TableHead, TableRow, Table, Stack } f
 import FilterBar from './subComponents/FilterBar.jsx';
 import ClearIcon from '@mui/icons-material/Clear';
 import useQuizzes from '../hooks/useQuizzes';
+import useFilter from '../hooks/useFilter';
 
 const MyQuizzes = (props) => {
 
   const quizzes = useQuizzes('quizzes');
+  const { filteredData, handleFilterChange, filter } = useFilter(quizzes);
 
+  // handle deleting quiz
   const handleDelete = (e) => {
-    // handle deleting quiz
     console.log('delete');
   };
 
@@ -16,7 +18,7 @@ const MyQuizzes = (props) => {
     <>
       <Stack direction='row' >
         <Typography variant='h4' sx={{ flexGrow: 1}}>My Quizzes</Typography>
-        <FilterBar />
+        <FilterBar onFilterChange={handleFilterChange} category={filter.category} />
       </Stack>
 
       <Table sx={{ width: '100%' }} aria-label="simple table">
@@ -31,7 +33,7 @@ const MyQuizzes = (props) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {quizzes.map((row) => (
+          {filteredData.map((row) => (
             <TableRow
               key={row.id}
             >
