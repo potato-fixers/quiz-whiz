@@ -1,8 +1,12 @@
 import { AppBar, Typography, Toolbar, Button } from '@mui/material'
 import { Link } from 'react-router-dom';
+import { useContext } from 'react';
+import { UserContext } from './components/global/UserContext';
+import { Avatar } from '@mui/material';
 
 const Nav = () => {
 
+  const { isLoggedIn } = useContext(UserContext);
   const styles = { color: 'inherit', textDecoration: 'inherit' };
 
   return (
@@ -22,12 +26,17 @@ const Nav = () => {
           <Link to='/createQuiz' style={styles}>Create</Link>
         </Typography>
 
-        <Button color='inherit' >
-          <Link to='/register' style={styles}>Sign Up</Link>
-        </Button>
-        <Button color='inherit' >
-        <Link to='/login' style={styles}>Sign In</Link>
-        </Button>
+        { isLoggedIn ?
+          <Avatar /> :
+          <>
+            <Button color='inherit' >
+              <Link to='/register' style={styles}>Sign Up</Link>
+            </Button>
+            <Button color='inherit' >
+              <Link to='/login' style={styles}>Sign In</Link>
+            </Button>
+          </>
+        }
       </Toolbar>
     </AppBar>
   );
