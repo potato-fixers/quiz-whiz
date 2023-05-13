@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useContext } from "react";
 import { Link } from "react-router-dom";
 import "../styles/take-quiz.css";
 import {
@@ -9,20 +9,16 @@ import {
   FormControl,
   MenuItem,
 } from "@mui/material";
-import useFetch from "../hooks/useFetch";
 
-function Begin({ setTimer, quizId }) {
-  let quizPath = `/quiz/${quizId}/question`;
-  let { quizDetails } = useFetch(quizId);
-  const [countdown, setCountdown] = useState(300000);
+import { UserContext } from "../../global/UserContext";
+import { QuizContext } from "../context/QuizContext";
 
-  const handleChange = (e) => {
-    setCountdown(e.target.value);
-  };
+function Begin() {
+  const { quizDetails, id, resetQuiz, time, handleTimerChange } =
+    useContext(QuizContext);
+  const { isLoggedIn } = useContext(UserContext);
 
-  useEffect(() => {
-    countdown && setTimer(countdown);
-  }, [countdown, setTimer]);
+  let buttonText = !isLoggedIn ? "Home" : "Dashboard";
 
   return (
     <Grid
@@ -34,6 +30,14 @@ function Begin({ setTimer, quizId }) {
       rowSpacing={1}
       columnSpacing={{ xs: 1, sm: 2, md: 3 }}
     >
+      {/* Quiz Information (Category, Difficulty) */}
+      <Grid id="category" item xs={6}>
+        <Typography id="category">
+          {typeof quizDetails.title === "string" &&
+            `${quizDetails.title}`.toUpperCase()}
+        </Typography>
+      </Grid>
+
       <Grid id="category" item xs={6}>
         <Typography>CATEGORY</Typography>
         <Typography id="category">
@@ -50,14 +54,15 @@ function Begin({ setTimer, quizId }) {
         </Typography>
       </Grid>
 
+      {/* User Timer Settings */}
       <Grid id="set-timer" item xs={6}>
         <FormControl fullWidth>
-          {/* <InputLabel id="countdown">Timer</InputLabel> */}
+          {/* <InputLabel id="time">Timer</InputLabel> */}
           <Select
-            labelId="countdown"
-            id="countdown"
-            value={countdown}
-            onChange={handleChange}
+            labelId="time"
+            id="time"
+            value={time}
+            onChange={handleTimerChange}
           >
             <MenuItem value={30000}>30 Seconds</MenuItem>
             <MenuItem value={60000}>1 Minute</MenuItem>
@@ -67,19 +72,20 @@ function Begin({ setTimer, quizId }) {
         </FormControl>
       </Grid>
 
+      {/* Navigation  */}
       <div className="flex ms" id="abandon-quiz">
         <Grid item xs={6}>
           <Link to="/dashboard">
-            <Button variant="contained" color="secondary">
-              Back to My Quizzes
+            <Button variant="contained" color="primary">
+              &lt; {buttonText}
             </Button>
           </Link>
         </Grid>
 
         <Grid item xs={6}>
-          <Link to={quizPath}>
-            <Button variant="contained" color="primary">
-              Begin Quiz
+          <Link to={`/quiz/${id}/question`}>
+            <Button onClick={resetQuiz} variant="contained" color="primary">
+              Begin &gt;
             </Button>
           </Link>
         </Grid>

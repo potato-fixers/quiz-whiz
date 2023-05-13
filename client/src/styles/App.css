@@ -5,6 +5,7 @@
 :root {
     --white: #ffffff;
     --black: #000000;
+    --red: #ff0000;
     --lt-black: rgba(0, 0, 0, .5);
     --mid-black: rgba(0, 0, 0, .75);
 
