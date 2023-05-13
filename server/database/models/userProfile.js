@@ -18,9 +18,9 @@ module.exports = {
   },
 
   updateUsername: async (userid, newUsername, cb) => {
-    // query logic
     try {
-      console.log('UPDATEUSERNAME RESULT: ', rows);
+      const { rows } = await db.query('UPDATE users SET username = $1 WHERE id = $2', [newUsername, userid]);
+      console.log('UPDATEPROFILEPIC RESULT: ', rows);
       cb(null, rows);
     } catch (err) {
       cb(err);
@@ -28,11 +28,26 @@ module.exports = {
   },
 
   updatePassword: async (userid, newPassword, cb) => {
-    // query logic
+    try {
+      // need to integrate with Benny's logic to appropriately update password
+      // const { rows } = await db.query('UPDATE users SET password = $1 WHERE id = $2', [newPic, userid]);
+      // console.log('UPDATEPROFILEPIC RESULT: ', rows);
+      console.log('UPDATE RESULT: ', 'TBD');
+      cb(null, rows);
+    } catch (err) {
+      cb(err);
+    }
   },
 
   updateBio: async (userid, newBio, cb) => {
-    // query logic
+    try {
+      console.log('query string check: ', 'UPDATE users SET bio = $1 WHERE id = $2', [newBio, userid])
+      const { rows } = await db.query('UPDATE users SET bio = $1 WHERE id = $2', [newBio, userid]);
+      console.log('UPDATEPROFILEPIC RESULT: ', rows);
+      cb(null, rows);
+    } catch (err) {
+      cb(err);
+    }
   },
 
   updateProfilePic: async (userid, newPic, cb) => {

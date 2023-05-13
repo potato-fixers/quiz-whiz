@@ -1,18 +1,22 @@
 import { Box, Button, TextField } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './styles/profile.css';
 import ProfilePicBox from './ProfilePicBox.jsx';
 import axios from 'axios';
 
 const UserProfileFieldBox = (props) => {
+  // TODO: Update this with the logged in userid.
+  const userid = 1;
+
   const [editing, setEditing] = useState(false);
-
-  // console.log('props.initial_value:', props.initial_value);
-  // console.log('props.default_value:', props.default_value);
-
   const [field, setField] = useState(props.initial_value ? props.initial_value : props.default_value);
   const [oldPassword, setOldPassword] = useState('Enter current password');
 
+  useEffect(() => {
+    if (props.initial_value) {
+      setField(props.initial_value);
+    }
+  }, [props.initial_value]);
 
   const handleEditClick = () => {
     setEditing(true);
@@ -23,18 +27,22 @@ const UserProfileFieldBox = (props) => {
   };
 
   const handleSaveClick = () => {
+    // TODO: if it's the password field, need to check password first before updating
     axios.put(`${process.env.REACT_APP_API_URI}${props.saveRoute}`, {
-    newUsername: 'new_username'
+    updatedField: field
   }, {
     headers: {
       'Content-Type': 'application/json'
+    },
+    params: {
+      id: userid
     }
   })
   .then(res => {
     if (res.status === 200) {
-      console.log('Username updated successfully!');
+      console.log(`${props.field_title} updated successfully!`);
     } else {
-      console.error('Failed to update username.');
+      console.error(`Failed to update ${props.field_title}.`);
     }
   })
   .catch(error => {
@@ -44,17 +52,17 @@ const UserProfileFieldBox = (props) => {
 };
 
   const handleFieldChange = (event) => {
-    setOldPassword(event.target.value);
+    setField(event.target.value);
   };
 
   const handleCurrentPasswordChange = (event) => {
-    setField(event.target.value);
+    setOldPassword(event.target.value);
   };
 
   return (
     <Box className="user-profile-box">
       <h3>{props.field_title}</h3>
-      {editing ? (
+      { editing ? (
         <>
           {props.field_title === "Password" ? (
             <TextField
@@ -67,7 +75,7 @@ const UserProfileFieldBox = (props) => {
           ) : null }
 
           {props.field_title === "Profile Picture" ? (
-            <ProfilePicBox saveRoute={props.saveRoute} img={props.initial_value_pic}/>
+            <ProfilePicBox saveRoute={props.saveRoute} img={field}/>
           ) : (
             <TextField
               className="input"
@@ -89,11 +97,19 @@ const UserProfileFieldBox = (props) => {
         </>
       ) : (
         <>
+        {props.field_title === "Profile Picture" ? (
+          field ? (
+            <p>
+            <img className="user-profile-image" src={field} alt="User profile" />
+            </p>
+          ) : null
+        ) : (
           <p>{field}</p>
-          <Button className="editButton" variant="contained" onClick={handleEditClick}>
-            Edit
-          </Button>
-        </>
+        )}
+        <Button className="editButton" variant="contained" onClick={handleEditClick}>
+          Edit
+        </Button>
+      </>
       )}
     </Box>
   );

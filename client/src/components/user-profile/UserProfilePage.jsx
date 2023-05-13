@@ -26,13 +26,27 @@ function UserProfilePage() {
 
   return (
     <div>
-      <p>Username: {userData.username}</p>
-      <p>Email: {userData.email}</p>
-
-      <UserProfileFieldBox field_title={"Profile Picture"} label={"Profile Picture"} default_value={"Upload a pic!"} initial_value_pic={userData.profile_img ? `data:image/jpeg;base64,${Buffer.from(userData.profile_img.data).toString('base64')}` : ""} saveRoute={'/settings/updatePic'}/>
-      <UserProfileFieldBox field_title={"Username"} label={"Username"} default_value={"Choose a username"} initial_value={userData.username} secondary_value={userData.email} saveRoute={'/settings/updateUsername'}/>
-      <UserProfileFieldBox field_title={"Password"} label={"Password"} default_value={"********"} initial_value={userData.password} saveRoute={'/settings/updatePassword'} />
-      <UserProfileFieldBox field_title={"Bio"} label={"bio"} default_value={"Roses are red, violets are blue, I like taking quizzes, how bout you!"} initial_value={userData.bio} saveRoute={'/settings/updateBio'}/>
+      <UserProfileFieldBox field_title={"Profile Picture"}
+          label={"Profile Picture"}
+          default_value={"Upload a pic!"}
+          initial_value={userData.profile_img ? `data:image/jpeg;base64,${Buffer.from(userData.profile_img.data).toString('base64')}` : ""}
+          saveRoute={'/settings/updatePic'}/>
+      <UserProfileFieldBox field_title={"Username"}
+          label={"Username"}
+          default_value={"Choose a username"}
+          initial_value={userData.username}
+          secondary_value={userData.email}
+          saveRoute={'/settings/updateUsername'}/>
+      <UserProfileFieldBox field_title={"Password"}
+          label={"Password"}
+          default_value={"********"}
+          hidden_value={userData.password}
+          saveRoute={'/settings/updatePassword'} />
+      <UserProfileFieldBox field_title={"Bio"}
+          label={"bio"}
+          default_value={"Add a Bio"}
+          initial_value={userData.bio}
+          saveRoute={'/settings/updateBio'}/>
     </div>
   );
 }

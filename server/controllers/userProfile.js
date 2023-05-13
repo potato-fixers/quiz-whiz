@@ -10,9 +10,6 @@ var user = {'username': 'johndoe',
 module.exports = {
 
   getUserInfo: (req, res) => {
-      // get User info from database
-      //const user = await User.findById(req.params.id);
-      // set user info on res.locals so the router can send to client;
     console.log('this is the userid', req.query.id);
     User.getUserInfo(req.query.id, (err, data) => {
       if (err) {
@@ -26,36 +23,50 @@ module.exports = {
   },
 
   updateUsername: (req, res) => {
-    try {
-      // update username
-      console.log('username update log');
-      res.status(200).send('Username Updated Successfully on server');
-    } catch (err) {
-      console.error(err);
-      res.status(500).send('Server Error while updating username');
-    }
+    const id = req.query.id;
+    const newUsername = req.body.updatedField;
+
+    console.log('changing to username: ', newUsername);
+
+    User.updateUsername(id, newUsername, (err, data) => {
+      if (err) {
+        console.log(err);
+        res.status(500).send('Server Error updating username');
+      } else {
+        console.log('here is the data from updateusername', data);
+        res.status(200).json(data);
+      }
+    })
   },
 
   updatePassword: (req, res) => {
-    try {
-      // update password
-      console.log('password update log');
-      res.status(200).send('Password Updated Successfully on server');
-    } catch (err) {
-      console.error(err);
-      res.status(500).send('Server Error while updating password');
-    }
+    const id = req.query.id;
+    const newPassword = req.body.updatedField;
+
+    User.updatePassword(id, newPassword, (err, data) => {
+      if (err) {
+        console.log(err);
+        res.status(500).send('Server Error updating password');
+      } else {
+        console.log('here is the data from update password', data);
+        res.status(200).json(data);
+      }
+    })
   },
 
   updateBio: (req, res) => {
-    try {
-      // update bio
-      console.log('bio update log');
-      res.status(200).send('Bio Updated Successfully on server');
-    } catch (err) {
-      console.error(err);
-      res.status(500).send('Server Error while updating bio');
-    }
+    const id = req.query.id;
+    const newBio = req.body.updatedField;
+
+    User.updateBio(id, newBio, (err, data) => {
+      if (err) {
+        console.log(err);
+        res.status(500).send('Server Error updating bio');
+      } else {
+        console.log('here is the data from update bio', data);
+        res.status(200).json(data);
+      }
+    })
   },
 
   updateProfilePic: (req, res) => {

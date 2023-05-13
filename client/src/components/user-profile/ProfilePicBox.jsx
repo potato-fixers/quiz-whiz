@@ -7,6 +7,7 @@ import axios from 'axios';
 
 
 const ProfilePicBox = (props) => {
+  // TODO: Update this with the logged in userid.
   const userid = 1;
 
   const [selectedFile, setSelectedFile] = useState(null);
@@ -42,10 +43,9 @@ const ProfilePicBox = (props) => {
 
   return (
     <>
-    { props.img ? (
-
-      <img className="user-profile-image" src={props.img} alt="User profile" />
-    ) : <> </>}
+      { props.img ? (
+        <img className="user-profile-image" src={props.img} alt="User profile" />
+      ) : <> </>}
       <input type="file" onChange={handleFileChange} />
       <Button variant="contained" color="primary" onClick={handleUploadClick}>
         Upload
