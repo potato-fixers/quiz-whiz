@@ -4,6 +4,7 @@ FROM node:alpine
 WORKDIR /server
 
 # copy the application files into the container
+COPY ./.env ./
 COPY ./ ./
 
 # Expose Port 8080

@@ -4,6 +4,7 @@ FROM node:alpine
 WORKDIR /client
 
 # copy the application files into the container
+COPY ./.env ./
 COPY ./ ./
 
 # Expose Port 3000
