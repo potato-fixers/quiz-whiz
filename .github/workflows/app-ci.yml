@@ -14,7 +14,8 @@ jobs:
   build:
     name: Build and test
     runs-on: ubuntu-latest
-
+    env:
+      REACT_APP_API_URI: 'http://localhost:8080'
     strategy:
       matrix:
         node-version: [19.x]
