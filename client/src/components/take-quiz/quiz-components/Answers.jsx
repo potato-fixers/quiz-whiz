@@ -1,24 +1,37 @@
 import "../styles/take-quiz.css";
 import { Button } from "@mui/material";
 
-function Answers({ answers }) {
-  const ans = [];
+function Answers({ page, answers }) {
+  let keys = Object.keys(answers);
+  answers = Object.values(answers);
 
-  Object.keys(answers).forEach((key) => {
-    if (key !== "question") {
-      console.log("key", key);
-      ans.push(answers[key]);
-    }
-  });
+  const handleClick = (e) => {
+    let selected = Object.values(e.currentTarget.firstChild)[0].stateNode.data;
+    keys.forEach((key, index) => {
+      if (answers[index] === selected) {
+        selected = { key: key, value: selected };
+      }
+    });
+    localStorage.setItem(`${page}`, JSON.stringify(selected));
+  };
 
   return (
-    ans && (
+    answers && (
       <>
-        {ans.map((key, index) => (
-          <Button key={index} variant="contained" color="secondary">
-            {key}
-          </Button>
-        ))}
+        {answers.map((key, index) => {
+          if (keys[index] !== "question") {
+            return (
+              <Button
+                key={index}
+                variant="contained"
+                color="secondary"
+                onClick={handleClick}
+              >
+                {answers[index]}
+              </Button>
+            );
+          } else return "";
+        })}
       </>
     )
   );

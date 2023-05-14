@@ -1,4 +1,5 @@
 import { Typography, TableBody, TableCell, TableHead, TableRow, Table, Stack } from '@mui/material';
+import { Link } from 'react-router-dom';
 import FilterBar from './subComponents/FilterBar';
 import ClearIcon from '@mui/icons-material/Clear';
 import useQuizzes from '../hooks/useQuizzes';
@@ -54,7 +55,7 @@ const MyQuizzes = (props) => {
               key={row.id}
             >
               <TableCell align='left' sx={{ border: 0 }}>
-                {row.quiz_name}
+                <Link to={`/quiz/${row.id}/start`}> {row.quiz_name} </Link>
               </TableCell>
               <TableCell align='center' sx={{ border: 0 }}>
                 {row.category}

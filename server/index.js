@@ -20,6 +20,7 @@ app.use(logger)
 // =============================================
 app.use('/auth', require('./routes/user-auth-route'));
 app.use('/quiz', require('./routes/take-quiz'));
+app.use('/settings', require('./routes/user-profile'));
 app.use('/dashboard', dashboard);
 app.use('/create', create);
 
