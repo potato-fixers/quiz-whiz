@@ -10,12 +10,15 @@ CREATE SCHEMA quizwhiz;
 
 CREATE TABLE quizzes(
   id SERIAL,
-  user_id TEXT,
+  user_id INT,
   category TEXT,
   difficulty TEXT,
   quiz_name TEXT,
   created_at DATE NOT NULL DEFAULT CURRENT_DATE,
-  PRIMARY KEY(id)
+  PRIMARY KEY(id),
+  CONSTRAINT fk_quizzes
+  FOREIGN KEY(user_id)
+  REFERENCES users(id)
 );
 
 SAVEPOINT quizzes_table_created;
