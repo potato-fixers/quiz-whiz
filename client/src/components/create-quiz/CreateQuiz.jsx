@@ -13,7 +13,7 @@ import { UserContext } from '../global/UserContext.jsx'
 
 const CreateQuiz = (props) => {
 
-  const { user } = useContext(UserContext);
+  const { profile } = useContext(UserContext);
 
    // useStates here
    const [quizName, setQuizName] = useState("");
@@ -264,7 +264,7 @@ const CreateQuiz = (props) => {
           if (TF) {
             var quizDataTF = {
               quizzes: {
-              user_id: user,
+              user_id: profile.id,
               name: quizName,
               difficulty: difficulty,
               category: categoryVal
@@ -290,7 +290,7 @@ const CreateQuiz = (props) => {
           } else if (MC) {
             var quizDataMC = {
               quizzes: {
-              user_id: user,
+              user_id: profile.id,
               name: quizName,
               difficulty: difficulty,
               category: categoryVal
@@ -316,7 +316,7 @@ const CreateQuiz = (props) => {
           } else {
             var quizDataMCTF = {
               quizzes: {
-              user_id: user,
+              user_id: profile.id,
               name: quizName,
               difficulty: difficulty,
               category: categoryVal
