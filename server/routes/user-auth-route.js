@@ -15,4 +15,15 @@ router.get('/session', (req, res) => {
   authentication.getSession(req, res);
 })
 
+router.get('/signout', (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      console.log('Error destroying session:', err);
+    } else {
+      console.log('Session destroyed successfully');
+    }
+    res.end();
+  });
+})
+
 module.exports = router
