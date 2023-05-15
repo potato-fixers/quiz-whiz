@@ -280,6 +280,8 @@ const CreateQuiz = (props) => {
                   headers: {
                     "Content-Type": "application/json",
                   },
+                  mode: 'cors',
+                  credentials: 'same-origin',
                   body: JSON.stringify(quizDataTF),
                 }
 
@@ -306,6 +308,8 @@ const CreateQuiz = (props) => {
                   headers: {
                     "Content-Type": "application/json",
                   },
+                  mode: 'cors',
+                  credentials: 'same-origin',
                   body: JSON.stringify(quizDataMC),
                 }
 
@@ -332,6 +336,8 @@ const CreateQuiz = (props) => {
                   headers: {
                     "Content-Type": "application/json",
                   },
+                  mode: 'cors',
+                  credentials: 'same-origin',
                   body: JSON.stringify(quizDataMCTF)
                 }
 
