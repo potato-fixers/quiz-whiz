@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const controllers = require('../controllers/index.js');
 
-router.get('/getSample', controllers.getSample.get)
+router.post('/createSample', controllers.createSample.createSample)
 
 
 module.exports = router;

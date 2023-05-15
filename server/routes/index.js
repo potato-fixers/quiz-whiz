@@ -1,4 +1,5 @@
 exports.dashboard = require('./dashboard.js');
 exports.create = require('./create-quiz.js')
 exports.authentication = require('./user-auth-route');
-exports.getSample = require('./getSample.js')
+exports.getQuizzes = require('./getQuizzes.js');
+exports.createSample = require('./createSample.js');
