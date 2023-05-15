@@ -10,5 +10,5 @@ RUN echo "max_wal_size = '3072'" >> my-postgres.conf
 RUN cat my-postgres.conf
 
 # create database + tables
-ADD db/init/schema.sql /docker-entrypoint-initdb.d
+ADD schema.sql /docker-entrypoint-initdb.d
 
