@@ -5,20 +5,43 @@ BEGIN;
 CREATE SCHEMA quizwhiz;
 
 -- ----------------------
+-- USERS TABLE
+-- ----------------------
+CREATE TABLE users(
+	id SERIAL PRIMARY KEY,
+  email VARCHAR(255) NOT NULL,
+  password VARCHAR(255) NOT NULL,
+  first_name VARCHAR(255) NOT NULL,
+  last_name VARCHAR(255) NOT NULL,
+  username VARCHAR(255) UNIQUE,
+  profile_img bytea,
+  bio TEXT,
+  salt VARCHAR(255) NOT NULL
+);
+
+SAVEPOINT users_table_created;
+
+-- ----------------------
 -- QUIZZES TABLE
 -- ----------------------
 
 CREATE TABLE quizzes(
   id SERIAL,
-  user_id TEXT,
+  user_id INT,
   category TEXT,
   difficulty TEXT,
   quiz_name TEXT,
   created_at DATE NOT NULL DEFAULT CURRENT_DATE,
-  PRIMARY KEY(id)
+  PRIMARY KEY(id),
+  CONSTRAINT fk_quizzes
+  FOREIGN KEY(user_id)
+  REFERENCES users(id)
 );
 
 SAVEPOINT quizzes_table_created;
+
+CREATE INDEX quizzes_user_index ON quizzes(user_id);
+SAVEPOINT quizzes_user_index_created;
 
 -- ----------------------
 -- QUESTIONS TABLE
@@ -35,25 +58,8 @@ CREATE TABLE questions(
 
 SAVEPOINT questions_table_created;
 
-CREATE INDEX questions_fk_index ON questions (quiz_id);
+CREATE INDEX questions_fk_index ON questions(quiz_id);
 SAVEPOINT questions_fk_index_created;
-
--- ----------------------
--- USERS TABLE
--- ----------------------
-CREATE TABLE users(
-	id SERIAL PRIMARY KEY,
-  email VARCHAR(255) NOT NULL,
-  password VARCHAR(255) NOT NULL,
-  first_name VARCHAR(255) NOT NULL,
-  last_name VARCHAR(255) NOT NULL,
-  username VARCHAR(255) UNIQUE,
-  profile_img bytea,
-  bio TEXT,
-  salt VARCHAR(255) NOT NULL
-);
-
-SAVEPOINT users_table_created;
 
 -- ----------------------
 -- HISTORY TABLE
