@@ -2,13 +2,28 @@ import { AppBar, Typography, Toolbar, Button } from '@mui/material'
 import { Link } from 'react-router-dom';
 import { UserContext } from './components/global/UserContext';
 import { useContext } from 'react';
-import handleSignOutClick from './components/user-auth/utils/handleSignOut.js'
+import handleSignOutClick from './components/user-auth/utils/handleSignOut.js';
+import useSession from './components/user-auth/hooks/useSession';
+import { useEffect } from 'react';
 
 const Nav = () => {
 
   const styles = { color: 'inherit', textDecoration: 'inherit' };
   const { isLoggedIn } = useContext(UserContext);
+  const { updateSession } = useSession();
 
+
+  useEffect(() => {
+    let fetch = async () => {
+      try {
+        await updateSession();
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    fetch();
+    // eslint-disable-next-line
+  }, [])
 
   return (
     <AppBar position='static'>
