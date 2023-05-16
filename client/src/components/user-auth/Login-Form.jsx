@@ -8,7 +8,7 @@ export default function LoginForm() {
   const navigate = useNavigate();
   const email = useInput('');
   const password = useInput('');
-  const { login, user } = useContext(UserContext);
+  const { login } = useContext(UserContext);
 
 
   const handleSubmit = async (event) => {
@@ -29,8 +29,6 @@ export default function LoginForm() {
       console.log(err);
     }
   }
-
-  console.log('already logged in as', user);
 
   return (
     <>
