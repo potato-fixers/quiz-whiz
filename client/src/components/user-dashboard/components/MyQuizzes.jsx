@@ -30,7 +30,7 @@ const MyQuizzes = (props) => {
     try {
       const response = await fetch(endpoint, {method: 'delete'})
       if (response.ok) {
-        getQuizzes(profile.userId)
+        getQuizzes(profile.userId);
       }
     } catch (err) {
       console.error(err.stack);

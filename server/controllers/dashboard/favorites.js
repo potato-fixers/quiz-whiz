@@ -29,7 +29,15 @@ module.exports = {
   },
 
   unlike:  (req, res) => {
-    res.send('delete a quiz');
+    const { id } = req.params;
+    console.log(id)
+    models.favorites.unlike(id)
+    .then(response => {
+      res.sendStatus(204);
+    })
+    .catch(err => {
+      console.error(err.stack);
+    });
   },
 
 }

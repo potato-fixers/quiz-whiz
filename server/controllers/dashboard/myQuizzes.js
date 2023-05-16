@@ -21,7 +21,7 @@ module.exports = {
 
     models.myQuizzes.delete(id)
     .then(() => {
-      res.sendStatus(201);
+      res.sendStatus(204);
     })
     .catch(err => {
       console.error('Failed to delete quiz', err.stack);

@@ -53,8 +53,22 @@ module.exports = {
     })
   },
 
-  unlike: (/* TBD */) => {
-    // query logic
+  unlike: (id) => {
+
+    const queryString = `
+      DELETE FROM
+        favorites
+      WHERE
+        id = ${id}
+    `;
+
+    return db.query(queryString)
+    .then(res => {
+      return res;
+    })
+    .catch(err => {
+      console.error(err.stack);
+    })
   },
 
 };
