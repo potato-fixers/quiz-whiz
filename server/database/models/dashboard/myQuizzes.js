@@ -28,7 +28,6 @@ module.exports = {
 
     return db.query(queryString)
     .then(res => {
-      console.log('that', res.rows)
       return res.rows;
     })
     .catch(err => {

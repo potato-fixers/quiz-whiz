@@ -12,7 +12,7 @@ module.exports = {
         h.score,
         h.duration,
         h.finished,
-        to_char(h.date, 'Mon DDth, YYYY') AS date
+        to_char(h.date, 'FMMonth FMDDth, YYYY') AS date
       FROM
         history h
       JOIN

@@ -48,7 +48,8 @@ const Favorites = (props) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {sortedData.map((row) => (
+          {(sortedData.length &&
+            sortedData.map((row) => (
             <TableRow
               key={row.id}
             >
@@ -65,13 +66,13 @@ const Favorites = (props) => {
                 {row.totalLikes}
               </TableCell>
               <TableCell align='right' sx={{ border: 0 }}>
-                {row.date}
+                {row.liked_at}
               </TableCell>
               <TableCell align='center' sx={{ border: 0 }}>
                 <FavoriteIcon onClick={handleUnlike}></FavoriteIcon>
               </TableCell>
             </TableRow>
-          ))}
+          ))) || <TableRow><Typography component='td' align='center'> No quiz found </Typography></TableRow>}
         </TableBody>
       </Table>
 

@@ -17,6 +17,7 @@ module.exports = {
     })
     .catch(err => {
       console.error(err.stack);
+      res.sendStatus(500);
     });
   },
 
