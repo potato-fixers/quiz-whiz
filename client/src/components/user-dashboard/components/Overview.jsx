@@ -3,7 +3,7 @@ import useQuizzes from '../hooks/useQuizzes';
 
 const Overview = (props) => {
 
-  const quizzes = useQuizzes('');
+  const { quizzes } = useQuizzes('');
 
   return (
     <>

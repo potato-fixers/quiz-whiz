@@ -8,7 +8,7 @@ import useSort from '../hooks/useSort';
 
 const Plays = (props) => {
 
-  const quizzes = useQuizzes('history');
+  const { quizzes } = useQuizzes('history');
   const { filteredData, handleFilterChange, filter } = useFilter(quizzes);
   const { sortedData, sortData } = useSort(filteredData);
 

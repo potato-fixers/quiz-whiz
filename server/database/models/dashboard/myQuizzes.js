@@ -35,8 +35,21 @@ module.exports = {
     });
   },
 
-  delete: (/* TBD */) => {
-    // query logic
+  delete: (quizId) => {
+
+    const queryString = `
+      UPDATE quizzes
+      SET user_id = 1
+      WHERE id = ${quizId};
+    `;
+
+    return db.query(queryString)
+    .then(() => {
+      return 'Deleted';
+    })
+    .catch(err => {
+      console.error(err.stack);
+    });
   },
 
 };

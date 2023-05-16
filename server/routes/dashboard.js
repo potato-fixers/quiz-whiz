@@ -14,8 +14,7 @@ router.get('/', controllers.overview.get);
 
 router.get('/quizzes', controllers.myQuizzes.get);
 
-// can also use delete request (TBD)
-router.put('/quizzes/:id', controllers.myQuizzes.delete);
+router.delete('/quizzes/:id', controllers.myQuizzes.delete);
 
 // =============================================
 //                Plays

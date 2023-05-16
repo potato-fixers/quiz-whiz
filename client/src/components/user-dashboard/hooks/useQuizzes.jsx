@@ -25,7 +25,10 @@ const useQuizzes = (tab) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [profile]);
 
-  return quizzes;
+  return {
+    quizzes,
+    getQuizzes
+  }
 };
 
 export default useQuizzes;
