@@ -25,7 +25,9 @@ const TFQuestions = (props) => {
               <button
                 name="TFRemoveButton"
                 onClick={(e) => {
+                  if (window.confirm('Are you sure?')) {
                   props.removeFields(e, index);
+                  }
                 }}
               >
                 {" "}

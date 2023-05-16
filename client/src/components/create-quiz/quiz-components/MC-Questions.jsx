@@ -26,8 +26,11 @@ const MCQuestions = (props) => {
               ></textarea>
               <button
                 name="MCRemoveButton"
-                onClick={(e) => {
-                  props.removeFields(e, index);
+                onClick={ (e) => {
+                  if(window.confirm('Are you sure?')) {
+                    props.removeFields(e, index);
+                  }
+
                 }}
               >
                 {" "}

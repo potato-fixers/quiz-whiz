@@ -396,7 +396,9 @@ const CreateQuiz = (props) => {
         <div name='createQuiz'>
           <button
             onClick={(e) => {
+              if (window.confirm('Submit Quiz?')) {
               setTimeout(sendQuiz(e), 5000);
+              }
             }}
           >
             {" "}
