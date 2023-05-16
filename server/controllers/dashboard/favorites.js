@@ -17,10 +17,18 @@ module.exports = {
   },
 
   like: (req, res) => {
-    res.send('like a quiz');
+    const { userId, quizId } = req.body;
+
+    models.favorites.like(userId, quizId)
+    .then(response => {
+      res.sendStatus(201);
+    })
+    .catch(err => {
+      console.error(err.stack);
+    });
   },
 
-  delete:  (req, res) => {
+  unlike:  (req, res) => {
     res.send('delete a quiz');
   },
 

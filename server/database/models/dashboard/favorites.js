@@ -35,11 +35,25 @@ module.exports = {
     });
   },
 
-  like: (/* TBD */) => {
-    // query logic
+  like: (userId, quizId) => {
+
+    const queryString = `
+      INSERT INTO
+        favorites (user_id, quiz_id)
+      VALUES
+        (${userId}, ${quizId})
+    `;
+
+    return db.query(queryString)
+    .then(res => {
+      return res;
+    })
+    .catch(err => {
+      console.error(err.stack);
+    })
   },
 
-  delete: (/* TBD */) => {
+  unlike: (/* TBD */) => {
     // query logic
   },
 

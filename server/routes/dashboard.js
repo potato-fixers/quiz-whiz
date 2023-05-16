@@ -30,10 +30,10 @@ router.get('/favorites', controllers.favorites.get);
 
 router.post('/favorites', controllers.favorites.like);
 
-router.delete('/favorites/:id',controllers.favorites.delete);
+router.delete('/favorites/:id',controllers.favorites.unlike);
 
 // =============================================
-//                Favorites
+//                Counts
 // =============================================
 
 router.get('/counts', controllers.counts.get);

@@ -44,8 +44,8 @@ module.exports = {
     `;
 
     return db.query(queryString)
-    .then(() => {
-      return 'Deleted';
+    .then(res => {
+      return res;
     })
     .catch(err => {
       console.error(err.stack);
