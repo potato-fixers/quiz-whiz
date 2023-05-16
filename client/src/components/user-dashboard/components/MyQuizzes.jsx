@@ -43,14 +43,14 @@ const MyQuizzes = (props) => {
           <TableRow>
             <TableCell align='left' onClick={handleClick} >Quiz</TableCell>
             <TableCell align='center' onClick={handleClick} >Category</TableCell>
-            <TableCell align='center' onClick={handleClick} >Type</TableCell>
             <TableCell align='center' onClick={handleClick} >Plays</TableCell>
             <TableCell align='center' onClick={handleClick} >Likes</TableCell>
             <TableCell align='right' onClick={handleClick} >Created At</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {sortedData.map((row) => (
+          {(sortedData.length &&
+            sortedData.map((row) => (
             <TableRow
               key={row.id}
             >
@@ -59,9 +59,6 @@ const MyQuizzes = (props) => {
               </TableCell>
               <TableCell align='center' sx={{ border: 0 }}>
                 {row.category}
-              </TableCell>
-              <TableCell align='center' sx={{ border: 0 }}>
-                {row.type}
               </TableCell>
               <TableCell align='center' sx={{ border: 0 }}>
                 {row.plays}
@@ -76,7 +73,7 @@ const MyQuizzes = (props) => {
                 <ClearIcon onClick={handleDelete}></ClearIcon>
               </TableCell>
             </TableRow>
-          ))}
+          ))) || <TableRow><Typography component='td' align='center'> No quiz found </Typography></TableRow>}
         </TableBody>
       </Table>
 

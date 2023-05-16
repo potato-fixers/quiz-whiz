@@ -25,7 +25,7 @@ const QuizCounts = (props) => {
   };
 
   useEffect(() => {
-    getCounts(profile.userId);
+    getCounts(profile.userId || 1);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [profile]);
 

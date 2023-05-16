@@ -4,10 +4,6 @@ module.exports = {
 
   get: (userId) => {
 
-    if (userId === undefined) {
-      userId = 0;
-    }
-
     const queryString = `
       SELECT
       (SELECT COUNT(*) FROM quizzes WHERE user_id = ${userId}) AS quizzes,

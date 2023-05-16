@@ -4,10 +4,6 @@ module.exports = {
 
   get: (userId) => {
 
-    if (userId === undefined) {
-      userId = 0;
-    }
-
     const queryString = `
       SELECT
         quizzes.id,

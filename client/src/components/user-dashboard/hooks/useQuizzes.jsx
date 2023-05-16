@@ -21,7 +21,7 @@ const useQuizzes = (tab) => {
   };
 
   useEffect(() => {
-    getQuizzes(profile.userId);
+    getQuizzes(profile.userId || 1);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [profile]);
 
