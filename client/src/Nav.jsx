@@ -4,19 +4,21 @@ import { UserContext } from './components/global/UserContext';
 import { useContext } from 'react';
 import handleSignOutClick from './components/user-auth/utils/handleSignOut.js';
 import useSession from './components/user-auth/hooks/useSession';
-import { useEffect } from 'react';
+import { useLayoutEffect, useState } from 'react';
 
 const Nav = () => {
 
   const styles = { color: 'inherit', textDecoration: 'inherit' };
   const { isLoggedIn } = useContext(UserContext);
   const { updateSession } = useSession();
+  const [isReady, setIsReady] = useState(false);
 
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     let fetch = async () => {
       try {
         await updateSession();
+        setIsReady(true);
       } catch (err) {
         console.log(err);
       }
@@ -34,14 +36,17 @@ const Nav = () => {
           </Link>
         </Typography>
 
-        <Typography variant='h6' >
-          <Link to='/dashboard' style={styles}>Dashboard</Link>
-        </Typography>
-
-        <Typography variant='h6' sx={{ flexGrow: 1 }} >
-          <Link to='/createQuiz' style={styles}>Create</Link>
-        </Typography>
-        {!isLoggedIn ?
+        {(isReady && !isLoggedIn) ? <></> :
+          <>
+            <Typography variant='h6' >
+              <Link to='/dashboard' style={styles}>Dashboard</Link>
+            </Typography>
+            <Typography variant='h6' sx={{ flexGrow: 1 }} >
+              <Link to='/createQuiz' style={styles}>Create</Link>
+            </Typography>
+          </>
+        }
+        {!isReady ? <></> : !isLoggedIn ?
           <>
             <Button color='inherit' >
               <Link to='/register' style={styles}>Sign Up</Link>
