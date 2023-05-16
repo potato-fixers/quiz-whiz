@@ -3,11 +3,11 @@ import "../styles/create-quiz.css";
 const MCQuestions = (props) => {
   return (
     <div className="MCQuestions">
-      <h1> Enter MC Questions Here </h1>
+      <h1> Enter Multiple Choice Questions Here </h1>
       <form>
       <button name="MCButton" onClick={props.addFields}>
           {" "}
-          Add More MC Questions!{" "}
+          Add More Multiple Choice Questions!{" "}
         </button>
         {props.inputFields.map((input, index) => {
           return (
@@ -30,7 +30,6 @@ const MCQuestions = (props) => {
                   if(window.confirm('Are you sure?')) {
                     props.removeFields(e, index);
                   }
-
                 }}
               >
                 {" "}

@@ -4,12 +4,13 @@ const TFQuestions = (props) => {
 
   return (
     <div className='TFQuestions'>
-    <h1> Enter TF Questions Here</h1>
+    <h1> Enter True / False Questions Here</h1>
+    <h3> Please Enter only True / False Answer Choices </h3>
       <form>
         <button
         name='TFButton' onClick={props.addFields}>
           {" "}
-          Add More TF Questions!{" "}
+          Add More True / False Questions!{" "}
         </button>
         {props.inputFields.map((input, index) => {
           return (

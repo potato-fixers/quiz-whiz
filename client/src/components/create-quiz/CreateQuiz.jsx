@@ -5,8 +5,8 @@ import Difficulty from "./quiz-components/Difficulty.jsx"
 import MCQuestions from "./quiz-components/MC-Questions.jsx";
 import TFQuestions from "./quiz-components/TF-Questions.jsx";
 import APIQuestions from "./quiz-components/API-Questions.jsx";
-import { useContext } from 'react'
-import { UserContext } from '../global/UserContext.jsx'
+import { useContext } from "react"
+import { UserContext } from "../global/UserContext.jsx"
 
 // need useState here for both MC Questions and TF Questions
 // state will be passed down to both components along with update functions.
@@ -17,8 +17,8 @@ const CreateQuiz = (props) => {
 
    // useStates here
    const [quizName, setQuizName] = useState("");
-   const [TFValidation, setTFValidation] = useState(false);
-   const [MCValidation, setMCValidation] = useState(false);
+   const [TFValidation, setTFValidation] = useState([false, false]);
+   const [MCValidation, setMCValidation] = useState([false, false, false]);
    const [MCInputFields, setMCInputFields] = useState([
      { question: "", corrAns: "", incAns1: "", incAns2: "", incAns3: "" },
      { question: "", corrAns: "", incAns1: "", incAns2: "", incAns3: "" },
@@ -105,20 +105,73 @@ const CreateQuiz = (props) => {
         var MCdata = [...MCInputFields]
         MCdata[index][e.target.name] = e.target.value
         setMCInputFields(MCdata);
-        if (e.target.value === "") {
-          setMCValidation(false);
+        if (MCdata[index].question === "" || MCdata[index].corrAns === "" || MCdata[index].incAns1 === "" || MCdata[index].incAns2 === "" || MCdata[index].incAns3 === "") {
+          var MCValFalse = [...MCValidation]
+          MCValFalse[index] = false
+          setMCValidation(MCValFalse);
         } else {
-          setMCValidation(true)
+          var MCValTrue = [...MCValidation]
+          MCValTrue[index] = true;
+          setMCValidation(MCValTrue)
         }
       } else {
-        var TFdata = [...TFInputFields]
-        TFdata[index][e.target.name] = e.target.value
-        setTFInputFields(TFdata);
-        if (e.target.value === "") {
-          setTFValidation(false);
+        if (e.target.name === "corrAns" || e.target.name === "incAns") {
+          if (e.target.value === "t" || e.target.value === "T") {
+            var TFCorrAnsData = [...TFInputFields]
+            TFCorrAnsData[index][e.target.name] = "True"
+            setTFInputFields(TFCorrAnsData);
+            if (TFCorrAnsData[index].question === "" || TFCorrAnsData[index].corrAns === "" || TFCorrAnsData[index].incAns === "") {
+              var TFCorrValFalse = [...TFValidation]
+              TFCorrValFalse[index] = false
+              setTFValidation(TFCorrValFalse);
+            } else {
+              var TFCorrAnsValTrue = [...TFValidation]
+              TFCorrAnsValTrue[index] = true;
+              setTFValidation(TFCorrAnsValTrue)
+            }
+          } else if (e.target.value === "f" || e.target.value === "F") {
+            var TFIncAnsData = [...TFInputFields]
+            TFIncAnsData[index][e.target.name] = "False"
+            setTFInputFields(TFIncAnsData);
+            if (TFIncAnsData[index].question === "" || TFIncAnsData[index].corrAns === "" || TFIncAnsData[index].incAns === "") {
+              var TFIncValFalse = [...TFValidation]
+              TFIncValFalse[index] = false
+              setTFValidation(TFIncValFalse);
+            } else {
+              var TFAnsValTrue = [...TFValidation]
+              TFAnsValTrue[index] = true;
+              setTFValidation(TFAnsValTrue)
+            }
+          } else {
+            var TFEmptyAns = [...TFInputFields]
+            TFEmptyAns[index][e.target.name] = ""
+            setTFInputFields(TFEmptyAns)
+            if (TFEmptyAns[index].question === "" || TFEmptyAns[index].corrAns === "" || TFEmptyAns[index].incAns === "") {
+              var TFEmptyAnsFalse = [...TFValidation]
+              TFEmptyAnsFalse[index] = false
+              setTFValidation(TFEmptyAnsFalse);
+            } else {
+              var TFEmptyAnsTrue = [...TFValidation]
+              TFEmptyAnsTrue[index] = true;
+              setTFValidation(TFEmptyAnsTrue)
+            }
+          }
         } else {
-          setTFValidation(true)
+          var TFdata = [...TFInputFields]
+          TFdata[index][e.target.name] = e.target.value
+          setTFInputFields(TFdata);
+          if (TFdata[index].question === "" || TFdata[index].corrAns === "" || TFdata[index].incAns === "") {
+            var TFValFalse = [...TFValidation]
+            TFValFalse[index] = false
+            setTFValidation(TFValFalse);
+          } else {
+            var TFValTrue = [...TFValidation]
+            TFValTrue[index] = true;
+            setTFValidation(TFValTrue)
+          }
         }
+
+
       }
     }
 
@@ -144,13 +197,13 @@ const CreateQuiz = (props) => {
         e.target.name === "MCButton"
       ) {
         setMCInputFields([...MCInputFields, newMCField]);
-        setMCValidation(false);
+        setMCValidation([...MCValidation, false])
       } else if (
         TFInputFields.length + MCInputFields.length < 20 &&
         e.target.name === "TFButton"
       ) {
         setTFInputFields([...TFInputFields, newTField]);
-        setTFValidation(false);
+        setTFValidation([...TFValidation, false])
       } else {
         alert("Maximum Questions Reached!");
       }
@@ -163,195 +216,146 @@ const CreateQuiz = (props) => {
         var MCdata = [...MCInputFields];
         MCdata.splice(index, 1);
         setMCInputFields(MCdata);
+        var MCVal = [...MCValidation]
+        MCVal.splice(index, 1)
+        setMCValidation(MCVal)
       } else if (e.target.name === "TFRemoveButton" && minQuestions > 5) {
         var TFdata = [...TFInputFields];
         TFdata.splice(index, 1);
         setTFInputFields(TFdata);
+        var TFVal = [...TFValidation];
+        TFVal.splice(index, 1);
+        setTFValidation(TFVal);
       } else {
         alert("Minimum Questions Reached!")
       }
   };
 
-  const questionValidation = (callback) => {
-    if (TFInputFields.length === 0) {
-      for (var i = 0; i < MCInputFields.length; i++) {
-        if (MCInputFields[i].question.length < 1) {
-          setMCValidation(false);
-        }
-        if (MCInputFields[i].corrAns.length < 1) {
-          setMCValidation(false);
-        }
-        if (MCInputFields[i].incAns1.length < 1) {
-          setMCValidation(false);
-        }
-        if (MCInputFields[i].incAns2.length < 1) {
-          setMCValidation(false);
-        }
-        if (MCInputFields[i].incAns3.length < 1) {
-          setMCValidation(false);
-        }
-      }
-      callback(true, null)
-    } else if (MCInputFields.length === 0) {
-        for (var j = 0; j < TFInputFields.length; j++) {
-          if (TFInputFields[j].question.length < 1) {
-            setTFValidation(false);
-          }
-          if (TFInputFields[j].corrAns.length < 1) {
-            setTFValidation(false);
-          }
-          if (TFInputFields[j].incAns.length < 1) {
-            setTFValidation(false);
-          }
-        }
-        callback(null, true)
-
-    } else {
-        for (var k = 0; k < MCInputFields.length; k++) {
-          if (MCInputFields[k].question.length < 1) {
-            setMCValidation(false);
-          }
-          if (MCInputFields[k].corrAns.length < 1) {
-            setMCValidation(false);
-          }
-          if (MCInputFields[k].incAns1.length < 1) {
-            setMCValidation(false);
-          }
-          if (MCInputFields[k].incAns2.length < 1) {
-            setMCValidation(false);
-          }
-          if (MCInputFields[k].incAns3.length < 1) {
-            setMCValidation(false);
-          }
-        }
-
-        for (var l = 0; l < TFInputFields.length; l++) {
-          if (TFInputFields[l].question.length < 1) {
-            setTFValidation(false);
-          }
-          if (TFInputFields[l].corrAns.length < 1) {
-            setTFValidation(false);
-          }
-          if (TFInputFields[l].incAns.length < 1) {
-            setTFValidation(false);
-          }
-        }
-        callback(null, null);
-      }
-    }
-
     const sendQuiz = (e) => {
 
       e.preventDefault();
+      if (!quizName) {
+        alert("Please Enter Quiz Name!")
+      } else if (!categoryVal) {
+        alert("Please Choose Category!")
+      } else if (!difficulty) {
+        alert("Please Select Difficulty!")
+      } else if (!TFValidation.length) {
+        var MCpass = true;
+        for (var i = 0; i < MCValidation.length; i++) {
+          if (!MCValidation[i]) {
+            MCpass = false;
+          }
+        }
+        if (MCpass) {
+          var quizDataMC = {
+            quizzes: {
+            user_id: profile.id,
+            name: quizName,
+            difficulty: difficulty,
+            category: categoryVal
+            },
+            questions: JSON.stringify(MCInputFields),
+          }
 
-      if (!MCValidation && !TFValidation) {
-        alert('Please Fill Out All Fields')
-      } else {
-          questionValidation( (MC, TF) => {
-            if (!TFValidation && TF === true) {
-              alert("Please Fill Out All TF Question Fields!");
-            } else if (!MCValidation && MC === true) {
-              alert("Please Fill Out All MC Question Fields!");
-            } else if (!MCValidation && TFValidation && !MC && !TF) {
-              alert("Please Fill Out All MC / TF Question Fields or Remove Unused Questions");
-            } else if (MCValidation && !TFValidation && !MC && !TF) {
-              alert("Please Fill Out All MC / TF Question Fields or Remove Unused Questions");
-            } else if (!MCValidation && !TFValidation && !MC && !TF) {
-              alert("Please Fill Out All MC / TF Question Fields or Remove Unused Questions");
-            } else if (!quizName) {
-              alert("Please Enter Quiz Name!")
-            } else if (!categoryVal) {
-              alert("Please Choose Category!")
-            } else if (!difficulty) {
-              alert("Please Select Difficulty!")
-            } else {
-              if (TF) {
-                var quizDataTF = {
-                  quizzes: {
-                  user_id: profile.id,
-                  name: quizName,
-                  difficulty: difficulty,
-                  category: categoryVal
-                  },
-                  questions: JSON.stringify(TFInputFields),
-                }
+          var optionsMC = {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            mode: "cors",
+            credentials: "include",
+            body: JSON.stringify(quizDataMC),
+          }
 
-                var optionsTF = {
-                  method: "POST",
-                  headers: {
-                    "Content-Type": "application/json",
-                  },
-                  mode: 'cors',
-                  credentials: 'include',
-                  body: JSON.stringify(quizDataTF),
-                }
-
-                fetch(`${process.env.REACT_APP_API_URI}/create/createQuiz`, optionsTF)
-                .then( (response) => {
-                  if (response.status === 200) {
-                    alert("Quiz Succesfully Created!");
-                    window.location.href = '/';
-                  }
-                })
-              } else if (MC) {
-                var quizDataMC = {
-                  quizzes: {
-                  user_id: profile.id,
-                  name: quizName,
-                  difficulty: difficulty,
-                  category: categoryVal
-                  },
-                  questions: JSON.stringify(MCInputFields),
-                }
-
-                var optionsMC = {
-                  method: "POST",
-                  headers: {
-                    "Content-Type": "application/json",
-                  },
-                  mode: 'cors',
-                  credentials: 'include',
-                  body: JSON.stringify(quizDataMC),
-                }
-
-                fetch(`${process.env.REACT_APP_API_URI}/create/createQuiz`, optionsMC)
-                .then( (response) => {
-                  if (response.status === 200) {
-                    alert("Quiz Succesfully Created!");
-                    window.location.href = '/';
-                  }
-                })
-              } else {
-                var quizDataMCTF = {
-                  quizzes: {
-                  user_id: profile.id,
-                  name: quizName,
-                  difficulty: difficulty,
-                  category: categoryVal
-                  },
-                  questions: JSON.stringify(MCInputFields.concat(TFInputFields)),
-                }
-
-                var optionsMCTF = {
-                  method: "POST",
-                  headers: {
-                    "Content-Type": "application/json",
-                  },
-                  mode: 'cors',
-                  credentials: 'include',
-                  body: JSON.stringify(quizDataMCTF)
-                }
-
-                fetch(`${process.env.REACT_APP_API_URI}/create/createQuiz`, optionsMCTF)
-                .then( (response) => {
-                  if (response.status === 200) {
-                    alert("Quiz Succesfully Created!");
-                    window.location.href = '/';
-                  }
-                })
-              }
+          fetch(`${process.env.REACT_APP_API_URI}/create/createQuiz`, optionsMC)
+          .then( (response) => {
+            if (response.status === 200) {
+              alert("Quiz Succesfully Created!");
+              window.location.href = "/";
             }
           })
+        } else {
+          alert("Please Fill Out All MC Question Fields!")
+        }
+
+      } else if (!MCValidation.length) {
+        var TFpass = true;
+        for (var j = 0; j < TFValidation.length; j++) {
+          if (!TFValidation[j]) {
+            TFpass = false;
+          }
+        }
+        if (TFpass) {
+          var quizDataTF = {
+            quizzes: {
+            user_id: profile.id,
+            name: quizName,
+            difficulty: difficulty,
+            category: categoryVal
+            },
+            questions: JSON.stringify(TFInputFields),
+          }
+
+          var optionsTF = {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            mode: "cors",
+            credentials: "include",
+            body: JSON.stringify(quizDataTF),
+          }
+
+          fetch(`${process.env.REACT_APP_API_URI}/create/createQuiz`, optionsTF)
+          .then( (response) => {
+            if (response.status === 200) {
+              alert("Quiz Succesfully Created!");
+              window.location.href = "/";
+            }
+          })
+        } else {
+          alert("Please Fill Out All TF Question Fields!")
+        }
+      } else {
+        var MCTFpass = true;
+        var validationArray = MCValidation.concat(TFValidation)
+        for (var k = 0; k < validationArray.length; k++) {
+          if (!validationArray[k]) {
+            MCTFpass= false;
+          }
+        }
+        if (MCTFpass) {
+          var quizDataMCTF = {
+            quizzes: {
+            user_id: profile.id,
+            name: quizName,
+            difficulty: difficulty,
+            category: categoryVal
+            },
+            questions: JSON.stringify(MCInputFields.concat(TFInputFields)),
+          }
+
+          var optionsMCTF = {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            mode: "cors",
+            credentials: "include",
+            body: JSON.stringify(quizDataMCTF)
+          }
+
+          fetch(`${process.env.REACT_APP_API_URI}/create/createQuiz`, optionsMCTF)
+          .then( (response) => {
+            if (response.status === 200) {
+              alert("Quiz Succesfully Created!");
+              window.location.href = "/";
+            }
+          })
+        } else {
+          alert("Please Fill Out All MC / TF Question Fields or Remove Unused Questions")
+        }
       }
     }
 
@@ -393,11 +397,11 @@ const CreateQuiz = (props) => {
           addFields={addFields}
           removeFields={removeFields}
         />
-        <div name='createQuiz'>
+        <div name="createQuiz">
           <button
             onClick={(e) => {
-              if (window.confirm('Submit Quiz?')) {
-              setTimeout(sendQuiz(e), 5000);
+              if (window.confirm("Submit Quiz?")) {
+              sendQuiz(e)
               }
             }}
           >
