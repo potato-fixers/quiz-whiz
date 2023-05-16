@@ -1,7 +1,7 @@
 const db = require('../../config/index.js');
 //               DB Methods               //
 let getQuizzes = (id, callback) => {
-  var getQuery = `SELECT * FROM quizzes WHERE user_id = '${id}';`
+  var getQuery = `SELECT * FROM quizzes WHERE user_id = ${id};`
   db.query(getQuery, (err, rows) => {
     if (err) {
       callback(err, null)
