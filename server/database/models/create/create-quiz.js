@@ -4,7 +4,7 @@ let createQuiz = (data, callback) => {
   // db connection created, insert statement depending on what the data looks like
   var quizData = data.quizzes
   var questionsData = JSON.stringify(data.questions);
-  var quizzesQuery = `INSERT INTO quizzes (user_id, category, difficulty, quiz_name) VALUES ('${quizData.user_id}', '${quizData.category}', '${quizData.difficulty}', '${quizData.name}') RETURNING id`
+  var quizzesQuery = `INSERT INTO quizzes (user_id, category, difficulty, quiz_name) VALUES ('${quizData.user_id ? quizData.user_id : 1}', '${quizData.category}', '${quizData.difficulty}', '${quizData.name}') RETURNING id`
 
   db.query(quizzesQuery, (err, res) => {
     if (err) {

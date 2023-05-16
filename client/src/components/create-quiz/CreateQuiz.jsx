@@ -243,105 +243,115 @@ const CreateQuiz = (props) => {
 
       e.preventDefault();
 
-      questionValidation( (MC, TF) => {
-        if (!TFValidation && TF === true) {
-          alert("Please Fill Out All TF Question Fields!");
-        } else if (!MCValidation && MC === true) {
-          alert("Please Fill Out All MC Question Fields!");
-        } else if (!MCValidation && TFValidation && !MC && !TF) {
-          alert("Please Fill Out All MC / TF Question Fields or Remove Unused Questions");
-        } else if (MCValidation && !TFValidation && !MC && !TF) {
-          alert("Please Fill Out All MC / TF Question Fields or Remove Unused Questions");
-        } else if (!MCValidation && !TFValidation && !MC && !TF) {
-          alert("Please Fill Out All MC / TF Question Fields or Remove Unused Questions");
-        } else if (!quizName) {
-          alert("Please Enter Quiz Name!")
-        } else if (!categoryVal) {
-          alert("Please Choose Category!")
-        } else if (!difficulty) {
-          alert("Please Select Difficulty!")
-        } else {
-          if (TF) {
-            var quizDataTF = {
-              quizzes: {
-              user_id: profile.id,
-              name: quizName,
-              difficulty: difficulty,
-              category: categoryVal
-              },
-              questions: JSON.stringify(TFInputFields),
-            }
+      if (!MCValidation && !TFValidation) {
+        alert('Please Fill Out All Fields')
+      } else {
+          questionValidation( (MC, TF) => {
+            if (!TFValidation && TF === true) {
+              alert("Please Fill Out All TF Question Fields!");
+            } else if (!MCValidation && MC === true) {
+              alert("Please Fill Out All MC Question Fields!");
+            } else if (!MCValidation && TFValidation && !MC && !TF) {
+              alert("Please Fill Out All MC / TF Question Fields or Remove Unused Questions");
+            } else if (MCValidation && !TFValidation && !MC && !TF) {
+              alert("Please Fill Out All MC / TF Question Fields or Remove Unused Questions");
+            } else if (!MCValidation && !TFValidation && !MC && !TF) {
+              alert("Please Fill Out All MC / TF Question Fields or Remove Unused Questions");
+            } else if (!quizName) {
+              alert("Please Enter Quiz Name!")
+            } else if (!categoryVal) {
+              alert("Please Choose Category!")
+            } else if (!difficulty) {
+              alert("Please Select Difficulty!")
+            } else {
+              if (TF) {
+                var quizDataTF = {
+                  quizzes: {
+                  user_id: profile.id,
+                  name: quizName,
+                  difficulty: difficulty,
+                  category: categoryVal
+                  },
+                  questions: JSON.stringify(TFInputFields),
+                }
 
-            var optionsTF = {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify(quizDataTF),
-            }
+                var optionsTF = {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  mode: 'cors',
+                  credentials: 'same-origin',
+                  body: JSON.stringify(quizDataTF),
+                }
 
-            fetch(`${process.env.REACT_APP_API_URI}/create/createQuiz`, optionsTF)
-            .then( (response) => {
-              if (response.status === 200) {
-                alert("Quiz Succesfully Created!");
-                window.location.href = '/';
+                fetch(`${process.env.REACT_APP_API_URI}/create/createQuiz`, optionsTF)
+                .then( (response) => {
+                  if (response.status === 200) {
+                    alert("Quiz Succesfully Created!");
+                    window.location.href = '/';
+                  }
+                })
+              } else if (MC) {
+                var quizDataMC = {
+                  quizzes: {
+                  user_id: profile.id,
+                  name: quizName,
+                  difficulty: difficulty,
+                  category: categoryVal
+                  },
+                  questions: JSON.stringify(MCInputFields),
+                }
+
+                var optionsMC = {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  mode: 'cors',
+                  credentials: 'same-origin',
+                  body: JSON.stringify(quizDataMC),
+                }
+
+                fetch(`${process.env.REACT_APP_API_URI}/create/createQuiz`, optionsMC)
+                .then( (response) => {
+                  if (response.status === 200) {
+                    alert("Quiz Succesfully Created!");
+                    window.location.href = '/';
+                  }
+                })
+              } else {
+                var quizDataMCTF = {
+                  quizzes: {
+                  user_id: profile.id,
+                  name: quizName,
+                  difficulty: difficulty,
+                  category: categoryVal
+                  },
+                  questions: JSON.stringify(MCInputFields.concat(TFInputFields)),
+                }
+
+                var optionsMCTF = {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  mode: 'cors',
+                  credentials: 'same-origin',
+                  body: JSON.stringify(quizDataMCTF)
+                }
+
+                fetch(`${process.env.REACT_APP_API_URI}/create/createQuiz`, optionsMCTF)
+                .then( (response) => {
+                  if (response.status === 200) {
+                    alert("Quiz Succesfully Created!");
+                    window.location.href = '/';
+                  }
+                })
               }
-            })
-          } else if (MC) {
-            var quizDataMC = {
-              quizzes: {
-              user_id: profile.id,
-              name: quizName,
-              difficulty: difficulty,
-              category: categoryVal
-              },
-              questions: JSON.stringify(MCInputFields),
             }
-
-            var optionsMC = {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify(quizDataMC),
-            }
-
-            fetch(`${process.env.REACT_APP_API_URI}/create/createQuiz`, optionsMC)
-            .then( (response) => {
-              if (response.status === 200) {
-                alert("Quiz Succesfully Created!");
-                window.location.href = '/';
-              }
-            })
-          } else {
-            var quizDataMCTF = {
-              quizzes: {
-              user_id: profile.id,
-              name: quizName,
-              difficulty: difficulty,
-              category: categoryVal
-              },
-              questions: JSON.stringify(MCInputFields.concat(TFInputFields)),
-            }
-
-            var optionsMCTF = {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify(quizDataMCTF)
-            }
-
-            fetch(`${process.env.REACT_APP_API_URI}/create/createQuiz`, optionsMCTF)
-            .then( (response) => {
-              if (response.status === 200) {
-                alert("Quiz Succesfully Created!");
-                window.location.href = '/';
-              }
-            })
-          }
-        }
-      })
+          })
+      }
     }
 
     return (
