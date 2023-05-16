@@ -15,7 +15,29 @@ import TakeQuiz from "./components/take-quiz/TakeQuiz.jsx";
 import CreateQuiz from "./components/create-quiz/CreateQuiz.jsx";
 
 import { QuizProvider } from "./components/take-quiz/context/QuizContext";
+import { useState, useLayoutEffect } from 'react';
+import useSession from './components/user-auth/hooks/useSession';
+import { UserContext } from './components/global/UserContext';
+import { useContext } from 'react';
+
 function App() {
+  const { isLoggedIn } = useContext(UserContext);
+  const [isReady, setIsReady] = useState(false);
+  const { updateSession } = useSession();
+
+  useLayoutEffect(() => {
+    let fetch = async () => {
+      try {
+        await updateSession();
+        setIsReady(true);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    fetch();
+    // eslint-disable-next-line
+  }, [])
+
   return (
     <Router>
       <Nav />
@@ -23,8 +45,13 @@ function App() {
         <Route path="/*" element={<Landing />}></Route>
         <Route path="/login/" element={<Login />}></Route>
         <Route path="/register/" element={<Register />}></Route>
-        <Route path="/settings/" element={<UserProfilePage />}></Route>
-        <Route path="dashboard/*" element={<Dashboard />}></Route>
+        {isReady && !isLoggedIn ? <></> :
+          <>
+            <Route path="/settings/" element={<UserProfilePage />}></Route>
+            <Route path="dashboard/*" element={<Dashboard />}></Route>
+            <Route path="/createQuiz/" element={<CreateQuiz />}></Route>
+          </>
+        }
         <Route
           path="/quiz/:id/*"
           element={
@@ -33,7 +60,6 @@ function App() {
             </QuizProvider>
           }
         ></Route>
-        <Route path="/createQuiz/" element={<CreateQuiz />}></Route>
       </Routes>
     </Router>
   );

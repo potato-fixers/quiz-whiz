@@ -15,5 +15,5 @@ db.query(queryString)
   console.log('Favorites table created!');
 })
 .catch(err => {
-  console.err(err.stack);
+  console.log(err.stack);
 });
