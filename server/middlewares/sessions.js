@@ -7,6 +7,7 @@ const cookie_secret = process.env.COOKIE_SECRET || 'pass';
 module.exports = expressSession({
   store: new pgSession({
     pool: pgPool,
+    createTableIfMissing: true,
   }),
   secret: cookie_secret,
   resave: false,
