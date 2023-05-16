@@ -9,8 +9,13 @@ db.query('CREATE TABLE quizzes (id SERIAL, user_id INT, category TEXT, difficult
       if (err) {
         console.log('Questions Table creation error');
       } else {
-        console.log('All tables succesfully created');
-        db.end();
+        db.query("CREATE TABLE users (id SERIAL PRIMARY KEY, email VARCHAR(255) NOT NULL, password VARCHAR(255) NOT NULL, first_name VARCHAR(255) NOT NULL, last_name VARCHAR(255) NOT NULL, username VARCHAR(255) UNIQUE, profile_img bytea, bio TEXT, salt VARCHAR(255) NOT NULL)", (err, res) => {
+          if (err) {
+            console.log('this sucks')
+          } else {
+            console.log('all tables created successfully')
+          }
+        })
       }
     })
   }
