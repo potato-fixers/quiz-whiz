@@ -1,7 +1,11 @@
 import { useState, useEffect } from 'react';
 import { Stack, Typography, Box } from '@mui/material'
+import React, { useContext } from 'react';
+import { UserContext } from '../../global/UserContext';
 
 const QuizCounts = (props) => {
+
+  const { profile } = useContext(UserContext);
 
   const [counts, setCounts] = useState({
     quizzes: 0,
@@ -11,7 +15,7 @@ const QuizCounts = (props) => {
 
   const getCounts = async (userId) => {
     const url = process.env.REACT_APP_API_URI;
-    const response = await fetch(`${url}/dashboard/counts`)
+    const response = await fetch(`${url}/dashboard/counts/?userId=${userId}`)
     if (response.ok) {
       const data = await response.json();
       setCounts(data);
@@ -19,14 +23,14 @@ const QuizCounts = (props) => {
   };
 
   useEffect(() => {
-    getCounts();
-  }, []);
+    getCounts(profile.userId);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [profile]);
 
   const Counts = ({name, count}) => <Box>
     <Typography variant='h5'>{count}</Typography>
     <Typography >{name}</Typography>
   </Box>
-
 
   return (
     <Stack direction='row' spacing={20} sx={{margin: 3}}>

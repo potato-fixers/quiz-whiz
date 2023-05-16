@@ -3,7 +3,14 @@ const models = require('../../database/models')
 module.exports = {
 
   get: (req, res) => {
-    res.json(models.counts.get());
+    const { userId } = req.query;
+    models.counts.get()
+    .then(response => {
+      res.json(response);
+    })
+    .catch(err => {
+      console.error(err.stack)
+    });
   },
 
 }
