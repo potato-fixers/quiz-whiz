@@ -1,7 +1,7 @@
 require('dotenv').config();
 const db = require('../config/index');
 
-db.query('CREATE TABLE quizzes (id SERIAL, user_id TEXT, category TEXT, difficulty TEXT, quiz_name TEXT, PRIMARY KEY(id))', (err, res) => {
+db.query('CREATE TABLE quizzes (id SERIAL, user_id INT, category TEXT, difficulty TEXT, quiz_name TEXT, PRIMARY KEY(id))', (err, res) => {
   if (err) {
     console.log('Quiz Table creation failed:', process.env.DB, err)
   } else {
