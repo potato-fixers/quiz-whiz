@@ -1,9 +1,29 @@
 import { AppBar, Typography, Toolbar, Button } from '@mui/material'
 import { Link } from 'react-router-dom';
+import { UserContext } from './components/global/UserContext';
+import { useContext } from 'react';
+import handleSignOutClick from './components/user-auth/utils/handleSignOut.js';
+import useSession from './components/user-auth/hooks/useSession';
+import { useEffect } from 'react';
 
 const Nav = () => {
 
   const styles = { color: 'inherit', textDecoration: 'inherit' };
+  const { isLoggedIn } = useContext(UserContext);
+  const { updateSession } = useSession();
+
+
+  useEffect(() => {
+    let fetch = async () => {
+      try {
+        await updateSession();
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    fetch();
+    // eslint-disable-next-line
+  }, [])
 
   return (
     <AppBar position='static'>
@@ -11,7 +31,7 @@ const Nav = () => {
         <Typography variant="h4" >
           <Link to='/' style={styles}>
             Quiz Whiz
-           </Link>
+          </Link>
         </Typography>
 
         <Typography variant='h6' >
@@ -21,13 +41,19 @@ const Nav = () => {
         <Typography variant='h6' sx={{ flexGrow: 1 }} >
           <Link to='/createQuiz' style={styles}>Create</Link>
         </Typography>
-
-        <Button color='inherit' >
-          <Link to='/register' style={styles}>Sign Up</Link>
-        </Button>
-        <Button color='inherit' >
-        <Link to='/login' style={styles}>Sign In</Link>
-        </Button>
+        {!isLoggedIn ?
+          <>
+            <Button color='inherit' >
+              <Link to='/register' style={styles}>Sign Up</Link>
+            </Button>
+            <Button color='inherit' >
+              <Link to='/login' style={styles}>Sign In</Link>
+            </Button>
+          </>
+          :
+          <Button color='inherit' onClick={handleSignOutClick}>
+            Sign Out
+          </Button>}
       </Toolbar>
     </AppBar>
   );
