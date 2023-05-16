@@ -4,6 +4,8 @@ import QuizList from './components/QuizList.jsx';
 import Pages from './components/Pages.jsx';
 import SearchBar from './components/SearchBar.jsx';
 // import freeQuiz from './mock_data/freeQuiz.js';
+import { useContext } from 'react'
+import { UserContext } from '../global/UserContext.jsx'
 import axios from 'axios';
 
 import { useState, useEffect } from 'react';
@@ -15,9 +17,15 @@ const Landing = (props) => {
   const [category, setCategory] = useState("General Knowledge");
   const [currentQuizzes, setCurrent] = useState([]);
   const [page, setPage] = useState(0);
-  const user_id = 1;
+  const { profile } = useContext(UserContext);
 
   useEffect(() => {
+    let user_id;
+    if (!profile.userId) {
+      user_id = 1;
+    } else {
+      user_id = profile.userId;
+    }
     axios.get(`${process.env.REACT_APP_API_URI}/get/getQuizzes`, { params: { id : user_id}})
     .then((response) => {
       setQuizzes(response.data.rows);
@@ -33,7 +41,8 @@ const Landing = (props) => {
       }
       setCurrent(arr);
     });
-  }, [user_id]);
+
+  }, [profile.userId]);
 
   // const current = (newpage) => {
   //   let arr = [];
@@ -43,7 +52,7 @@ const Landing = (props) => {
   //   setCurrent(arr);
   // }
 
-  if (user_id === 1) {
+  if (profile.userId === 1) {
     return (
       <div className="Landing">
         <h1> Welcome to Quiz Whiz </h1>
