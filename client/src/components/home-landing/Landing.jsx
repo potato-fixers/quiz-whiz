@@ -15,7 +15,7 @@ const Landing = (props) => {
   const [category, setCategory] = useState("General Knowledge");
   const [currentQuizzes, setCurrent] = useState([]);
   const [page, setPage] = useState(0);
-  const user_id = 1;
+  const user_id = 'undefined';
 
   useEffect(() => {
     axios.get(`${process.env.REACT_APP_API_URI}/get/getQuizzes`, { params: { id : user_id}})
