@@ -9,7 +9,6 @@ let DB_PASSWORD = process.env.DB_PASSWORD;
 let DB_HOST = process.env.DB_HOST;
 let DB_NAME = process.env.DB_NAME;
 let DB_PORT = process.env.DB_PORT;
-
 // Connection String Pattern
 // schema://user:password@host:port/db_name
 // let dbString = `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}`;
