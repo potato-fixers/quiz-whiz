@@ -13,7 +13,7 @@ const QuizList = (props) => (
         </tr>
       </thead>
       <tbody className="landing_quiz_body">
-        {props.quizzes.map((quiz) => <QuizListEntry quiz={quiz} key={quiz.question} category={props.category}/>)}
+        {props.quizzes.map((quiz, index) => <QuizListEntry page={props.page} quiz={quiz} key={quiz.id} category={props.category}/>)}
       </tbody>
     </table>
   </div>
