@@ -13,13 +13,15 @@ const QuizCounts = (props) => {
     favorites: 0
   });
 
-  const getCounts = async (userId) => {
+  const getCounts = (userId) => {
     const url = process.env.REACT_APP_API_URI;
-    const response = await fetch(`${url}/dashboard/counts/?userId=${userId}`)
-    if (response.ok) {
-      const data = await response.json();
-      setCounts(data);
-    }
+    fetch(`${url}/dashboard/counts/?userId=${userId}`)
+    .then(async res => {
+      setCounts(await res.json());
+    })
+    .catch(err => {
+      console.error(err.stack);
+    });
   };
 
   useEffect(() => {

@@ -18,23 +18,29 @@ const Overview = (props) => {
             <TableCell align='right'>Last Played</TableCell>
           </TableRow>
         </TableHead>
-        <TableBody>
-          {quizzes.map((quiz) => (
-            <TableRow
-              key={quiz.id}
-            >
-              <TableCell align='left' sx={{ border: 0 }}>
-               <Link to={`/quiz/${quiz.id}/start`}> {quiz.quiz_name} </Link>
-              </TableCell>
-              <TableCell align='center' sx={{ border: 0 }}>
-                {quiz.score}
-              </TableCell>
-              <TableCell align='right' sx={{ border: 0 }} >
-                {quiz.date}
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
+        {
+          (quizzes.length
+          &&
+          <TableBody>
+            {quizzes.map((quiz) => (
+              <TableRow
+                key={quiz.id}
+              >
+                <TableCell align='left' sx={{ border: 0 }}>
+                <Link to={`/quiz/${quiz.id}/start`}> {quiz.quiz_name} </Link>
+                </TableCell>
+                <TableCell align='center' sx={{ border: 0 }}>
+                  {quiz.score}
+                </TableCell>
+                <TableCell align='right' sx={{ border: 0 }} >
+                  {quiz.date}
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>)
+          ||
+          <Typography variant='subtitle1' align='center'>  No quiz found </Typography>
+        }
       </Table>
 
     </>
