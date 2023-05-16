@@ -43,7 +43,7 @@ const Landing = (props) => {
   //   setCurrent(arr);
   // }
 
-  if (user_id === 'undefined') {
+  if (user_id === 1) {
     return (
       <div className="Landing">
         <h1> Welcome to Quiz Whiz </h1>
