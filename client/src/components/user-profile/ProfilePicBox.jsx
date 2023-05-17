@@ -10,6 +10,7 @@ const ProfilePicBox = (props) => {
   // TODO: Update this with the logged in userid.
   // const userid = 1;
   const { profile } = useContext(UserContext);
+
   const loggedInUserId = profile.userId;
 
   const [selectedFile, setSelectedFile] = useState(null);

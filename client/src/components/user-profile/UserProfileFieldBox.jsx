@@ -12,6 +12,7 @@ const UserProfileFieldBox = (props) => {
   const { profile } = useContext(UserContext);
   const loggedInUserId = profile.userId;
 
+
   const [editing, setEditing] = useState(false);
   const [field, setField] = useState(props.initial_value ? props.initial_value : props.default_value);
   const [oldPassword, setOldPassword] = useState('Enter current password');

@@ -8,25 +8,31 @@ import { UserContext } from '../../components/global/UserContext';
 
 function UserProfilePage() {
   const [userData, setUserData] = useState({});
-
   const { profile } = useContext(UserContext);
+  const { isLoggedIn } = useContext(UserContext);
+
   const loggedInUserId = profile.userId;
 
   useEffect(() => {
-    axios.get(`${process.env.REACT_APP_API_URI}/settings/user`,{
-      params: {
-        id: loggedInUserId
-      }
-    })
-    .then(response => {
-      setUserData(response.data[0]);
-    })
-    .catch(error => {
-      console.error('Error fetching user data:', error);
-    });
-  }, [loggedInUserId]);
+    if (isLoggedIn) {
+      axios.get(`${process.env.REACT_APP_API_URI}/settings/user`, {
+        params: {
+          id: loggedInUserId
+        }
+      })
+      .then(response => {
+        setUserData(response.data[0]);
+      })
+      .catch(error => {
+        console.error('Error fetching user data:', error);
+      });
+    }
+  }, [isLoggedIn, loggedInUserId]);
+
 
   return (
+    <>
+    { isLoggedIn ? (
     <div>
       <UserProfileFieldBox field_title={"Profile Picture"}
           label={"Profile Picture"}
@@ -50,6 +56,8 @@ function UserProfilePage() {
           initial_value={userData.bio}
           saveRoute={'/settings/updateBio'}/>
     </div>
+  ) : <></> }
+  </>
   );
 }
 
