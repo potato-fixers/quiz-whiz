@@ -172,9 +172,6 @@ export const QuizProvider = ({ children }) => {
 
         // Handle User ran out of time before finishing the quiz
         if (timeRemaining <= 0) {
-          // setDuration(dur);
-          // calculateDuration();
-          console.log('got here');
           clearInterval(quizTimer);
           setFinished(false);
           window.location.href = `/quiz/${id}/summary`;
@@ -237,7 +234,6 @@ export const QuizProvider = ({ children }) => {
 
   useEffect(() => {
     if (quizStart && quizEnd) { 
-      console.log("Duration from QuizContext", quizEnd - quizStart);
       setDuration(quizEnd - quizStart);
     };
   }, [quizStart, quizEnd]);
@@ -245,7 +241,6 @@ export const QuizProvider = ({ children }) => {
   // Set Summary Message based on User's Quiz Score
   useEffect(() => {
     if (finished) {
-      console.log('True', finished);
       if (score > 60) {
        setMsg("Congratulations, You Passed!");
      } else if (score <= 60) {
@@ -255,10 +250,6 @@ export const QuizProvider = ({ children }) => {
       setMsg("Oh no! You ran out of time. Would you like to try again?");
     }
   }, [finished, score, setMsg, duration]);
-  
-  useEffect(() => {
-    correctAs && console.log('corA', correctAs); 
-  }, [correctAs]);
 
   // Context to be used in other components
   const ctx = {
