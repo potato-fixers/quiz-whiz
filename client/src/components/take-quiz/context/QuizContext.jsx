@@ -17,7 +17,9 @@ export const QuizProvider = ({ children }) => {
   const [open, setOpen] = useState(false);
 
   const [quizDetails, setQuizDetails] = useState([{}]);
-
+  const [quizStart, setQuizStart] = useState(null);
+  const [quizEnd, setQuizEnd] = useState(null);
+  
   const [time, setTime] = useState(300000);
 
   const [questions, setQuestions] = useState([{}]);
@@ -87,7 +89,7 @@ export const QuizProvider = ({ children }) => {
       for (var i = 0; i <= localStorage.length; i++) {
         let a = JSON.parse(localStorage.getItem(i));
 
-        if (a && a.key === "corrAns") {
+        if (a && a.key === "corrAns" && a.key !== "start") {
           count++;
         }
       }
@@ -96,10 +98,15 @@ export const QuizProvider = ({ children }) => {
     }
   };
 
+  const calculateDuration = () => {
+      setQuizEnd(Date.now());
+      setQuizStart(JSON.parse(localStorage.getItem('start')));
+  };
+
   const calculateScore = () => {
     getCorrectAnswerCount();
-
-    let score = (correctAs / localStorage.length) * 100;
+    let length = localStorage.length - 1;
+    let score = (correctAs / length) * 100;
 
     if (isNaN(score)) {
       setScore(0);
@@ -107,19 +114,23 @@ export const QuizProvider = ({ children }) => {
       setScore(Math.floor(score));
     }
   };
-  // const saveHistory = async (payload) => {
-  //   try {
-  //     axios.post(`/${id}`, {
-  //       user_id: payload.user_id,
-  //       score: payload.score,
-  //       quiz_id: payload.id,
-  //       duration: payload.duration,
-  //       finished: payload.finished,
-  //     });
-  //   } catch (err) {
-  //     throw err;
-  //   }
-  // };
+
+  const saveHistory = async (payload) => {
+    console.log(`saving quiz score to user history`);
+    let body = {
+      user_id: parseInt(payload.user),
+      score: payload.score,
+      quiz_id: payload.id,
+      duration: payload.duration,
+      finished: payload.finished,
+    };
+
+    try {
+      axios.post(`${process.env.REACT_APP_API_URI}/quiz/${payload.quiz_id}`, body);
+    } catch (err) {
+      console.log('Couldn\'t Save Score', err);
+    }
+  };
 
   // =============================================
   //             Quiz Timer Utilities
@@ -127,11 +138,12 @@ export const QuizProvider = ({ children }) => {
   const setTimer = (time) => {
     /* check if element exists  */
     let timer = document.getElementById("timer");
-
+    
     if (timer) {
       // Set up the Timer
       let timeRemaining = time;
-      let dur = 0;
+
+      // let dur = 0;
       let minutes = Math.ceil((timeRemaining / 1000 / 60) << 0);
       let seconds = Math.ceil((timeRemaining / 1000) % 60);
 
@@ -156,11 +168,12 @@ export const QuizProvider = ({ children }) => {
 
         // Decrement Time Remaining by 1 second
         timeRemaining -= 1000;
-        dur += 1000;
+        // dur += 1000;
 
         // Handle User ran out of time before finishing the quiz
         if (timeRemaining <= 0) {
-          setDuration(dur);
+          // setDuration(dur);
+          // calculateDuration();
           clearInterval(quizTimer);
           setFinished(false);
           navigate(`/quiz/${id}/summary`);
@@ -176,7 +189,7 @@ export const QuizProvider = ({ children }) => {
   const formatDuration = (duration) => {
     let min = Math.ceil((duration / 1000 / 60) << 0);
     let sec = Math.ceil((duration / 1000) % 60);
-
+    
     return `00:${min.toString().length < 2 ? "0" + min : min}:${
       sec === 0 ? "00" : sec.toString().length < 2 ? "0" + sec : sec
     }`;
@@ -215,8 +228,12 @@ export const QuizProvider = ({ children }) => {
   }, [id]);
 
   useEffect(() => {
-    duration > 0 && console.log("Duration:", duration);
-  }, [duration]);
+    if (quizStart && quizEnd) { 
+      let d = quizEnd - quizStart;
+      console.log("Duration from QuizContext", d);
+      setDuration(d);
+    };
+  }, [quizStart, quizEnd]);
 
   // Set Summary Message based on User's Quiz Score
   useEffect(() => {
@@ -230,6 +247,10 @@ export const QuizProvider = ({ children }) => {
       }
     }
   }, [finished, score, setMsg, duration]);
+
+  useEffect(() => {
+    correctAs && console.log('corA', correctAs); 
+  }, [correctAs]);
 
   // Context to be used in other components
   const ctx = {
@@ -254,7 +275,7 @@ export const QuizProvider = ({ children }) => {
     score,
     calculateScore,
 
-    // saveHistory,
+    saveHistory,
 
     finished,
     setFinished,
@@ -270,6 +291,8 @@ export const QuizProvider = ({ children }) => {
     open,
     handleOpen,
     handleClose,
+
+    calculateDuration
   };
 
   // Return the provider component with the context value
