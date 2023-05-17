@@ -20,6 +20,11 @@ function Begin() {
 
   let buttonText = !isLoggedIn ? "Home" : "Dashboard";
 
+  const handleClick = () => {
+    resetQuiz();
+    localStorage.setItem(`start`, JSON.stringify(Date.now()));
+  };
+
   return (
     <Grid
       id="quiz-grid"
@@ -84,7 +89,7 @@ function Begin() {
 
         <Grid item xs={6}>
           <Link to={`/quiz/${id}/question`}>
-            <Button onClick={resetQuiz} variant="contained" color="primary">
+            <Button onClick={handleClick} variant="contained" color="primary">
               Begin &gt;
             </Button>
           </Link>
