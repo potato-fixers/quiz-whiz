@@ -13,7 +13,7 @@ import { QuizContext } from "../take-quiz/context/QuizContext";
 
 const Pagination = (props) => {
   const { isLoggedIn } = useContext(UserContext);
-  const { resetQuiz, setFinished } = useContext(QuizContext);
+  const { setFinished } = useContext(QuizContext);
 
   const {
     onPageChange,
@@ -46,7 +46,6 @@ const Pagination = (props) => {
   };
 
   const onPrevious = () => {
-    // console.log('here', currentPage);
     if (currentPage > 1) {
       onPageChange(currentPage - 1);
     }
