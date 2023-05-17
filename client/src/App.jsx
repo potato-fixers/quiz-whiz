@@ -1,8 +1,9 @@
+// React Imports
+import { useState, useLayoutEffect, useContext } from 'react';
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+
 // Global Styles
 import "./styles/App.css";
-
-// React Imports
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 // Components
 import Nav from "./Nav.jsx";
@@ -14,11 +15,12 @@ import UserProfilePage from "./components/user-profile/UserProfilePage.jsx";
 import TakeQuiz from "./components/take-quiz/TakeQuiz.jsx";
 import CreateQuiz from "./components/create-quiz/CreateQuiz.jsx";
 
-import { QuizProvider } from "./components/take-quiz/context/QuizContext";
-import { useState, useLayoutEffect } from 'react';
+// Hooks
 import useSession from './components/user-auth/hooks/useSession';
+
+// Context
+import { QuizProvider } from "./components/take-quiz/context/QuizContext";
 import { UserContext } from './components/global/UserContext';
-import { useContext } from 'react';
 
 function App() {
   const { isLoggedIn } = useContext(UserContext);
@@ -26,6 +28,10 @@ function App() {
   const { updateSession } = useSession();
 
   useLayoutEffect(() => {
+    if (localStorage.getItem('quizSaved') === 'true') {
+      localStorage.clear();
+    }
+
     let fetch = async () => {
       try {
         await updateSession();

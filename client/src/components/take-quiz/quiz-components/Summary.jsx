@@ -26,44 +26,54 @@ function Summary({ quizId }) {
 
     finished,
     setFinished,
-
     duration,
     formatDuration,
-    calculateDuration
+    calculateDuration,
+    saved
   } = useContext(QuizContext);
-  const { user, profile, isLoggedIn } = useContext(UserContext);
+  const { profile, isLoggedIn } = useContext(UserContext);
 
   useEffect(() => {
     getUserAnswers();
+    setFinished(true);
     // eslint-disable-next-line
   }, []);
 
-
   useLayoutEffect(() => {
-
-    if (isLoggedIn) {
-      console.log(`User ${user}is logged in? ${isLoggedIn}`);
-      // add score to user quiz history
-      console.log(`Duration Pyload: ${duration}`);
-      let payload = {
-        user: profile.userId,
-        score: score,
-        quiz_id: quizId,
-        duration: duration,
-        finished: finished,
-      };
-      console.log("Saving your score", payload);
-
-      saveHistory(payload);
+    if (isLoggedIn && localStorage.getItem('quizActive') === '1') {
+        // add score to user quiz history
+        console.log(`Finished: ${finished}`);
+        let payload = {
+          user: profile.userId,
+          score: score,
+          quiz_id: quizId,
+          duration: formatDuration(duration),
+          finished: finished,
+        };
+        console.log("Saving your score", payload);
+  
+        try {
+          saveHistory(payload);
+        } catch (err) {
+          console.log('Error saving score', err);
+        }
     }
   }, [isLoggedIn]);
 
-  useLayoutEffect(() => {
-    setFinished(true);
+  useEffect(() => {
     calculateDuration();
     calculateScore();
     // eslint-disable-next-line
   }, [userAnswers, correctAs]);
+  
+  useEffect(() => {
+    console.log('Not Saved', saved);
+    if (saved === true) {
+      console.log('Saved', saved);
+      localStorage.setItem('quizSaved', 'true')
+    };
+    // eslint-disable-next-line
+  }, [saved]);
 
   return (
     <Grid

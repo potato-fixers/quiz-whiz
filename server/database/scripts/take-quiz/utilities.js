@@ -21,17 +21,13 @@ const fetch = async (quizId, table, cb) => {
 };
 
 const saveScore = async (payload, cb) => {
-  console.log('SAVE SCORE PAYLOAD:', payload);
-
-  
-  const query = `INSERT INTO history("user_id", "quiz_id", "score", "duration", "finished") VALUES('${payload.user_id}', '${payload.quiz_id}', '${payload.score}', '${payload.duration}', '${payload.finished}')`; 
+  const query = `INSERT INTO history("user_id", "quiz_id", "score", "duration", "finished") VALUES(${payload.user_id}, ${payload.quiz_id}, ${payload.score}, '${payload.duration}', ${payload.finished})`; 
 
   try {
-    console.log('SAVE SCORE Query String Was:', query);
-    // const { rows } = await pool.query(query);
+    // console.log('SAVE SCORE Query String Was:', query);
+    const { rows } = await pool.query(query);
     // console.log('Take Quiz Save Score Result: ', rows);
-    // cb(null,  rows);
-    cb(null,  'Test went well');
+    cb(null,  rows);
   } catch (err) {
     cb(err);
   }

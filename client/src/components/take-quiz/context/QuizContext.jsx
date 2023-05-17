@@ -1,6 +1,5 @@
 import { useState, useEffect, useContext, createContext } from "react";
 import { useParams } from "react-router-dom";
-// import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 import { UserContext } from "../../global/UserContext";
@@ -10,13 +9,11 @@ export const QuizContext = createContext();
 
 // Create the provider component
 export const QuizProvider = ({ children }) => {
+
   // Set up state variables here
   let { id } = useParams();
   const { isLoggedIn } = useContext(UserContext);
-
-  // const navigate = useNavigate();
   const [open, setOpen] = useState(false);
-  const [quizActive, setQuizActive] = useState(null)
  
   const [quizDetails, setQuizDetails] = useState([{}]);
   const [quizStart, setQuizStart] = useState(null);
@@ -35,7 +32,7 @@ export const QuizProvider = ({ children }) => {
   const [saved, setSaved] = useState(false);
   const [msg, setMsg] = useState("Whoops, You Haven't Take Any Tests Yet!");
 
-  // Set up the Quiz for User
+  // Get Current Quiz Data for User (based on quiz id)
   const fetchQuizData = async (id) => {
     try {
       const payload = await axios({
@@ -56,7 +53,6 @@ export const QuizProvider = ({ children }) => {
       });
 
       let quizQs = payload && JSON.parse(payload.data);
-      // console.log("Got PAYLOAD", quizQs);
       quizQs && setQuestions(quizQs);
     } catch (err) {
       console.log("There was an error getting your questions", err);
@@ -67,8 +63,8 @@ export const QuizProvider = ({ children }) => {
   const resetQuiz = () => {
     localStorage.clear();
     setScore(0);
+    setSaved(false);
     setDuration(0);
-    // setSaveStatus(null);
     setFinished(false);
   };
 
@@ -108,7 +104,7 @@ export const QuizProvider = ({ children }) => {
 
   const calculateScore = () => {
     getCorrectAnswerCount();
-    let length = localStorage.length - 1;
+    let length = localStorage.length - 2;
     let score = (correctAs / length) * 100;
 
     if (isNaN(score)) {
@@ -117,6 +113,7 @@ export const QuizProvider = ({ children }) => {
       setScore(Math.floor(score));
     }
   };
+
 
   const saveHistory = async (payload) => {
     let body = {
@@ -128,8 +125,8 @@ export const QuizProvider = ({ children }) => {
     };
 
     try {
-      await axios.post(`${process.env.REACT_APP_API_URI}/quiz/${payload.quiz_id}`, body);
-      setSaved(true);
+      let res = await axios.post(`${process.env.REACT_APP_API_URI}/quiz/${payload.quiz_id}`, body);
+      res.status === 200 ? setSaved(true) : setSaved(false) ;
     } catch (err) {
       console.log('Couldn\'t Save Score', err);
     }
@@ -222,6 +219,7 @@ export const QuizProvider = ({ children }) => {
   const handleQuizStart = () => {
     resetQuiz();
     localStorage.setItem(`start`, JSON.stringify(Date.now()));
+    localStorage.setItem(`quizActive`, 0);
   };
   // =============================================
   //           	 Lifecycle Methods
@@ -265,8 +263,6 @@ export const QuizProvider = ({ children }) => {
   // Context to be used in other components
   const ctx = {
     id,
-    quizActive, 
-    setQuizActive,
 
     questions,
     setQuestions,

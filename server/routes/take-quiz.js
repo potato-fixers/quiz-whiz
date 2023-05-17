@@ -35,7 +35,7 @@ router.get('/:id/question', (req, res) => {
       res.status(500).json(err);
     } else {
       let questions = JSON.parse(payload[0].questions);
-      console.log('Quiz Question Payload', questions);
+      // console.log('Quiz Question Payload', questions);
       res.status(200).json(questions);
     }
   });
@@ -57,17 +57,16 @@ router.get('/:id/summary', (req, res) => {
 // =============================================
 //           			  POST REQs
 // =============================================
+// Save Quiz Score to User History
 router.post('/:id', (req, res) => {
-  console.log('Inside post quiz route');
-
   const payload = {
-    user: req.body.user_id,
+    user_id: req.body.user_id,
     quiz_id: req.params.id | req.body.quiz_id,
     score: req.body.score,
-    duration: req.body.duration | '00:05:00',
+    duration: req.body.duration,
     finished: req.body.finished,
   }
-  console.log('Payload from routes', payload);
+  // console.log('Payload from routes', payload);
 
   saveScore(payload, (err, payload) => {
     if (err) {
