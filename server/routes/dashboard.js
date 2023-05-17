@@ -28,6 +28,8 @@ router.get('/history', controllers.history.get);
 
 router.get('/favorites', controllers.favorites.get);
 
+router.get('/favorites/one', controllers.favorites.getOne);
+
 router.post('/favorites', controllers.favorites.like);
 
 router.delete('/favorites/:id',controllers.favorites.unlike);

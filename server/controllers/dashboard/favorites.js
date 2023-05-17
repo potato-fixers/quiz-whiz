@@ -6,7 +6,21 @@ module.exports = {
 
     const { userId } = req.query;
 
-    models.favorites.get(userId)
+    models.favorites.getAll(userId)
+    .then(response => {
+      res.json(response);
+    })
+    .catch(err => {
+      console.error(err.stack);
+      res.sendStatus(500);
+    })
+  },
+
+  getOne: (req, res) => {
+
+    const { userId, quizId } = req.query;
+
+    models.favorites.getOne(userId, quizId)
     .then(response => {
       res.json(response);
     })
@@ -19,7 +33,6 @@ module.exports = {
   like: (req, res) => {
 
     const { userId, quizId } = req.body;
-    console.log(userId, quizId)
     models.favorites.like(userId, quizId)
     .then(response => {
       res.sendStatus(201);

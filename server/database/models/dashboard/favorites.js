@@ -2,7 +2,7 @@ const db = require('../../index.js');
 
 module.exports = {
 
-  get: (userId) => {
+  getAll: (userId) => {
 
     const queryString = `
       SELECT
@@ -33,6 +33,25 @@ module.exports = {
     .catch(err => {
       console.error(err.stack);
     });
+  },
+
+  getOne: (userId, quizId) => {
+    const queryString =`
+      SELECT
+        *
+      FROM
+        favorites
+      WHERE
+        user_id = ${userId} AND quiz_id = ${quizId}
+    `;
+
+    return db.query(queryString)
+    .then(res => {
+      return res.rows[0];
+    })
+    .catch(err => {
+      console.error(err.stack);
+    })
   },
 
   like: (userId, quizId) => {
