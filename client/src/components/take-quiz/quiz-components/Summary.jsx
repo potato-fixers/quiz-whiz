@@ -42,7 +42,6 @@ function Summary({ quizId }) {
   useLayoutEffect(() => {
     if (isLoggedIn && localStorage.getItem('quizActive') === '1') {
         // add score to user quiz history
-        console.log(`Finished: ${finished}`);
         let payload = {
           user: profile.userId,
           score: score,
@@ -50,7 +49,6 @@ function Summary({ quizId }) {
           duration: formatDuration(duration),
           finished: finished,
         };
-        console.log("Saving your score", payload);
   
         try {
           saveHistory(payload);
@@ -66,15 +64,6 @@ function Summary({ quizId }) {
     // eslint-disable-next-line
   }, [userAnswers, correctAs]);
   
-  useEffect(() => {
-    console.log('Not Saved', saved);
-    if (saved === true) {
-      console.log('Saved', saved);
-      localStorage.setItem('quizSaved', 'true')
-    };
-    // eslint-disable-next-line
-  }, [saved]);
-
   return (
     <Grid
       alignItems="center"

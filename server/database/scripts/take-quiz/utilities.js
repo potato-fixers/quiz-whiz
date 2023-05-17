@@ -11,7 +11,7 @@ const fetch = async (quizId, table, cb) => {
   `; 
 
   try {
-    console.log('Query String Was:', query);
+    // console.log('Query String Was:', query);
     const { rows } = await pool.query(query);
     // console.log('Take Quiz Fetch Result: ', rows);
     cb(null,  rows);

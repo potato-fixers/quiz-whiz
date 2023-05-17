@@ -73,7 +73,7 @@ router.post('/:id', (req, res) => {
       console.log(`Error from Save Quiz Score Route`, err);
       res.status(500).json(err);
     } else {
-      console.log('Saved Your Score!', payload);
+      // console.log('Saved Your Score!', payload);
       res.status(200).json(payload); // return score
     }
   });
