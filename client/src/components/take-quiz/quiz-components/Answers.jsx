@@ -9,7 +9,7 @@ function Answers({ page, answers }) {
     let selected = Object.values(e.currentTarget.firstChild)[0].stateNode.data;
     keys.forEach((key, index) => {
       if (answers[index] === selected) {
-        selected = { key: key, value: selected };
+        selected = { key: key, value: selected, question: page };
       }
     });
     localStorage.setItem(`${page}`, JSON.stringify(selected));
