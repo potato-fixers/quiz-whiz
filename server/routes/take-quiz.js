@@ -1,13 +1,15 @@
 const express = require('express')
 const router = express.Router()
-const { fetch } = require("../database/scripts/take-quiz/utilities");
+const { fetch, saveScore } = require("../database/scripts/take-quiz/utilities");
 
+
+// =============================================
+//           			  GET REQs
+// =============================================
 router.get('/', (req, res) => {
   res.send('Hello Take Quiz on 8080')
 });
 
-// Title might be cleaner in the URL slug than the quiz ID. Get team input
-// router.get('/:quiz_title/start', (req, res) => {
 router.get('/:id/start', (req, res) => {
   let id = req.params.id;
   fetch(id, "quizzes", (err, payload) => {
@@ -33,7 +35,7 @@ router.get('/:id/question', (req, res) => {
       res.status(500).json(err);
     } else {
       let questions = JSON.parse(payload[0].questions);
-      // console.log('Quiz Question Payload', questions);
+      console.log('Quiz Question Payload', questions);
       res.status(200).json(questions);
     }
   });
@@ -47,6 +49,32 @@ router.get('/:id/summary', (req, res) => {
       res.status(500).json(err);
     } else {
       // console.log('Quiz Summary Payload', payload);
+      res.status(200).json(payload); // return score
+    }
+  });
+});
+
+// =============================================
+//           			  POST REQs
+// =============================================
+router.post('/:id', (req, res) => {
+  console.log('Inside post quiz route');
+
+  const payload = {
+    user: req.body.user_id,
+    quiz_id: req.params.id | req.body.quiz_id,
+    score: req.body.score,
+    duration: req.body.duration | '00:05:00',
+    finished: req.body.finished,
+  }
+  console.log('Payload from routes', payload);
+
+  saveScore(payload, (err, payload) => {
+    if (err) {
+      console.log(`Error from Save Quiz Score Route`, err);
+      res.status(500).json(err);
+    } else {
+      console.log('Saved Your Score!', payload);
       res.status(200).json(payload); // return score
     }
   });
