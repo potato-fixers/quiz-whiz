@@ -3,8 +3,17 @@ const models = require('../../database/models/index');
 module.exports = {
 
   get: (req, res) => {
-    let query = req.query;
-    res.send(models.overview.get());
+
+    const { userId } = req.query;
+
+    models.overview.get(userId)
+    .then(response => {
+      res.json(response);
+    })
+    .catch(err => {
+      console.error(err.stack);
+      res.sendStatus(500);
+    })
   },
 
 };

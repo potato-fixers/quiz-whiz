@@ -3,7 +3,17 @@ const models = require('../../database/models')
 module.exports = {
 
   get: (req, res) => {
-    res.send(models.favorites.get())
+
+    const { userId } = req.query;
+
+    models.favorites.get(userId)
+    .then(response => {
+      res.json(response);
+    })
+    .catch(err => {
+      console.error(err.stack);
+      res.sendStatus(500);
+    })
   },
 
   like: (req, res) => {

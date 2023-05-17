@@ -1,54 +1,38 @@
 const db = require('../../index.js');
 
-// Dummy data
-const data = [
-  {
-    id: 1,
-    quiz_name: 'Quiz E',
-    category: 'Music',
-    totalPlays: 23,
-    totalLikes: 13,
-    date: 'May 5th, 2023'
-  },
-  {
-    id: 7,
-    quiz_name: 'Quiz D',
-    category: 'Sport',
-    totalPlays: 34,
-    totalLikes: 34,
-    date: 'May 5th, 2023'
-  },
-  {
-    id: 2,
-    quiz_name: 'Quiz C',
-    category: 'Education',
-    totalPlays: 231,
-    totalLikes: 133,
-    date: 'May 4th, 2023'
-  },
-  {
-    id: 5,
-    quiz_name: 'Quiz B',
-    category: 'Sport',
-    totalPlays: 31,
-    totalLikes: 3,
-    date: 'May 3th, 2023'
-  },
-  {
-    id: 43,
-    quiz_name: 'Quiz A',
-    category: 'Music',
-    totalPlays: 21,
-    totalLikes: 13,
-    date: 'May 2th, 2023'
-  },
-];
-
 module.exports = {
 
-  get: (/* TBD */) => {
-    // query logic
-    return data;
+  get: (userId) => {
+
+    const queryString = `
+      SELECT
+        q.id,
+        q.quiz_name,
+        q.category,
+        COUNT(DISTINCT h.id) AS totalPlays,
+        COUNT(DISTINCT f.id) AS totalLikes,
+        to_char(f.liked_at, 'FMMonth, FMDDth, YYYY') AS liked_at
+      FROM
+        favorites f
+      INNER JOIN
+        quizzes q ON f.quiz_id = q.id
+      LEFT JOIN
+        history h ON q.id = h.quiz_id AND f.user_id = h.user_id
+      WHERE
+        f.user_id = ${userId}
+      GROUP BY
+        q.id,
+        f.liked_at
+    `;
+
+    return db.query(queryString)
+    .then(res => {
+
+      return res.rows;
+    })
+    .catch(err => {
+      console.error(err.stack);
+    });
   },
 
   like: (/* TBD */) => {
