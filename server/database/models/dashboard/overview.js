@@ -8,13 +8,13 @@ module.exports = {
       SELECT
         quizzes.id,
         quizzes.quiz_name,
-        history.score,
+        CONCAT(history.score, '%') AS score,
         to_char(history.date, 'FMMonth FMDDth, YYYY') AS date
       FROM
-        quizzes
-        INNER JOIN history ON quizzes.id = history.quiz_id
+        history
+        INNER JOIN quizzes ON quizzes.id = history.quiz_id
       WHERE
-        quizzes.user_id = ${userId}
+        history.user_id = ${userId}
       ORDER BY
         history.date DESC
       LIMIT 10
