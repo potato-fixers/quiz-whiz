@@ -17,8 +17,9 @@ module.exports = {
   },
 
   like: (req, res) => {
-    const { userId, quizId } = req.body;
 
+    const { userId, quizId } = req.body;
+    console.log(userId, quizId)
     models.favorites.like(userId, quizId)
     .then(response => {
       res.sendStatus(201);
@@ -29,8 +30,9 @@ module.exports = {
   },
 
   unlike:  (req, res) => {
+
     const { id } = req.params;
-    console.log(id)
+
     models.favorites.unlike(id)
     .then(response => {
       res.sendStatus(204);
