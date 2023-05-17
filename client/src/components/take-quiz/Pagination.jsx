@@ -1,11 +1,19 @@
 import React, { useContext } from "react";
 import { Button } from "@mui/material";
-import { usePagination } from "./hooks/usePagination";
+
+// Components
 import BasicModal from "./Modal";
+
+// Hooks
+import { usePagination } from "./hooks/usePagination";
+
+// Context
 import { UserContext } from "../global/UserContext";
+import { QuizContext } from "../take-quiz/context/QuizContext";
 
 const Pagination = (props) => {
   const { isLoggedIn } = useContext(UserContext);
+  const { resetQuiz, setFinished } = useContext(QuizContext);
 
   const {
     onPageChange,
@@ -29,21 +37,27 @@ const Pagination = (props) => {
   let lastPage = paginationRange[paginationRange.length - 1];
 
   const onNext = () => {
-    if (currentPage !== lastPage) {
+     if (currentPage !== lastPage) {
       onPageChange(currentPage + 1);
     } else {
       window.location.href = `/quiz/${props.quizId}/summary`;
+      setFinished(true);
     }
   };
 
   const onPrevious = () => {
-    onPageChange(currentPage - 1);
+    // console.log('here', currentPage);
+    if (currentPage > 1) {
+      onPageChange(currentPage - 1);
+    }
   };
 
   return (
+    currentPage &&
     <ul id="pagination">
       <li className="arrow left" onClick={onPrevious}>
-        <Button variant="contained">&lt;</Button>
+        {(currentPage === 1) ?(<BasicModal message="&lt;" />) :
+        (<Button variant="contained">&lt;</Button>)}
       </li>
 
       {isLoggedIn ? (

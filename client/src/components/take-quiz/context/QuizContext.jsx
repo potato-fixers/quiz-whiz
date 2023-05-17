@@ -1,5 +1,6 @@
 import { useState, useEffect, useContext, createContext } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
+// import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 import { UserContext } from "../../global/UserContext";
@@ -13,9 +14,10 @@ export const QuizProvider = ({ children }) => {
   let { id } = useParams();
   const { isLoggedIn } = useContext(UserContext);
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [open, setOpen] = useState(false);
-
+  const [quizActive, setQuizActive] = useState(null)
+ 
   const [quizDetails, setQuizDetails] = useState([{}]);
   const [quizStart, setQuizStart] = useState(null);
   const [quizEnd, setQuizEnd] = useState(null);
@@ -30,6 +32,7 @@ export const QuizProvider = ({ children }) => {
   const [duration, setDuration] = useState(0);
 
   const [score, setScore] = useState(0);
+  const [saved, setSaved] = useState(false);
   const [msg, setMsg] = useState("Whoops, You Haven't Take Any Tests Yet!");
 
   // Set up the Quiz for User
@@ -40,7 +43,6 @@ export const QuizProvider = ({ children }) => {
         url: `${process.env.REACT_APP_API_URI}/quiz/${id}/start`,
       });
       payload && setQuizDetails(payload.data);
-      // console.log("Got PAYLOAD", payload.data);
     } catch (err) {
       console.log("There was an error getting your quiz", err);
     }
@@ -66,6 +68,7 @@ export const QuizProvider = ({ children }) => {
     localStorage.clear();
     setScore(0);
     setDuration(0);
+    // setSaveStatus(null);
     setFinished(false);
   };
 
@@ -116,7 +119,6 @@ export const QuizProvider = ({ children }) => {
   };
 
   const saveHistory = async (payload) => {
-    console.log(`saving quiz score to user history`);
     let body = {
       user_id: parseInt(payload.user),
       score: payload.score,
@@ -126,7 +128,8 @@ export const QuizProvider = ({ children }) => {
     };
 
     try {
-      axios.post(`${process.env.REACT_APP_API_URI}/quiz/${payload.quiz_id}`, body);
+      await axios.post(`${process.env.REACT_APP_API_URI}/quiz/${payload.quiz_id}`, body);
+      setSaved(true);
     } catch (err) {
       console.log('Couldn\'t Save Score', err);
     }
@@ -174,9 +177,10 @@ export const QuizProvider = ({ children }) => {
         if (timeRemaining <= 0) {
           // setDuration(dur);
           // calculateDuration();
+          console.log('got here');
           clearInterval(quizTimer);
           setFinished(false);
-          navigate(`/quiz/${id}/summary`);
+          window.location.href = `/quiz/${id}/summary`;
         }
       }, 1000);
     }
@@ -201,18 +205,24 @@ export const QuizProvider = ({ children }) => {
   const abandonQuiz = (e, message) => {
     if (e.currentTarget.value === "Yes") {
       resetQuiz();
-      if (message === "Home") {
+      if (message === "Back Home") {
         window.location.href = "/";
-      } else {
+      } if (message === "Dashboard") {
         window.location.href = isLoggedIn ? "/dashboard" : "/";
-      }
+      } else {
+        window.location.href = `/quiz/${id}/start`;
+      } 
     } else {
       setOpen(false);
     }
   };
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-
+  
+  const handleQuizStart = () => {
+    resetQuiz();
+    localStorage.setItem(`start`, JSON.stringify(Date.now()));
+  };
   // =============================================
   //           	 Lifecycle Methods
   // =============================================
@@ -229,25 +239,25 @@ export const QuizProvider = ({ children }) => {
 
   useEffect(() => {
     if (quizStart && quizEnd) { 
-      let d = quizEnd - quizStart;
-      console.log("Duration from QuizContext", d);
-      setDuration(d);
+      console.log("Duration from QuizContext", quizEnd - quizStart);
+      setDuration(quizEnd - quizStart);
     };
   }, [quizStart, quizEnd]);
 
   // Set Summary Message based on User's Quiz Score
   useEffect(() => {
-    if (score > 60) {
-      setMsg("Congratulations, You Passed!");
-    } else if (score <= 60) {
-      if (!finished) {
-        setMsg("Oh no! You ran out of time. Would you like to try again?");
-      } else {
-        setMsg("Oh no! You didn't pass, would you like to try again?");
-      }
+    if (finished) {
+      console.log('True', finished);
+      if (score > 60) {
+       setMsg("Congratulations, You Passed!");
+     } else if (score <= 60) {
+       setMsg("Oh no! You didn't pass, would you like to try again?");
+     }
+    } else {
+      setMsg("Oh no! You ran out of time. Would you like to try again?");
     }
   }, [finished, score, setMsg, duration]);
-
+  
   useEffect(() => {
     correctAs && console.log('corA', correctAs); 
   }, [correctAs]);
@@ -255,6 +265,8 @@ export const QuizProvider = ({ children }) => {
   // Context to be used in other components
   const ctx = {
     id,
+    quizActive, 
+    setQuizActive,
 
     questions,
     setQuestions,
@@ -263,6 +275,7 @@ export const QuizProvider = ({ children }) => {
     setQuizDetails,
 
     resetQuiz,
+    handleQuizStart,
     userAnswers,
     getUserAnswers,
 
@@ -292,7 +305,9 @@ export const QuizProvider = ({ children }) => {
     handleOpen,
     handleClose,
 
-    calculateDuration
+    calculateDuration,
+    saved,
+    setSaved,
   };
 
   // Return the provider component with the context value
