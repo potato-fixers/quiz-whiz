@@ -29,7 +29,7 @@ function Summary({ quizId }) {
     duration,
     formatDuration,
     calculateDuration,
-    saved
+    // saved
   } = useContext(QuizContext);
   const { profile, isLoggedIn } = useContext(UserContext);
 
