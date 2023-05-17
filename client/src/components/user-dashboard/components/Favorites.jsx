@@ -1,14 +1,14 @@
 import { Typography, TableBody, TableCell, TableHead, TableRow, Table, Stack } from '@mui/material';
 import { Link } from 'react-router-dom';
 import FilterBar from './subComponents/FilterBar.jsx';
-import FavoriteIcon from '@mui/icons-material/Favorite';
 import useQuizzes from '../hooks/useQuizzes';
 import useFilter from '../hooks/useFilter';
 import useSort from '../hooks/useSort';
+import LikeIcon from './subComponents/LikeIcon';
 
 const Favorites = (props) => {
 
-  const { quizzes } = useQuizzes('favorites');
+  const { quizzes, getQuizzes } = useQuizzes('favorites');
   const { filteredData, handleFilterChange, filter } = useFilter(quizzes);
   const { sortedData, sortData } = useSort(filteredData);
 
@@ -18,11 +18,6 @@ const Favorites = (props) => {
     'Total Plays': 'totalPlays',
     'Total Likes': 'totalLikes',
     'Date Liked': 'date',
-  };
-
-  const handleUnlike = (e) => {
-    // handle unliking quiz
-    console.log('unlike')
   };
 
   const handleClick = (e) => {
@@ -69,7 +64,7 @@ const Favorites = (props) => {
                 {row.liked_at}
               </TableCell>
               <TableCell align='center' sx={{ border: 0 }}>
-                <FavoriteIcon onClick={handleUnlike}></FavoriteIcon>
+                <LikeIcon liked={true} favoriteId={row.id} getQuizzes={getQuizzes}></LikeIcon>
               </TableCell>
             </TableRow>
           ))) || <TableRow><Typography component='td' align='center'> No quiz found </Typography></TableRow>}

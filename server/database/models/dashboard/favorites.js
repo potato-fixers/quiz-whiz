@@ -6,7 +6,7 @@ module.exports = {
 
     const queryString = `
       SELECT
-        q.id,
+        f.id,
         q.quiz_name,
         q.category,
         COUNT(DISTINCT h.id) AS totalPlays,
@@ -21,8 +21,10 @@ module.exports = {
       WHERE
         f.user_id = ${userId}
       GROUP BY
-        q.id,
-        f.liked_at
+        f.id,
+        f.liked_at,
+        q.quiz_name,
+        q.category
     `;
 
     return db.query(queryString)

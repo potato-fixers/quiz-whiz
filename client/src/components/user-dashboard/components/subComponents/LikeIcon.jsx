@@ -32,7 +32,10 @@ const LikeIcon = ({liked, quizId, getQuizzes, favoriteId}) => {
 
   const unlikeQuiz = (favoriteId, userId, quizId) => {
     if (favoriteId) {
-      //
+      fetch(`${url}/dashboard/favorites/${favoriteId}`, {method: 'DELETE'})
+      .then(res => {
+        getQuizzes(userId);
+      })
     } else {
       fetch(`${url}/dashboard/favorites/one/?userId=${userId}&quizId=${quizId}`)
       .then(async res => {
