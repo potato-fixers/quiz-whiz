@@ -18,13 +18,16 @@ const Landing = (props) => {
   const [currentQuizzes, setCurrent] = useState([]);
   const [page, setPage] = useState(0);
   const { profile } = useContext(UserContext);
+  const [difficulty, setDifficulty] = useState('All');
+  const [categoryList, setCategoryList] = useState(['All']);
+  const [userCategory, setUserCategory] = useState('All');
 
   useEffect(() => {
     let user_id;
-    if (!profile.userId) {
+    if (profile.userId === undefined) {
       user_id = 1;
     } else {
-      user_id = profile.userId;
+      user_id = profile.userId + 1;
     }
     axios.get(`${process.env.REACT_APP_API_URI}/get/getQuizzes`, { params: { id : user_id}})
     .then((response) => {
@@ -36,23 +39,26 @@ const Landing = (props) => {
         }
       } else {
         for (var j = 0; j < response.data.rows.length; j ++) {
-          arr.push(response.data.rows[i])
+          arr.push(response.data.rows[j])
         }
       }
       setCurrent(arr);
+
+      if (user_id !== 1) {
+        let list = ['All'];
+        response.data.rows.forEach((row) => {
+          var cate = row.category;
+          if (list.indexOf(cate) === -1) {
+            list.push(cate);
+          }
+        });
+        setCategoryList(list);
+      }
     });
 
   }, [profile.userId]);
 
-  // const current = (newpage) => {
-  //   let arr = [];
-  //   for (var i = newpage * 5; i < newpage * 5 + 5; i ++) {
-  //     arr.push(quizzes[i]);
-  //   }
-  //   setCurrent(arr);
-  // }
-
-  if (profile.userId === 1) {
+  if (profile.userId === undefined) {
     return (
       <div className="Landing">
         <h1> Welcome to Quiz Whiz </h1>
@@ -62,11 +68,11 @@ const Landing = (props) => {
       </div>
     );
   } else {
-    console.log(currentQuizzes)
     return (
       <div className="Home">
-        <h1> Hi, username</h1>
-        <SearchBar />
+        <h1> Hi, {profile.username}</h1>
+        <SearchBar setQuizzes={setQuizzes} setUserCategory={setUserCategory} setDifficulty={setDifficulty}
+          difficulty={difficulty} categoryList={categoryList} userCategory={userCategory} setCurrent={setCurrent} id={profile.userId + 1}/>
         <QuizList category={'all'} quizzes={currentQuizzes} />
         <Pages page={page} setPage={setPage} quizzes={quizzes} setCurrent={setCurrent} />
       </div>

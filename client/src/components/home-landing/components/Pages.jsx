@@ -40,7 +40,7 @@ const Pages = (props) => {
       <div className="landing_pages">
         {props.page > 0 ? <div onClick={handleClick}>&#8826;</div> : null}
         {props.page > 0 ? <div>...</div> : null}
-        <div className="landing_pages_current">{props.page + 1}</div>
+        {limit === 1 || limit === 0 ? null: <div className="landing_pages_current">{props.page + 1}</div>}
         {props.page + 1 < limit ?  <div onClick={handleClick}>{props.page + 2}</div> : null}
         {props.page + 2 < limit ?  <div onClick={handleClick}>{props.page + 3}</div> : null}
         {props.page + 3 < limit ?  <div onClick={handleClick}>{props.page + 4}</div> : null}
