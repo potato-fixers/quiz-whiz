@@ -1,14 +1,14 @@
 const db = require('../../index.js');
 
 module.exports = {
-  // user_id 1 should be guest or sample quizzes
-  get: (user_id = 1) => {
+
+  get: (userId) => {
 
     const queryString = `
       SELECT
-      (SELECT COUNT(*) FROM quizzes WHERE user_id = ${user_id}) AS quizzes,
-      (SELECT COUNT(*) FROM history WHERE user_id = ${user_id}) AS plays,
-      (SELECT COUNT(*) FROM favorites WHERE user_id = ${user_id}) AS favorites;
+      (SELECT COUNT(*) FROM quizzes WHERE user_id = ${userId}) AS quizzes,
+      (SELECT COUNT(*) FROM history WHERE user_id = ${userId}) AS plays,
+      (SELECT COUNT(*) FROM favorites WHERE user_id = ${userId}) AS favorites;
     `;
 
     return db.query(queryString)
@@ -17,6 +17,7 @@ module.exports = {
     })
     .catch(err => {
       console.error(err.stack);
+      res.sendStatus(500);
     });
   },
 
