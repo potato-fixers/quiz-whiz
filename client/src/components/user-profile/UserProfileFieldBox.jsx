@@ -1,12 +1,16 @@
 import { Box, Button, TextField } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import './styles/profile.css';
 import ProfilePicBox from './ProfilePicBox.jsx';
 import axios from 'axios';
+import { UserContext } from '../../components/global/UserContext';
+
 
 const UserProfileFieldBox = (props) => {
   // TODO: Update this with the logged in userid.
-  const userid = 1;
+  // const userid = 1;
+  const { profile } = useContext(UserContext);
+  const loggedInUserId = profile.userId;
 
   const [editing, setEditing] = useState(false);
   const [field, setField] = useState(props.initial_value ? props.initial_value : props.default_value);
@@ -35,7 +39,7 @@ const UserProfileFieldBox = (props) => {
       'Content-Type': 'application/json'
     },
     params: {
-      id: userid
+      id: loggedInUserId
     }
   })
   .then(res => {

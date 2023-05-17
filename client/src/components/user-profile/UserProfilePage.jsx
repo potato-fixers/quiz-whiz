@@ -1,19 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import './styles/profile.css';
 import UserProfileFieldBox from './UserProfileFieldBox.jsx';
 import axios from 'axios';
 import { Buffer } from 'buffer';
+import { UserContext } from '../../components/global/UserContext';
 
 
 function UserProfilePage() {
   const [userData, setUserData] = useState({});
 
-  const userid = 1;
+  const { profile } = useContext(UserContext);
+  const loggedInUserId = profile.userId;
 
   useEffect(() => {
     axios.get(`${process.env.REACT_APP_API_URI}/settings/user`,{
       params: {
-        id: userid
+        id: loggedInUserId
       }
     })
     .then(response => {
@@ -22,7 +24,7 @@ function UserProfilePage() {
     .catch(error => {
       console.error('Error fetching user data:', error);
     });
-  }, [userid]);
+  }, [loggedInUserId]);
 
   return (
     <div>
