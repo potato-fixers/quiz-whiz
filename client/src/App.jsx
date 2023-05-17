@@ -19,6 +19,7 @@ import { useState, useLayoutEffect } from 'react';
 import useSession from './components/user-auth/hooks/useSession';
 import { UserContext } from './components/global/UserContext';
 import { useContext } from 'react';
+import { CountsProvider } from './components/user-dashboard/context/CountsContext';
 
 function App() {
   const { isLoggedIn } = useContext(UserContext);
@@ -48,7 +49,14 @@ function App() {
         {isReady && !isLoggedIn ? <></> :
           <>
             <Route path="/settings/" element={<UserProfilePage />}></Route>
-            <Route path="dashboard/*" element={<Dashboard />}></Route>
+            <Route
+              path="dashboard/*"
+              element={
+                <CountsProvider>
+                  <Dashboard />
+                </CountsProvider>
+              }>
+            </Route>
             <Route path="/createQuiz/" element={<CreateQuiz />}></Route>
           </>
         }
