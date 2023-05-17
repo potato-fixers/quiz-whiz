@@ -1,16 +1,17 @@
+import { useContext } from "react";
 import "../styles/take-quiz.css";
 import { Button } from "@mui/material";
+
+import { QuizContext } from '../context/QuizContext';
 
 function Answers({ page, answers }) {
   let keys = Object.keys(answers);
   answers = Object.values(answers);
+  const { resetStyles } = useContext(QuizContext);
 
   const handleClick = (e) => {
     let selected = Object.values(e.currentTarget.firstChild)[0].stateNode.data;
-
-    document.querySelectorAll('.btn').forEach(item => {
-      item.setAttribute('style', 'null')
-    })
+    resetStyles();
 
     keys.forEach((key, index) => {
       if (answers[index] === selected) {

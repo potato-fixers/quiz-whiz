@@ -9,9 +9,11 @@ import { usePagination } from "./hooks/usePagination";
 
 // Context
 import { UserContext } from "../global/UserContext";
+import { QuizContext } from "../take-quiz/context/QuizContext";
 
 const Pagination = (props) => {
   const { isLoggedIn } = useContext(UserContext);
+  const { resetStyles } = useContext(QuizContext);
 
   const {
     onPageChange,
@@ -35,6 +37,7 @@ const Pagination = (props) => {
   let lastPage = paginationRange[paginationRange.length - 1];
 
   const onNext = () => {
+    resetStyles();
     // If the user didn't Answer the Question, 
     // Submit a default answer for rendering the Review Section
     if (!localStorage.getItem(currentPage)) {

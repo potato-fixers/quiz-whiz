@@ -218,6 +218,13 @@ export const QuizProvider = ({ children }) => {
     localStorage.setItem(`start`, JSON.stringify(Date.now()));
     localStorage.setItem(`quizActive`, 0);
   };
+
+  const resetStyles = () => {
+    document.querySelectorAll('.btn').forEach(item => {
+      item.setAttribute('style', 'null')
+    })
+  };
+
   // =============================================
   //           	 Lifecycle Methods
   // =============================================
@@ -295,6 +302,7 @@ export const QuizProvider = ({ children }) => {
     calculateDuration,
     saved,
     setSaved,
+    resetStyles
   };
 
   // Return the provider component with the context value
