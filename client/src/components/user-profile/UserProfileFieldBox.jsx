@@ -94,9 +94,13 @@ const UserProfileFieldBox = (props) => {
             <Button variant="contained" onClick={handleCancelClick}>
               Cancel
             </Button>
-            <Button variant="contained" color="primary" onClick={handleSaveClick}>
-              Save
-            </Button>
+            { props.field_title === "Profile Picture" ? (
+              <></>
+            ) : (
+              <Button variant="contained" color="primary" onClick={handleSaveClick}>
+                Save
+              </Button>
+            )}
           </div>
         </>
       ) : (
