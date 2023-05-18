@@ -1,0 +1,40 @@
+#register {
+  padding: 20px;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+h3 {
+  text-align: center;
+  padding-left: 50px;
+  padding-bottom: 50px;
+}
+
+#register input,
+#register textarea {
+  margin-bottom: 10px;
+  width: 300px; /* Adjust width as needed */
+}
+
+#register textarea{
+  height: 100px;
+}
+
+#register label {
+  display: inline-block;
+  margin-bottom: 10px;
+  font-weight: bold;
+  margin-right: 10px;
+  width: 150px; /* Adjust width as needed */
+}
+
+#register div {
+  display: flex;
+}
+
+#register button {
+  margin-left: auto;
+}
+

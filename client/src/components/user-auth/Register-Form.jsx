@@ -1,7 +1,9 @@
 import useInput from './hooks/useInput.jsx';
 import axios from 'axios';
 import { useState } from 'react';
-import { useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom";
+import { Typography, Button } from '@mui/material';
+import "./styles/register.css";
 
 
 export default function RegisterForm() {
@@ -51,9 +53,14 @@ export default function RegisterForm() {
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <form id='register' onSubmit={handleSubmit}>
+        <Typography variant="h3">
+          Welcome New User
+        </Typography>
         <div>
-          <label htmlFor="firstName">First Name:</label>
+          <Typography variant="subtitle1" component="label" className="label">
+            First Name:
+          </Typography>
           <input
             type="text"
             id="firstName"
@@ -62,7 +69,9 @@ export default function RegisterForm() {
           />
         </div>
         <div>
-          <label htmlFor="lastName">Last Name:</label>
+          <Typography variant="subtitle1" component="label" htmlFor="lastName" className="label">
+            Last Name:
+          </Typography>
           <input
             type="text"
             id="lastName"
@@ -71,7 +80,9 @@ export default function RegisterForm() {
           />
         </div>
         <div>
-          <label htmlFor="email">Email:</label>
+          <Typography variant="subtitle1" component="label" htmlFor="email" className="label">
+            Email:
+          </Typography>
           <input
             type="email"
             id="email"
@@ -80,7 +91,9 @@ export default function RegisterForm() {
           />
         </div>
         <div>
-          <label htmlFor="password">Password:</label>
+          <Typography variant="subtitle1" component="label" htmlFor="password" className="label">
+            Password:
+          </Typography>
           <input
             type="password"
             minilength={6}
@@ -93,7 +106,9 @@ export default function RegisterForm() {
           />
         </div>
         <div>
-          <label htmlFor="confirmPassword">Confirm Password:</label>
+          <Typography variant="subtitle1" component="label" htmlFor="confirmPassword" className="label">
+            Confirm Password:
+          </Typography>
           <input
             type="password"
             pattern={`^${password.value}$`}
@@ -104,14 +119,18 @@ export default function RegisterForm() {
           />
         </div>
         <div>
-          <label htmlFor="username">Username:</label>
+          <Typography variant="subtitle1" component="label" htmlFor="username" className="label">
+            Username:
+          </Typography>
           <input
             id="username"
             {...username}
           />
         </div>
         <div>
-          <label htmlFor="bio">Bio:</label>
+          <Typography variant="subtitle1" component="label" htmlFor="bio" className="label">
+            Bio:
+          </Typography>
           <textarea
             id="bio"
             {...bio}
@@ -119,7 +138,9 @@ export default function RegisterForm() {
           />
         </div>
         <div>
-          <label htmlFor="profileImage">Profile Image:</label>
+          <Typography variant="subtitle1" component="label" htmlFor="profileImage" className="label">
+            Profile Image:
+          </Typography>
           <input
             type="file"
             id="profileImage"
@@ -128,7 +149,7 @@ export default function RegisterForm() {
           />
           {profileImage && <img src={profileImage} style={{ width: '100px', height: '100px' }} alt="upload profile" />}
         </div>
-        <button type="submit">Register</button>
+        <Button type="submit" variant="contained" color="primary">Register</Button>
       </form>
     </>
   );
