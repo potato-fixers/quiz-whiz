@@ -31,10 +31,14 @@ const UserProfileFieldBox = (props) => {
     setEditing(false);
   };
 
+
   const handleSaveClick = () => {
     // TODO: if it's the password field, need to check password first before updating
     axios.put(`${process.env.REACT_APP_API_URI}${props.saveRoute}`, {
-    updatedField: field
+    updatedField: field,
+    oldPassword: oldPassword,
+    email: props.profile.email,
+    id: loggedInUserId
   }, {
     headers: {
       'Content-Type': 'application/json'
