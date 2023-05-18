@@ -1,6 +1,6 @@
 import "../styles/take-quiz.css";
 
-import { useEffect, useContext } from "react";
+import { useEffect, useLayoutEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import { Grid, Typography, Button } from "@mui/material";
 
@@ -22,38 +22,46 @@ function Summary({ quizId }) {
     score,
     calculateScore,
 
-    // saveHistory,
+    saveHistory,
 
     finished,
     setFinished,
-
     duration,
     formatDuration,
+    calculateDuration,
+    // saved
   } = useContext(QuizContext);
-  const { user, isLoggedIn } = useContext(UserContext);
+  const { profile, isLoggedIn } = useContext(UserContext);
 
   useEffect(() => {
     getUserAnswers();
+    setFinished(true);
     // eslint-disable-next-line
   }, []);
 
-  useEffect(() => {
-    calculateScore();
-    setFinished(true);
-
-    if (isLoggedIn) {
+  useLayoutEffect(() => {
+    if (isLoggedIn && localStorage.getItem('quizActive') === '1') {
       // add score to user quiz history
       let payload = {
-        user: user,
+        user: profile.userId,
         score: score,
         quiz_id: quizId,
         duration: formatDuration(duration),
         finished: finished,
       };
-      console.log("Saving your score", payload);
 
-      // saveHistory(payload);
+      try {
+        saveHistory(payload);
+      } catch (err) {
+        console.log('Error saving score', err);
+      }
     }
+    // eslint-disable-next-line
+  }, [isLoggedIn]);
+
+  useEffect(() => {
+    calculateDuration();
+    calculateScore();
     // eslint-disable-next-line
   }, [userAnswers, correctAs]);
 

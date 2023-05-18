@@ -4,12 +4,12 @@ import "./styles/take-quiz.css";
 import Pagination from "./Pagination.jsx";
 
 import Timer from "./quiz-components/Timer.jsx";
-import Question from "./quiz-components/Question.jsx";
+import Question from "./quiz-components/QuestionText.jsx";
 import Answers from "./quiz-components/Answers.jsx";
 
 import { QuizContext } from "./context/QuizContext";
 
-function Quiz() {
+function QuizQuestion() {
   const [page, setPage] = useState(1);
   const { id, questions } = useContext(QuizContext);
 
@@ -69,4 +69,4 @@ function Quiz() {
   }
 }
 
-export default Quiz;
+export default QuizQuestion;
