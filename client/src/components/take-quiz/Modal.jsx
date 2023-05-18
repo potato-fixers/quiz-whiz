@@ -24,7 +24,7 @@ export default function BasicModal({ type, message }) {
 
   return (
     <div>
-      <Button variant="contained" onClick={handleOpen}>
+      <Button variant={type && type === 'private-quiz' ? "hidden" : "contained"} onClick={handleOpen}>
         {message}
       </Button>
       <Modal

@@ -99,8 +99,6 @@ function Begin() {
   } else if (!quizDetails || quizDetails.user_id !== 1) {
     return (<BasicModal type='private-quiz'></BasicModal>)
   } 
-
-
 }
 
 export default Begin;
