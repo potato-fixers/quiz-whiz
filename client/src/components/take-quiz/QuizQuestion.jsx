@@ -3,10 +3,12 @@ import { Grid, Typography } from "@mui/material";
 import "./styles/take-quiz.css";
 import Pagination from "./Pagination.jsx";
 
+// Components
 import Timer from "./quiz-components/Timer.jsx";
 import Question from "./quiz-components/QuestionText.jsx";
 import Answers from "./quiz-components/Answers.jsx";
 
+// Context
 import { QuizContext } from "./context/QuizContext";
 
 function QuizQuestion() {

@@ -25,7 +25,6 @@ function Summary({ quizId }) {
     saveHistory,
 
     finished,
-    setFinished,
     duration,
     formatDuration,
     calculateDuration,
@@ -35,7 +34,6 @@ function Summary({ quizId }) {
 
   useEffect(() => {
     getUserAnswers();
-    setFinished(true);
     // eslint-disable-next-line
   }, []);
 

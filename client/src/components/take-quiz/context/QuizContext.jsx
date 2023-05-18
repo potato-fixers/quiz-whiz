@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 
 // Context
-import { GlobalContext } from "../../global/GlobalContext"
+// import { GlobalContext } from "../../global/GlobalContext"
 import { UserContext } from "../../global/UserContext";
 
 // Create the context object
@@ -15,12 +15,10 @@ export const QuizProvider = ({ children }) => {
   // Set up state variables here
   let { id } = useParams();
   const { isLoggedIn } = useContext(UserContext);
-  const { path, setPath, URLREGEX } = useContext(GlobalContext);
   const [open, setOpen] = useState(false);
  
   const [quizDetails, setQuizDetails] = useState([{}]);
   const [quizStart, setQuizStart] = useState(null);
-  const [quizActive, setQuizActive] = useState(localStorage.getItem('quizActive'));
   
   const [quizEnd, setQuizEnd] = useState(null);
   const [time, setTime] = useState(300000);
@@ -117,7 +115,6 @@ export const QuizProvider = ({ children }) => {
     }
   };
 
-
   const saveHistory = async (payload) => {
     let body = {
       user_id: parseInt(payload.user),
@@ -131,12 +128,9 @@ export const QuizProvider = ({ children }) => {
       let res = await axios.post(`${process.env.REACT_APP_API_URI}/quiz/${payload.quiz_id}`, body);
       if (res.status === 200) {
         setSaved(true);
-        console.log('saved');
-        // cb(null, 'saved')
       }
     } catch (err) {
       console.log(err);
-      // cb('Couldn\'t Save Score', err);
     }
   };
 
@@ -153,17 +147,33 @@ export const QuizProvider = ({ children }) => {
   //             Quiz Modal Utils
   // =============================================
   const abandonQuiz = (e, message) => {
-    if (e.currentTarget.value === "Yes") {
+    const buttonText = e.currentTarget.value;
+
+    if (buttonText === "Yes") {
       resetQuiz();
+
       if (message === "Back Home") {
         window.location.href = "/";
       } if (message === "Dashboard") {
         window.location.href = isLoggedIn ? "/dashboard" : "/";
-      } else {
+      } else if (message === 'Restart Quiz') {
         window.location.href = `/quiz/${id}/start`;
+      } else {
+        console.log('There was a problem abandoning the quiz');
       } 
+
     } else {
       setOpen(false);
+
+      if (buttonText === 'Create an Account') {
+        window.location.href = "/register";
+      } else if (buttonText === 'Login') {
+        window.location.href = "/login";
+      } else if (buttonText === 'No, Take Me Home') {
+        window.location.href = "/";
+      } else {
+        console.log('There was a problem in Quiz Modal');
+      }
     }
   };
   const handleOpen = () => setOpen(true);
@@ -214,7 +224,7 @@ export const QuizProvider = ({ children }) => {
     } else {
       setMsg("Oh no! You ran out of time. Would you like to try again?");
     }
-  }, [finished, score, setMsg, duration]);
+  }, [finished, score, setMsg, saved]);
 
   // Context to be used in other components
   const ctx = {
@@ -253,6 +263,7 @@ export const QuizProvider = ({ children }) => {
 
     abandonQuiz,
     open,
+    setOpen,
     handleOpen,
     handleClose,
 
