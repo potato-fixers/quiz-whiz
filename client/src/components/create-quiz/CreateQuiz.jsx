@@ -46,6 +46,7 @@ const CreateQuiz = (props) => {
      e.preventDefault();
 
      if (e.target.name === "Art") {
+      console.log(profile.id)
        setState1(true);
        setState2(false);
        setState3(false);
@@ -281,7 +282,7 @@ const CreateQuiz = (props) => {
                     "Content-Type": "application/json",
                   },
                   mode: 'cors',
-                  credentials: 'same-origin',
+                  credentials: 'include',
                   body: JSON.stringify(quizDataTF),
                 }
 
@@ -309,7 +310,7 @@ const CreateQuiz = (props) => {
                     "Content-Type": "application/json",
                   },
                   mode: 'cors',
-                  credentials: 'same-origin',
+                  credentials: 'include',
                   body: JSON.stringify(quizDataMC),
                 }
 
@@ -337,7 +338,7 @@ const CreateQuiz = (props) => {
                     "Content-Type": "application/json",
                   },
                   mode: 'cors',
-                  credentials: 'same-origin',
+                  credentials: 'include',
                   body: JSON.stringify(quizDataMCTF)
                 }
 
