@@ -1,11 +1,11 @@
 import "./styles/create-quiz.css";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { Grid, TextField, Button, Typography } from '@mui/material';
 import Categories from "./quiz-components/Categories.jsx";
 import Difficulty from "./quiz-components/Difficulty.jsx"
 import MCQuestions from "./quiz-components/MC-Questions.jsx";
 import TFQuestions from "./quiz-components/TF-Questions.jsx";
 import APIQuestions from "./quiz-components/API-Questions.jsx";
-import { useContext } from "react"
 import { UserContext } from "../global/UserContext.jsx"
 
 // need useState here for both MC Questions and TF Questions
@@ -46,7 +46,6 @@ const CreateQuiz = (props) => {
      e.preventDefault();
 
      if (e.target.name === "Art") {
-      console.log(profile.id)
        setState1(true);
        setState2(false);
        setState3(false);
@@ -101,7 +100,7 @@ const CreateQuiz = (props) => {
 
     const handleFormChange = (e, index) => {
       e.preventDefault();
-      if (e.target.getAttribute("data-type") === "MC") {
+      if (e.target.id === "MC") {
         var MCdata = [...MCInputFields]
         MCdata[index][e.target.name] = e.target.value
         setMCInputFields(MCdata);
@@ -360,60 +359,75 @@ const CreateQuiz = (props) => {
     }
 
     return (
-      <div className="createQuiz">
-        <div name="quizName">
-          <h1>Name Your Quiz!</h1>
-          <input
-            value={quizName}
-            placeholder={"Enter Quiz Name Here"}
-            onChange={nameChange}
-          ></input>
-        </div>
-        <Categories
-          art={category1}
-          general={category2}
-          history={category3}
-          politics={category4}
-          sports={category5}
-          select={onSelect}
-        />
-        <Difficulty
-          easyDiff={easyDiff}
-          mediumDiff={mediumDiff}
-          hardDiff={hardDiff}
-          select={onSelect}
-        />
-        <MCQuestions
-          inputFields={MCInputFields}
-          setInputFields={setMCInputFields}
-          handleFormChange={handleFormChange}
-          addFields={addFields}
-          removeFields={removeFields}
-        />
-        <TFQuestions
-          inputFields={TFInputFields}
-          setInputFields={setTFInputFields}
-          handleFormChange={handleFormChange}
-          addFields={addFields}
-          removeFields={removeFields}
-        />
-        <div name="createQuiz">
-          <button
-            onClick={(e) => {
-              if (window.confirm("Submit Quiz?")) {
-              sendQuiz(e)
-              }
-            }}
-          >
-            {" "}
-            Create Quiz!{" "}
-          </button>
-        </div>
-        <APIQuestions
-          category={categoryVal}
-          difficulty={difficulty}
-        />
-      </div>
+      <Grid container className="createQuiz" spacing={2}>
+        <Grid item xs={12} sx={{borderBottom: "solid #CEC9C9", borderWidth: 0.1}} pb={5}>
+          <div id="quizName">
+            <Typography sx={{marginTop: 2.5, marginBottom: 2.5}} variant="h4">Name Your Quiz!</Typography>
+            <TextField
+              value={quizName}
+              placeholder={"Enter Quiz Name Here"}
+              onChange={nameChange}
+            ></TextField>
+          </div>
+        </Grid>
+        <Grid item xs={12} sx={{borderBottom: "solid #CEC9C9", borderWidth: 0.1}} pb={5}>
+          <Categories
+            art={category1}
+            general={category2}
+            history={category3}
+            politics={category4}
+            sports={category5}
+            select={onSelect}
+          />
+        </Grid>
+        <Grid item xs={12} sx={{borderBottom: "solid #CEC9C9", borderWidth: 0.1}} pb={5}>
+          <Difficulty
+            easyDiff={easyDiff}
+            mediumDiff={mediumDiff}
+            hardDiff={hardDiff}
+            select={onSelect}
+          />
+        </Grid>
+        <Grid item xs={12} sx={{borderBottom: "solid #CEC9C9", borderWidth: 0.1}} pb={5}>
+          <MCQuestions
+            inputFields={MCInputFields}
+            setInputFields={setMCInputFields}
+            handleFormChange={handleFormChange}
+            addFields={addFields}
+            removeFields={removeFields}
+          />
+        </Grid>
+        <Grid item xs={12} pb={5}>
+          <TFQuestions
+            inputFields={TFInputFields}
+            setInputFields={setTFInputFields}
+            handleFormChange={handleFormChange}
+            addFields={addFields}
+            removeFields={removeFields}
+          />
+        </Grid>
+        <Grid item xs={12} sx={{borderBottom: "solid #CEC9C9", borderWidth: 0.1}} pb={5}>
+          <div name="createQuiz">
+            <Button
+              variant="contained"
+              onClick={(e) => {
+                if (window.confirm("Submit Quiz?")) {
+                sendQuiz(e)
+                }
+              }}
+            >
+              {" "}
+              Create Quiz!{" "}
+            </Button>
+          </div>
+        </Grid>
+        <Grid item xs={12} sx={{borderBottom: "solid #CEC9C9", borderWidth: 0.1}} pb={5}>
+          <APIQuestions
+            category={categoryVal}
+            difficulty={difficulty}
+          />
+        </Grid>
+      </Grid>
     );
   }
 

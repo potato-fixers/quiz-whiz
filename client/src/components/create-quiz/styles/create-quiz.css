@@ -1,11 +1,31 @@
-.categorychosen {
-  color: blue;
+#category1chosen {
+  color: greenyellow;
 }
 
-textarea {
-  resize: none;
+#category2chosen {
+  color: greenyellow;
 }
 
-.difficultychosen {
-  color: blue;
+#category3chosen {
+  color: greenyellow;
+}
+
+#category4chosen {
+  color: greenyellow;
+}
+
+#category5chosen {
+  color: greenyellow;
+}
+
+#difficulty1chosen {
+  color: greenyellow;
+}
+
+#difficulty2chosen {
+  color: greenyellow;
+}
+
+#difficulty3chosen {
+  color: greenyellow;
 }

@@ -1,13 +1,16 @@
 import "../styles/create-quiz.css";
 import { useState, useEffect } from "react";
+import { Button, TextField, Grid, Box, Typography} from '@mui/material';
 const APIQuestions = (props) => {
 
   const [render, setRender] = useState(false);
   const [ apiData, setAPIData] = useState([])
+  const [ reload, setReload ] = useState(false)
 
   const apiURL = "https://opentdb.com/api.php?amount=5"
 
   useEffect( () => {
+    setReload(false)
     if (!props.category || !props.difficulty) {
       setRender(false)
     } else {
@@ -97,34 +100,56 @@ const APIQuestions = (props) => {
           })
         }
     }
-  }, [props.category, props.difficulty])
+  }, [props.category, props.difficulty, reload])
 
   if (render) {
     return (
-      <div className="APIQuestions">
-        <h1> Need Help? </h1>
-        {apiData.map( (currQuestion, index) => {
-          return (
-            <div>
-              <div>{currQuestion.question}</div>
-              <div>
-                Correct Answer: {currQuestion.correct_answer}
-              </div>
-              <div>
-                {currQuestion.incorrect_answers.map( (currAns, index ) => {
-                  return (
-                    <div> Incorrect Answer: {currAns}</div>
-                  )
-                })
-              }</div>
-            </div>
-          )
-        })}
-      </div>
+      <Grid container xs={12} spacing={2}>
+        <Grid item xs={12}>
+          <Typography variant="h4" sx={{fontWeight: 400}}> Need Help? </Typography>
+        </Grid>
+        <Grid item>
+          <Grid container spacing={2}>
+            {apiData.map( (currQuestion, index) => {
+              return (
+                <Grid item xs={12} key={'TF' + index}>
+                  <Grid container spacing={2}>
+                    <Grid item xs={12}>
+                      <Typography variant="h6">Q{index + 1} {currQuestion.question}</Typography>
+                    </Grid>
+                    <Grid item>
+                      <div name="answer choices">
+                          <Typography sx={{fontWeight: "bold"}}>
+                            Correct Answer: {currQuestion.correct_answer}
+                          </Typography>
+                          <div>
+                            {currQuestion.incorrect_answers.map( (currAns, index ) => {
+                              return (
+                                <Typography> Incorrect Answer: {currAns}</Typography>
+                              )
+                            })
+                            }
+                          </div>
+                        </div>
+                    </Grid>
+                  </Grid>
+                </Grid>
+              )
+            })}
+          </Grid>
+        </Grid>
+        <Grid item xs={12}>
+          <Button
+            variant="contained"
+            onClick={ (e) => { setReload(true)}}>
+            Reload
+          </Button>
+        </Grid>
+      </Grid>
     );
   } else {
     return (
-      <div> Select Category / Difficulty For Helper Questions !</div>
+      <h3> Select Category / Difficulty For Helper Questions !</h3>
     )
   }
 }
