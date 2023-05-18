@@ -4,7 +4,11 @@ const Pages = (props) => {
   const [limit, setLimit] = useState(0);
   useEffect(() => {
     let newLimit = Math.floor(props.quizzes.length / 5);
-    setLimit(newLimit + 1)
+    if (props.quizzes.length / 5 === newLimit) {
+      setLimit(newLimit);
+    } else {
+      setLimit(newLimit + 1);
+    }
   }, [props.quizzes]);
 
   const handleClick = (event) => {
@@ -36,13 +40,13 @@ const Pages = (props) => {
       <div className="landing_pages">
         {props.page > 0 ? <div onClick={handleClick}>&#8826;</div> : null}
         {props.page > 0 ? <div>...</div> : null}
-        <div className="landing_pages_current">{props.page + 1}</div>
+        {limit === 1 || limit === 0 ? null: <div className="landing_pages_current">{props.page + 1}</div>}
         {props.page + 1 < limit ?  <div onClick={handleClick}>{props.page + 2}</div> : null}
         {props.page + 2 < limit ?  <div onClick={handleClick}>{props.page + 3}</div> : null}
         {props.page + 3 < limit ?  <div onClick={handleClick}>{props.page + 4}</div> : null}
         {props.page + 4 < limit ?  <div onClick={handleClick}>{props.page + 5}</div> : null}
         {props.page + 5 < limit ?  <div>...</div>  : null}
-        {props.page < limit ? <div onClick={handleClick}>&#8827;</div> : null}
+        {props.page + 1 < limit ? <div onClick={handleClick}>&#8827;</div> : null}
       </div>
   );
 };
