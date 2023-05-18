@@ -4,7 +4,7 @@ module.exports = {
 
   get: (req, res) => {
     const { userId } = req.query;
-    models.counts.get()
+    models.counts.get(userId)
     .then(response => {
       res.json(response);
     })

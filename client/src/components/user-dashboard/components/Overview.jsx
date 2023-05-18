@@ -1,5 +1,4 @@
 import { Typography, TableBody, TableCell, TableHead, TableRow, Table } from '@mui/material';
-import { Link } from 'react-router-dom';
 import useQuizzes from '../hooks/useQuizzes';
 
 const Overview = (props) => {
@@ -19,12 +18,13 @@ const Overview = (props) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {quizzes.map((quiz) => (
+          {(quizzes.length &&
+            quizzes.map((quiz) => (
             <TableRow
               key={quiz.id}
             >
               <TableCell align='left' sx={{ border: 0 }}>
-               <Link to={`/quiz/${quiz.id}/start`}> {quiz.quiz_name} </Link>
+                {quiz.quiz_name}
               </TableCell>
               <TableCell align='center' sx={{ border: 0 }}>
                 {quiz.score}
@@ -33,7 +33,7 @@ const Overview = (props) => {
                 {quiz.date}
               </TableCell>
             </TableRow>
-          ))}
+          ))) || <TableRow><Typography component='td' align='center'> No quiz found </Typography></TableRow>}
         </TableBody>
       </Table>
 

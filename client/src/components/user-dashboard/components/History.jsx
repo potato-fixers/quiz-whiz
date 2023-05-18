@@ -42,15 +42,15 @@ const Plays = (props) => {
           <TableRow>
             <TableCell align='left' onClick={handleClick} >Quiz</TableCell>
             <TableCell align='center' onClick={handleClick} >Category</TableCell>
-            <TableCell align='center' onClick={handleClick} >Plays</TableCell>
-            <TableCell align='center' onClick={handleClick} >Best Score</TableCell>
-            <TableCell align='center' onClick={handleClick} >Best Time</TableCell>
+            <TableCell align='center' onClick={handleClick} >Score</TableCell>
+            <TableCell align='center' onClick={handleClick} >Time</TableCell>
             <TableCell align='center' onClick={handleClick} >Finished?</TableCell>
-            <TableCell align='right' onClick={handleClick} >Last Played</TableCell>
+            <TableCell align='right' onClick={handleClick} >Played At</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {sortedData.map((row) => (
+          {(sortedData.length &&
+            sortedData.map((row) => (
             <TableRow
               key={row.id}
             >
@@ -59,9 +59,6 @@ const Plays = (props) => {
               </TableCell>
               <TableCell align='center' sx={{ border: 0 }}>
                 {row.category}
-              </TableCell>
-              <TableCell align='center' sx={{ border: 0 }}>
-                {row.plays}
               </TableCell>
               <TableCell align='center' sx={{ border: 0 }}>
                 {row.score}
@@ -79,7 +76,7 @@ const Plays = (props) => {
                 <FavoriteIcon onClick={handleLike}></FavoriteIcon>
               </TableCell>
             </TableRow>
-          ))}
+          ))) || <TableRow><Typography component='td' align='center'> No quiz found </Typography></TableRow>}
         </TableBody>
       </Table>
 
