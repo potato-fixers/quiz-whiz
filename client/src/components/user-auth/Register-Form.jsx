@@ -58,7 +58,7 @@ export default function RegisterForm() {
           Welcome New User
         </Typography>
         <div>
-          <Typography variant="subtitle1" component="label" className="label">
+          <Typography variant="subtitle1" component="label" className="label" htmlFor="firstName">
             First Name:
           </Typography>
           <input

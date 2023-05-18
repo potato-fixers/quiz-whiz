@@ -39,18 +39,20 @@ export default function LoginForm() {
           Welcome Back :D
         </Typography>
         <div>
-          <Typography variant="body1" component="label" className="label">
+          <Typography htmlFor="email" variant="body1" component="label" className="label">
             Email:
           </Typography>
-            <input type="text" {...email} />
+          <input type="text" id="email" {...email} />
         </div>
         <div>
-          <Typography variant="body1" component="label" className="label">
+          <Typography htmlFor="password" variant="body1" component="label" className="label">
             Password:
           </Typography>
-            <input type="password" {...password} />
+          <input type="password" id="password" {...password} />
         </div>
-        <Button type="submit" variant="contained" color="primary" id="button">Submit</Button>
+        <Button type="submit" variant="contained" color="primary" id="button">
+          Submit
+        </Button>
       </form>
     </>
   )
