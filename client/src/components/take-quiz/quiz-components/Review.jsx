@@ -8,6 +8,8 @@ function Review() {
   const [visible, setVisible] = useState(false);
   const { questions, userAnswers } = useContext(QuizContext);
 
+  userAnswers.filter((a, b) => a.question > b.question ? b : a);
+
   const handleClick = () => {
     setVisible(!visible);
   };
@@ -27,7 +29,7 @@ function Review() {
                   key={index}
                   className={a.key === "corrAns" ? "right" : "wrong"}
                 >
-                  #{index + 1} Your Answer: {a.value}{" "}
+                  #{a.question} Your Answer: {a.value}{" "}
                   <Typography sx={{ color: "var(--charcoal)" }}>
                     Correct Answer: {questions[index]["corrAns"]}
                   </Typography>
