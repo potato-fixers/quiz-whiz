@@ -14,7 +14,7 @@ import { UserContext } from "../../global/UserContext";
 import { QuizContext } from "../context/QuizContext";
 
 function Begin() {
-  const { quizDetails, id, resetQuiz, time, handleTimerChange } =
+  const { quizDetails, id, time, handleTimerChange, handleQuizStart } =
     useContext(QuizContext);
   const { isLoggedIn } = useContext(UserContext);
 
@@ -84,7 +84,7 @@ function Begin() {
 
         <Grid item xs={6}>
           <Link to={`/quiz/${id}/question`}>
-            <Button onClick={resetQuiz} variant="contained" color="primary">
+            <Button onClick={handleQuizStart} variant="contained" color="primary">
               Begin &gt;
             </Button>
           </Link>
