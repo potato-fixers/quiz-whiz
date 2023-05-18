@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext, createContext } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import axios from "axios";
 
 import { UserContext } from "../../global/UserContext";
@@ -9,15 +9,16 @@ export const QuizContext = createContext();
 
 // Create the provider component
 export const QuizProvider = ({ children }) => {
+
   // Set up state variables here
   let { id } = useParams();
   const { isLoggedIn } = useContext(UserContext);
-
-  const navigate = useNavigate();
   const [open, setOpen] = useState(false);
-
+ 
   const [quizDetails, setQuizDetails] = useState([{}]);
-
+  const [quizStart, setQuizStart] = useState(null);
+  const [quizEnd, setQuizEnd] = useState(null);
+  
   const [time, setTime] = useState(300000);
 
   const [questions, setQuestions] = useState([{}]);
@@ -28,9 +29,10 @@ export const QuizProvider = ({ children }) => {
   const [duration, setDuration] = useState(0);
 
   const [score, setScore] = useState(0);
+  const [saved, setSaved] = useState(false);
   const [msg, setMsg] = useState("Whoops, You Haven't Take Any Tests Yet!");
 
-  // Set up the Quiz for User
+  // Get Current Quiz Data for User (based on quiz id)
   const fetchQuizData = async (id) => {
     try {
       const payload = await axios({
@@ -38,7 +40,6 @@ export const QuizProvider = ({ children }) => {
         url: `${process.env.REACT_APP_API_URI}/quiz/${id}/start`,
       });
       payload && setQuizDetails(payload.data);
-      // console.log("Got PAYLOAD", payload.data);
     } catch (err) {
       console.log("There was an error getting your quiz", err);
     }
@@ -52,7 +53,6 @@ export const QuizProvider = ({ children }) => {
       });
 
       let quizQs = payload && JSON.parse(payload.data);
-      // console.log("Got PAYLOAD", quizQs);
       quizQs && setQuestions(quizQs);
     } catch (err) {
       console.log("There was an error getting your questions", err);
@@ -63,6 +63,7 @@ export const QuizProvider = ({ children }) => {
   const resetQuiz = () => {
     localStorage.clear();
     setScore(0);
+    setSaved(false);
     setDuration(0);
     setFinished(false);
   };
@@ -87,7 +88,7 @@ export const QuizProvider = ({ children }) => {
       for (var i = 0; i <= localStorage.length; i++) {
         let a = JSON.parse(localStorage.getItem(i));
 
-        if (a && a.key === "corrAns") {
+        if (a && a.key === "corrAns" && a.key !== "start") {
           count++;
         }
       }
@@ -96,10 +97,15 @@ export const QuizProvider = ({ children }) => {
     }
   };
 
+  const calculateDuration = () => {
+      setQuizEnd(Date.now());
+      setQuizStart(JSON.parse(localStorage.getItem('start')));
+  };
+
   const calculateScore = () => {
     getCorrectAnswerCount();
-
-    let score = (correctAs / localStorage.length) * 100;
+    let length = localStorage.length - 2;
+    let score = (correctAs / length) * 100;
 
     if (isNaN(score)) {
       setScore(0);
@@ -107,19 +113,24 @@ export const QuizProvider = ({ children }) => {
       setScore(Math.floor(score));
     }
   };
-  // const saveHistory = async (payload) => {
-  //   try {
-  //     axios.post(`/${id}`, {
-  //       user_id: payload.user_id,
-  //       score: payload.score,
-  //       quiz_id: payload.id,
-  //       duration: payload.duration,
-  //       finished: payload.finished,
-  //     });
-  //   } catch (err) {
-  //     throw err;
-  //   }
-  // };
+
+
+  const saveHistory = async (payload) => {
+    let body = {
+      user_id: parseInt(payload.user),
+      score: payload.score,
+      quiz_id: payload.id,
+      duration: payload.duration,
+      finished: payload.finished,
+    };
+
+    try {
+      let res = await axios.post(`${process.env.REACT_APP_API_URI}/quiz/${payload.quiz_id}`, body);
+      res.status === 200 ? setSaved(true) : setSaved(false) ;
+    } catch (err) {
+      console.log('Couldn\'t Save Score', err);
+    }
+  };
 
   // =============================================
   //             Quiz Timer Utilities
@@ -127,11 +138,12 @@ export const QuizProvider = ({ children }) => {
   const setTimer = (time) => {
     /* check if element exists  */
     let timer = document.getElementById("timer");
-
+    
     if (timer) {
       // Set up the Timer
       let timeRemaining = time;
-      let dur = 0;
+
+      // let dur = 0;
       let minutes = Math.ceil((timeRemaining / 1000 / 60) << 0);
       let seconds = Math.ceil((timeRemaining / 1000) % 60);
 
@@ -156,14 +168,13 @@ export const QuizProvider = ({ children }) => {
 
         // Decrement Time Remaining by 1 second
         timeRemaining -= 1000;
-        dur += 1000;
+        // dur += 1000;
 
         // Handle User ran out of time before finishing the quiz
         if (timeRemaining <= 0) {
-          setDuration(dur);
           clearInterval(quizTimer);
           setFinished(false);
-          navigate(`/quiz/${id}/summary`);
+          window.location.href = `/quiz/${id}/summary`;
         }
       }, 1000);
     }
@@ -176,7 +187,7 @@ export const QuizProvider = ({ children }) => {
   const formatDuration = (duration) => {
     let min = Math.ceil((duration / 1000 / 60) << 0);
     let sec = Math.ceil((duration / 1000) % 60);
-
+    
     return `00:${min.toString().length < 2 ? "0" + min : min}:${
       sec === 0 ? "00" : sec.toString().length < 2 ? "0" + sec : sec
     }`;
@@ -188,17 +199,31 @@ export const QuizProvider = ({ children }) => {
   const abandonQuiz = (e, message) => {
     if (e.currentTarget.value === "Yes") {
       resetQuiz();
-      if (message === "Home") {
+      if (message === "Back Home") {
         window.location.href = "/";
-      } else {
+      } if (message === "Dashboard") {
         window.location.href = isLoggedIn ? "/dashboard" : "/";
-      }
+      } else {
+        window.location.href = `/quiz/${id}/start`;
+      } 
     } else {
       setOpen(false);
     }
   };
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  
+  const handleQuizStart = () => {
+    resetQuiz();
+    localStorage.setItem(`start`, JSON.stringify(Date.now()));
+    localStorage.setItem(`quizActive`, 0);
+  };
+
+  const resetStyles = () => {
+    document.querySelectorAll('.btn').forEach(item => {
+      item.setAttribute('style', 'null')
+    })
+  };
 
   // =============================================
   //           	 Lifecycle Methods
@@ -215,19 +240,21 @@ export const QuizProvider = ({ children }) => {
   }, [id]);
 
   useEffect(() => {
-    duration > 0 && console.log("Duration:", duration);
-  }, [duration]);
+    if (quizStart && quizEnd) { 
+      setDuration(quizEnd - quizStart);
+    };
+  }, [quizStart, quizEnd]);
 
   // Set Summary Message based on User's Quiz Score
   useEffect(() => {
-    if (score > 60) {
-      setMsg("Congratulations, You Passed!");
-    } else if (score <= 60) {
-      if (!finished) {
-        setMsg("Oh no! You ran out of time. Would you like to try again?");
-      } else {
-        setMsg("Oh no! You didn't pass, would you like to try again?");
-      }
+    if (finished) {
+      if (score > 60) {
+       setMsg("Congratulations, You Passed!");
+     } else if (score <= 60) {
+       setMsg("Oh no! You didn't pass, would you like to try again?");
+     }
+    } else {
+      setMsg("Oh no! You ran out of time. Would you like to try again?");
     }
   }, [finished, score, setMsg, duration]);
 
@@ -242,6 +269,7 @@ export const QuizProvider = ({ children }) => {
     setQuizDetails,
 
     resetQuiz,
+    handleQuizStart,
     userAnswers,
     getUserAnswers,
 
@@ -254,7 +282,7 @@ export const QuizProvider = ({ children }) => {
     score,
     calculateScore,
 
-    // saveHistory,
+    saveHistory,
 
     finished,
     setFinished,
@@ -270,6 +298,11 @@ export const QuizProvider = ({ children }) => {
     open,
     handleOpen,
     handleClose,
+
+    calculateDuration,
+    saved,
+    setSaved,
+    resetStyles
   };
 
   // Return the provider component with the context value

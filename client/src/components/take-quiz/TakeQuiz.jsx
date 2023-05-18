@@ -3,7 +3,7 @@ import "./styles/take-quiz.css";
 import { Route, Routes } from "react-router-dom";
 
 import Begin from "./quiz-components/Begin.jsx";
-import Quiz from "./Quiz.jsx";
+import QuizQuestion from "./QuizQuestion.jsx";
 import Summary from "./quiz-components/Summary.jsx";
 
 import { QuizContext } from "./context/QuizContext";
@@ -15,7 +15,7 @@ function TakeQuiz() {
     <div className="container">
       <Routes>
         <Route path="/start" element={<Begin quizId={id} />}></Route>
-        <Route path="/question" element={<Quiz quizId={id} />}></Route>
+        <Route path="/question" element={<QuizQuestion quizId={id} />}></Route>
         <Route path="/summary" element={<Summary quizId={id} />}></Route>
       </Routes>
     </div>
