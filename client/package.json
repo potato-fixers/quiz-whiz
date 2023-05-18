@@ -21,6 +21,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test --coverage",
     "test-dashboard": "react-scripts test ./src/components/user-dashboard --coverage",
+    "test-user-auth": "react-scripts test ./src/components/user-auth/ --coverage",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
