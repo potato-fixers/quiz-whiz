@@ -25,7 +25,7 @@ const Overview = (props) => {
               key={quiz.id}
             >
               <TableCell align='left' sx={{ border: 0 }}>
-                <Link to={`/quiz/${quiz.id}/start`}> {quiz.quiz_name} </Link>
+                <Link to={`/quiz/${quiz.quiz_id}/start`}> {quiz.quiz_name} </Link>
               </TableCell>
               <TableCell align='center' sx={{ border: 0 }}>
                 {quiz.score}

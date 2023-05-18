@@ -49,16 +49,16 @@ const Favorites = (props) => {
               key={row.id}
             >
               <TableCell align='left' sx={{ border: 0 }} >
-                <Link to={`/quiz/${row.id}/start`}> {row.quiz_name} </Link>
+                <Link to={`/quiz/${row.quiz_id}/start`}> {row.quiz_name} </Link>
               </TableCell>
               <TableCell align='center' sx={{ border: 0 }}>
                 {row.category}
               </TableCell>
               <TableCell align='center' sx={{ border: 0 }}>
-                {row.totalPlays}
+                {row.totalplays}
               </TableCell>
               <TableCell align='center' sx={{ border: 0 }}>
-                {row.totalLikes}
+                {row.totallikes}
               </TableCell>
               <TableCell align='right' sx={{ border: 0 }}>
                 {row.liked_at}

@@ -51,7 +51,7 @@ const Plays = (props) => {
               key={row.id}
             >
               <TableCell align='left' sx={{ border: 0 }}>
-                <Link to={`/quiz/${row.id}/start`}> {row.quiz_name} </Link>
+                <Link to={`/quiz/${row.quiz_id}/start`}> {row.quiz_name} </Link>
               </TableCell>
               <TableCell align='center' sx={{ border: 0 }}>
                 {row.category}

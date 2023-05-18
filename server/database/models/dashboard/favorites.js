@@ -8,9 +8,10 @@ module.exports = {
       SELECT
         f.id,
         q.quiz_name,
+        f.quiz_id,
         q.category,
-        COUNT(DISTINCT h.id) AS totalPlays,
-        COUNT(DISTINCT f.id) AS totalLikes,
+        (SELECT COUNT(*) FROM history WHERE quiz_id = f.quiz_id) AS totalPlays,
+        (SELECT COUNT(*) FROM favorites WHERE quiz_id = f.quiz_id) AS totalLikes,
         to_char(f.liked_at, 'FMMonth, FMDDth, YYYY') AS liked_at
       FROM
         favorites f
