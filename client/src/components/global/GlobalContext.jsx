@@ -12,7 +12,6 @@ export const GlobalProvider = ({ children }) => {
 
   useEffect(() => {
     path && setPath(window.location.href);
-    path && console.log('url', path);
 
     if (path && !path.match(URLREGEX)) {
       localStorage.clear();
