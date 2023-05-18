@@ -50,12 +50,22 @@ const UserProfileFieldBox = (props) => {
   .then(res => {
     if (res.status === 200) {
       console.log(`${props.field_title} updated successfully!`);
+      alert(`${props.field_title} updated successfully!`);
     } else {
       console.error(`Failed to update ${props.field_title}.`);
     }
   })
   .catch(error => {
-    console.error(error);
+    if (error.response && error.response.data) {
+      const errorMessage = error.response.data;
+      console.error(errorMessage);
+      // Display the error message on the screen using an alert or a notification component
+      // Replace the following line with your own implementation
+      alert(errorMessage);
+    } else {
+      console.error(error);
+      alert('Something went wrong during update.');
+    }
   });
   setEditing(false);
 };
