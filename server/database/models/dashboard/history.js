@@ -7,6 +7,7 @@ module.exports = {
     const queryString =`
       SELECT
         h.id,
+        h.quiz_id,
         q.quiz_name,
         q.category,
         CONCAT(h.score, '%') AS score,
@@ -21,7 +22,9 @@ module.exports = {
       LEFT JOIN
         favorites f ON f.quiz_id = q.id AND f.user_id = ${userId}
       WHERE
-        h.user_id = ${userId};
+        h.user_id = ${userId}
+      ORDER BY
+        h.date DESC
     `;
 
     return db.query(queryString)

@@ -69,7 +69,7 @@ const Plays = (props) => {
                 {row.date}
               </TableCell>
               <TableCell align='center' sx={{ border: 0 }}>
-                <LikeIcon liked={row.liked} quizId={row.id} getQuizzes={getQuizzes} ></LikeIcon>
+                <LikeIcon liked={row.liked} quizId={row.quiz_id} getQuizzes={getQuizzes} ></LikeIcon>
               </TableCell>
             </TableRow>
           ))) || <TableRow><Typography component='td' align='center'> No quiz found </Typography></TableRow>}

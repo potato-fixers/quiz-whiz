@@ -40,6 +40,10 @@ const LikeIcon = ({liked, quizId, getQuizzes, favoriteId}) => {
         getQuizzes(userId);
         getCounts(userId);
       })
+      .catch(err => {
+        console.error(err.stack);
+        alert('Something went wrong');
+      });
     } else {
       fetch(`${url}/dashboard/favorites/one/?userId=${userId}&quizId=${quizId}`)
       .then(async res => {
