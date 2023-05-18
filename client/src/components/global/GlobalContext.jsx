@@ -1,30 +1,26 @@
 import React, { useMemo, useState, useEffect, createContext } from 'react';
-import { useLocation } from "react-router-dom";
 
 // Create the context object
 export const GlobalContext = createContext();
 
 // Create the provider component
 export const GlobalProvider = ({ children }) => {
-  
-  // Set up state variables here
-  const location = useLocation();
-  const [path, setPath] = useState(window.location.href);
-  const URLREGEX = useMemo(() => /^.*\/quiz\/\d+\/(start|question|summary)/i, []);
-  
-  useEffect(() => {
-    location && setPath(location.pathname);
-    if (path) {
 
-        if (!path.match(URLREGEX)) {
-          localStorage.clear();
-        } 
+  // Set up state variables here
+  const [path, setPath] = useState(window.location.href);
+  const URLREGEX = useMemo(() => /.*\/quiz\/\d+\/(start|question|summary)$/i, []);
+
+  useEffect(() => {
+    path && setPath(window.location.href);
+    path && console.log('url', path);
+
+    if (path && !path.match(URLREGEX)) {
+      localStorage.clear();
     }
-  }, [location, path, URLREGEX]);
+  }, [path, URLREGEX]);
 
   // Define any functions or methods that update the state here
   const contextValue = {
-    location,
     path,
     setPath,
     URLREGEX

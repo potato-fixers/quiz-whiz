@@ -118,7 +118,7 @@ export const QuizProvider = ({ children }) => {
   };
 
 
-  const saveHistory = async (payload, cb) => {
+  const saveHistory = async (payload) => {
     let body = {
       user_id: parseInt(payload.user),
       score: payload.score,
@@ -131,10 +131,12 @@ export const QuizProvider = ({ children }) => {
       let res = await axios.post(`${process.env.REACT_APP_API_URI}/quiz/${payload.quiz_id}`, body);
       if (res.status === 200) {
         setSaved(true);
-        cb(null, 'saved')
+        console.log('saved');
+        // cb(null, 'saved')
       }
     } catch (err) {
-      cb('Couldn\'t Save Score', err);
+      console.log(err);
+      // cb('Couldn\'t Save Score', err);
     }
   };
 
@@ -200,13 +202,6 @@ export const QuizProvider = ({ children }) => {
       }
     };
   }, [quizStart, quizEnd]);
-
-  useEffect(() => {
-    if (path) {
-      setPath(window.location.href);
-      console.log('Path from QC', path, '\n', path.match(URLREGEX))
-    };
-  }, [path, URLREGEX]);
   
   // Set Summary Message based on User's Quiz Score
   useEffect(() => {

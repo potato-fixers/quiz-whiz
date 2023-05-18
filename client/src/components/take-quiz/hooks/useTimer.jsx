@@ -1,12 +1,16 @@
 import { useContext } from 'react';
+
+// Context
 import { GlobalContext } from '../../global/GlobalContext.jsx';
 import { QuizContext } from '../context/QuizContext.jsx';
 
 export default function useTimer() {
-  const { path, URLREGEX } = useContext(GlobalContext);
+
+  const { URLREGEX } = useContext(GlobalContext);
   const { time, setTime, id, setFinished } = useContext(QuizContext);
   
   const setTimer = (time) => {
+
     /* check if element exists  */
     let timer = document.getElementById("timer");
     
@@ -39,12 +43,11 @@ export default function useTimer() {
         timeRemaining -= 1000;
 
         // Handle User ran out of time before finishing the quiz
-        if (timeRemaining <= 0 && path.match(URLREGEX)) {
+        if (timeRemaining <= 0 && window.location.href.match(URLREGEX)) {
           clearInterval(quizTimer);
           setFinished(false);
           window.location.href = `/quiz/${id}/summary`;
-        } else if (!path.match(URLREGEX)){
-          console.log('timer log', path.match(URLREGEX));
+        } else if (!window.location.href.match(URLREGEX)){
           clearInterval(quizTimer);
           console.log('Cancelled timer');
         }
