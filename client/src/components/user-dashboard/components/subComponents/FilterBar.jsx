@@ -21,10 +21,11 @@ const FilterBar = (props) => {
           size='small'
         >
           <MenuItem value=''>All</MenuItem>
-          <MenuItem value='education'>Education</MenuItem>
-          <MenuItem value='music'>Music</MenuItem>
-          <MenuItem value='sport'>Sport</MenuItem>
-          <MenuItem value='movie'>Movie</MenuItem>
+          <MenuItem value='Art'>Art</MenuItem>
+          <MenuItem value='General Knowledge'>General Knowledge</MenuItem>
+          <MenuItem value='Sports'>Sports</MenuItem>
+          <MenuItem value='History'>History</MenuItem>
+          <MenuItem value='Politics'>Politics</MenuItem>
         </Select>
       </FormControl>
     </Stack>

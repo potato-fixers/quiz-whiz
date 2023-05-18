@@ -134,7 +134,7 @@ test('history tab', async () => {
   expect(await screen.findByText(/CATEGORY/i)).toBeInTheDocument();
 
   // Simulate clicking headers
-  fireEvent.click(screen.getByText(/Best Score/i));
+  fireEvent.click(screen.getByText(/Score/i));
 });
 
 test('favorites tab', async () => {
