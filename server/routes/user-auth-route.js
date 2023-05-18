@@ -15,6 +15,10 @@ router.get('/session', (req, res) => {
   authentication.getSession(req, res);
 })
 
+router.put('/updatePassword', (req, res) => {
+  authentication.updatePassword(req, res);
+})
+
 router.get('/signout', (req, res) => {
   req.session.destroy((err) => {
     if (err) {
