@@ -11,6 +11,8 @@ function UserProfilePage() {
   const { profile } = useContext(UserContext);
   const { isLoggedIn } = useContext(UserContext);
 
+  console.log(useContext(UserContext));
+
   const loggedInUserId = profile.userId;
 
   useEffect(() => {
@@ -49,7 +51,8 @@ function UserProfilePage() {
           label={"Password"}
           default_value={"********"}
           hidden_value={userData.password}
-          saveRoute={'/settings/updatePassword'} />
+          saveRoute={'/auth/updatePassword'}
+          profile={profile} />
       <UserProfileFieldBox field_title={"Bio"}
           label={"bio"}
           default_value={"Add a Bio"}
