@@ -8,7 +8,7 @@ const Categories = (props) => {
       <Box>
         <Typography variant="h4" sx={{fontWeight: 400, marginBottom: 2.5}}> Choose Your Category </Typography>
       </Box>
-      <Grid container xs={6} spacing={2}>
+      <Grid container spacing={2}>
         <Grid item>
           <Button
             variant="contained"

@@ -26,14 +26,14 @@ const TFQuestions = (props) => {
             <Grid container spacing={2}>
               {props.inputFields.map((input, index) => {
                 return (
-                  <Grid item spacing={2} key={index} xs={12}>
+                  <Grid item key={index} xs={12}>
                     <Grid>
                       <Typography variant="h6">
                         Q{index + 1}
                       </Typography>
                     </Grid>
-                    <Grid container spacing={2} xs={4} md={12}>
-                      <Grid item>
+                    <Grid container spacing={2} sx={{marginBottom: 2.5}}>
+                      <Grid item xs={2.5} sm={3} lg={4.6} xl={6}>
                         <TextField
                           id="TF"
                           multiline
@@ -49,7 +49,8 @@ const TFQuestions = (props) => {
                         >
                         </TextField>
                       </Grid>
-                      <Grid item>
+                    </Grid>
+                      <Grid item xs={2} sm={6}>
                         <Grid container spacing={2} name="answers">
                           <Grid item>
                             <TextField
@@ -69,28 +70,26 @@ const TFQuestions = (props) => {
                               value={props.inputFields[index]['incAns']}
                               placeholder='Incorrect Answer'
                               onChange={(e) => {props.handleFormChange(e, index)}}>
-
                               </TextField>
+                          </Grid>
+                          <Grid item>
+                            <Button
+                              variant="contained"
+                              endIcon={<DeleteIcon/>}
+                              name="TFRemoveButton"
+                              onClick={ (e) => {
+                                if(window.confirm('Are you sure?')) {
+                                  props.removeFields(e, index);
+                                }
+                              }}
+                            >
+                              {" "}
+                              Remove
+                              {" "}
+                            </Button>
                           </Grid>
                         </Grid>
                       </Grid>
-                      <Grid item>
-                        <Button
-                          variant="contained"
-                          endIcon={<DeleteIcon/>}
-                          name="TFRemoveButton"
-                          onClick={ (e) => {
-                            if(window.confirm('Are you sure?')) {
-                              props.removeFields(e, index);
-                            }
-                          }}
-                        >
-                          {" "}
-                          Remove
-                          {" "}
-                        </Button>
-                      </Grid>
-                    </Grid>
                   </Grid>
                 );
               })}

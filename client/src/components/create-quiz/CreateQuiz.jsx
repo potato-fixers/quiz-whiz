@@ -249,7 +249,7 @@ const CreateQuiz = (props) => {
         if (MCpass) {
           var quizDataMC = {
             quizzes: {
-            user_id: profile.id,
+            user_id: profile.userId,
             name: quizName,
             difficulty: difficulty,
             category: categoryVal
@@ -288,7 +288,7 @@ const CreateQuiz = (props) => {
         if (TFpass) {
           var quizDataTF = {
             quizzes: {
-            user_id: profile.id,
+            user_id: profile.userId,
             name: quizName,
             difficulty: difficulty,
             category: categoryVal
@@ -327,7 +327,7 @@ const CreateQuiz = (props) => {
         if (MCTFpass) {
           var quizDataMCTF = {
             quizzes: {
-            user_id: profile.id,
+            user_id: profile.userId,
             name: quizName,
             difficulty: difficulty,
             category: categoryVal

@@ -1,6 +1,6 @@
 import "../styles/create-quiz.css";
 import { useState, useEffect } from "react";
-import { Button, TextField, Grid, Box, Typography} from '@mui/material';
+import { Button, Grid, Typography} from '@mui/material';
 const APIQuestions = (props) => {
 
   const [render, setRender] = useState(false);
