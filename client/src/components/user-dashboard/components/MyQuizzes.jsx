@@ -7,6 +7,7 @@ import useFilter from '../hooks/useFilter';
 import useSort from '../hooks/useSort';
 import { useContext } from 'react';
 import { UserContext } from '../../global/UserContext';
+import { CountsContext } from '../context/CountsContext';
 
 const MyQuizzes = (props) => {
 
@@ -14,6 +15,7 @@ const MyQuizzes = (props) => {
   const { filteredData, handleFilterChange, filter } = useFilter(quizzes);
   const { sortedData, sortData } = useSort(filteredData);
   const { profile } = useContext(UserContext);
+  const { getCounts } = useContext(CountsContext);
 
   const headersMapping = {
     'Quiz': 'quiz_name',
@@ -31,6 +33,7 @@ const MyQuizzes = (props) => {
       const response = await fetch(endpoint, {method: 'delete'})
       if (response.ok) {
         getQuizzes(profile.userId);
+        getCounts(profile.userId);
       }
     } catch (err) {
       console.error(err.stack);

@@ -2,11 +2,13 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { useContext } from 'react';
 import { UserContext } from '../../../global/UserContext';
+import { CountsContext } from '../../context/CountsContext';
 
 const LikeIcon = ({liked, quizId, getQuizzes, favoriteId}) => {
 
   const url = process.env.REACT_APP_API_URI;
   const { profile } = useContext(UserContext);
+  const { getCounts } = useContext(CountsContext);
 
   const likeQuiz = async (userId, quizId) => {
 
@@ -23,6 +25,7 @@ const LikeIcon = ({liked, quizId, getQuizzes, favoriteId}) => {
       const response = await fetch(`${url}/dashboard/favorites`, opt);
       if (response.ok) {
         getQuizzes(userId);
+        getCounts(userId);
       }
     } catch (err) {
       console.error(err.stack);
@@ -35,6 +38,7 @@ const LikeIcon = ({liked, quizId, getQuizzes, favoriteId}) => {
       fetch(`${url}/dashboard/favorites/${favoriteId}`, {method: 'DELETE'})
       .then(res => {
         getQuizzes(userId);
+        getCounts(userId);
       })
     } else {
       fetch(`${url}/dashboard/favorites/one/?userId=${userId}&quizId=${quizId}`)
@@ -44,6 +48,7 @@ const LikeIcon = ({liked, quizId, getQuizzes, favoriteId}) => {
       })
       .then(res => {
         getQuizzes(userId);
+        getCounts(userId);
       })
       .catch(err => {
         console.error(err.stack);
