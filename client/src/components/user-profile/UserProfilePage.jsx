@@ -40,23 +40,26 @@ function UserProfilePage() {
           label={"Profile Picture"}
           default_value={"Upload a pic!"}
           initial_value={userData.profile_img ? `data:image/jpeg;base64,${Buffer.from(userData.profile_img.data).toString('base64')}` : ""}
+          profile={profile}
           saveRoute={'/settings/updatePic'}/>
       <UserProfileFieldBox field_title={"Username"}
           label={"Username"}
           default_value={"Choose a username"}
           initial_value={userData.username}
           secondary_value={userData.email}
+          profile={profile}
           saveRoute={'/settings/updateUsername'}/>
       <UserProfileFieldBox field_title={"Password"}
           label={"Password"}
           default_value={"********"}
           hidden_value={userData.password}
-          saveRoute={'/auth/updatePassword'}
-          profile={profile} />
+          profile={profile}
+          saveRoute={'/auth/updatePassword'} />
       <UserProfileFieldBox field_title={"Bio"}
           label={"bio"}
           default_value={"Add a Bio"}
           initial_value={userData.bio}
+          profile={profile}
           saveRoute={'/settings/updateBio'}/>
     </div>
   ) : <></> }
