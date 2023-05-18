@@ -21,6 +21,7 @@ const Nav = () => {
         setIsReady(true);
       } catch (err) {
         console.log(err);
+        setIsReady(true);
       }
     }
     fetch();
