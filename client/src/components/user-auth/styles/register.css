@@ -6,28 +6,27 @@
   align-items: flex-start;
 }
 
-h3 {
+h2 {
   text-align: center;
-  padding-left: 50px;
-  padding-bottom: 50px;
 }
 
 #register input,
 #register textarea {
-  margin-bottom: 10px;
+  margin-bottom: 15px;
   width: 300px; /* Adjust width as needed */
 }
 
-#register textarea{
+#register textarea {
+  margin-top: 20px;
   height: 100px;
 }
 
 #register label {
-  display: inline-block;
+  display: flex;
+  align-items: center;
+  width: 200px;
   margin-bottom: 10px;
   font-weight: bold;
-  margin-right: 10px;
-  width: 150px; /* Adjust width as needed */
 }
 
 #register div {
@@ -37,4 +36,3 @@ h3 {
 #register button {
   margin-left: auto;
 }
-

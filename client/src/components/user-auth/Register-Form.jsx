@@ -54,7 +54,7 @@ export default function RegisterForm() {
   return (
     <>
       <form id='register' onSubmit={handleSubmit}>
-        <Typography variant="h3">
+        <Typography variant="h2">
           Welcome New User
         </Typography>
         <div>

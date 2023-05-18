@@ -3,6 +3,8 @@ import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import { UserContext } from '../global/UserContext';
 import { useContext } from 'react';
+import { Typography, Button } from '@mui/material';
+import "./styles/login.css";
 
 export default function LoginForm() {
   const navigate = useNavigate();
@@ -15,7 +17,7 @@ export default function LoginForm() {
     event.preventDefault();
     // TODO: Handle form submission
     try {
-      var { data }= await axios.post(`${process.env.REACT_APP_API_URI}/auth/login`, {
+      var { data } = await axios.post(`${process.env.REACT_APP_API_URI}/auth/login`, {
         email: email.value,
         password: password.value,
       }, {
@@ -32,17 +34,23 @@ export default function LoginForm() {
 
   return (
     <>
-      <h2> login form </h2>
       <form onSubmit={handleSubmit}>
-        <label>
-          Email:
-          <input type="text" {...email} />
-        </label>
-        <label>
-          Password:
-          <input type="password" {...password} />
-        </label>
-        <button type="submit">Submit</button>
+        <Typography variant="h2" component="h2">
+          Welcome Back :D
+        </Typography>
+        <div>
+          <Typography variant="body1" component="label" className="label">
+            Email:
+          </Typography>
+            <input type="text" {...email} />
+        </div>
+        <div>
+          <Typography variant="body1" component="label" className="label">
+            Password:
+          </Typography>
+            <input type="password" {...password} />
+        </div>
+        <Button type="submit" variant="contained" color="primary" id="button">Submit</Button>
       </form>
     </>
   )
