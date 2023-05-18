@@ -6,7 +6,7 @@ module.exports = {
 
     const queryString =`
       SELECT
-        q.id,
+        h.id,
         q.quiz_name,
         q.category,
         CONCAT(h.score, '%') AS score,

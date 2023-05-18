@@ -6,7 +6,7 @@ module.exports = {
 
     const queryString = `
       SELECT
-        quizzes.id,
+        history.id,
         quizzes.quiz_name,
         CONCAT(history.score, '%') AS score,
         to_char(history.date, 'FMMonth FMDDth, YYYY') AS date
