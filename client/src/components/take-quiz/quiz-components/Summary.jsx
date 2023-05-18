@@ -41,21 +41,22 @@ function Summary({ quizId }) {
 
   useLayoutEffect(() => {
     if (isLoggedIn && localStorage.getItem('quizActive') === '1') {
-        // add score to user quiz history
-        let payload = {
-          user: profile.userId,
-          score: score,
-          quiz_id: quizId,
-          duration: formatDuration(duration),
-          finished: finished,
-        };
-  
-        try {
-          saveHistory(payload);
-        } catch (err) {
-          console.log('Error saving score', err);
-        }
+      // add score to user quiz history
+      let payload = {
+        user: profile.userId,
+        score: score,
+        quiz_id: quizId,
+        duration: formatDuration(duration),
+        finished: finished,
+      };
+
+      try {
+        saveHistory(payload);
+      } catch (err) {
+        console.log('Error saving score', err);
+      }
     }
+    // eslint-disable-next-line
   }, [isLoggedIn]);
 
   useEffect(() => {
@@ -63,7 +64,7 @@ function Summary({ quizId }) {
     calculateScore();
     // eslint-disable-next-line
   }, [userAnswers, correctAs]);
-  
+
   return (
     <Grid
       alignItems="center"
