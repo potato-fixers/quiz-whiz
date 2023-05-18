@@ -2,7 +2,7 @@
 import "../styles/take-quiz.css";
 import { Typography } from "@mui/material";
 
-function Question({ quizId, question, currentKey }) {
+function QuestionText({ quizId, question, currentKey }) {
   return (
     question && (
       <>
@@ -12,4 +12,4 @@ function Question({ quizId, question, currentKey }) {
   );
 }
 
-export default Question;
+export default QuestionText;
