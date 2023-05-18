@@ -12,10 +12,11 @@ import {
 
 import { UserContext } from "../../global/UserContext";
 import { QuizContext } from "../context/QuizContext";
+import useTimer from '../hooks/useTimer'
 
 function Begin() {
-  const { quizDetails, id, time, handleTimerChange, handleQuizStart } =
-    useContext(QuizContext);
+  const { quizDetails, id, handleQuizStart } = useContext(QuizContext);
+  const { time, handleTimerChange } = useTimer();
   const { isLoggedIn } = useContext(UserContext);
 
   let buttonText = !isLoggedIn ? "Home" : "Dashboard";

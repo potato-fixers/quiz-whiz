@@ -1,15 +1,15 @@
-import { useEffect, useContext } from "react";
+import { useEffect } from "react";
+import useTimer from "../hooks/useTimer";
 
 import "../styles/take-quiz.css";
 import { Typography } from "@mui/material";
-import { QuizContext } from "../context/QuizContext";
 
 function Timer({ id }) {
-  const { time, setTimer } = useContext(QuizContext);
+  const { time, setTimer } = useTimer();
 
   useEffect(() => {
     setTimer(time);
-  }, [time, setTimer]);
+  }, []);
 
   return (
     <div id="timer">
