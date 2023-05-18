@@ -28,6 +28,7 @@ const DashTop = (props) => {
 
   useEffect(() => {
     getUserInfo(profile.userId);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const profileImg = userInfo.profile_img ? `data:image/jpeg;base64,${Buffer.from(userInfo.profile_img.data).toString('base64')}` : '';
