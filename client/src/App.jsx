@@ -21,7 +21,6 @@ import useSession from './components/user-auth/hooks/useSession';
 // Context
 import { QuizProvider } from "./components/take-quiz/context/QuizContext";
 import { UserContext } from './components/global/UserContext';
-import { useContext } from 'react';
 import { CountsProvider } from './components/user-dashboard/context/CountsContext';
 
 function App() {
