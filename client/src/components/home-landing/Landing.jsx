@@ -27,7 +27,7 @@ const Landing = (props) => {
     if (profile.userId === undefined) {
       user_id = 1;
     } else {
-      user_id = profile.userId + 1;
+      user_id = profile.userId ;
     }
     axios.get(`${process.env.REACT_APP_API_URI}/get/getQuizzes`, { params: { id : user_id}})
     .then((response) => {
@@ -72,7 +72,7 @@ const Landing = (props) => {
       <div className="Home">
         <h1> Hi, {profile.username}</h1>
         <SearchBar setQuizzes={setQuizzes} setUserCategory={setUserCategory} setDifficulty={setDifficulty}
-          difficulty={difficulty} categoryList={categoryList} userCategory={userCategory} setCurrent={setCurrent} id={profile.userId + 1}/>
+          difficulty={difficulty} categoryList={categoryList} userCategory={userCategory} setCurrent={setCurrent} id={profile.userId}/>
         <QuizList category={'all'} quizzes={currentQuizzes} />
         <Pages page={page} setPage={setPage} quizzes={quizzes} setCurrent={setCurrent} />
       </div>
