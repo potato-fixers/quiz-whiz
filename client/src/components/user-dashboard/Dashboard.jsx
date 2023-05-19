@@ -27,6 +27,7 @@ const Dashboard = (props) => {
 
   useEffect(() => {
     isLoggedIn && getCounts(userId);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId, isLoggedIn]);
 
   return (

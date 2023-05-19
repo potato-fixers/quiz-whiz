@@ -1,4 +1,4 @@
-import  { Box, Tabs, Tab }  from '@mui/material';
+import  { Tabs, Tab }  from '@mui/material';
 
 const TabsBar = (props) => {
 

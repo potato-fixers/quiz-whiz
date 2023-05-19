@@ -5,7 +5,6 @@ import { useContext } from 'react';
 import handleSignOutClick from './components/user-auth/utils/handleSignOut.js';
 import useSession from './components/user-auth/hooks/useSession';
 import { useLayoutEffect, useState } from 'react';
-import useDeviceDetect from './components/user-dashboard/hooks/useDeviceDetect';
 
 const Nav = () => {
 

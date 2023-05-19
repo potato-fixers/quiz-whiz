@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { Stack, Typography, Box, Grid } from '@mui/material';
+import { Typography, Grid } from '@mui/material';
 import { CountsContext } from '../context/CountsContext';
 import useDeviceDetect from '../hooks/useDeviceDetect';
 
