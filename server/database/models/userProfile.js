@@ -7,13 +7,23 @@ const upload = multer({ storage });
 
 module.exports = {
 
-  getUserInfo: async (userid, cb) => {
+  getUserInfoCb: async (userid, cb) => {
     try {
       const { rows } = await db.query(`SELECT * FROM users WHERE id = ${userid}`);
       console.log('GETUSERINFO RESULT for userid ,', userid, ': ', rows);
       cb(null, rows);
     } catch (err) {
-    cb(err);
+      cb(err);
+    }
+  },
+
+  getUserInfo: async (userid) => {
+    try {
+      const { rows } = await db.query(`SELECT * FROM users WHERE id = ${userid}`);
+      console.log('GETUSERINFO ASYNC RESULT for userid ,', userid, ': ', rows);
+      return rows[0];
+    } catch (err) {
+      throw err;
     }
   },
 
@@ -27,17 +37,17 @@ module.exports = {
     }
   },
 
-  updatePassword: async (userid, newPassword, cb) => {
-    try {
-      // need to integrate with Benny's logic to appropriately update password
-      // const { rows } = await db.query('UPDATE users SET password = $1 WHERE id = $2', [newPic, userid]);
-      // console.log('UPDATEPROFILEPIC RESULT: ', rows);
-      console.log('UPDATE RESULT: ', 'TBD');
-      cb(null, rows);
-    } catch (err) {
-      cb(err);
-    }
-  },
+  // updatePassword: async (userid, newPassword, cb) => {
+  //   try {
+  //     // need to integrate with Benny's logic to appropriately update password
+  //     // const { rows } = await db.query('UPDATE users SET password = $1 WHERE id = $2', [newPic, userid]);
+  //     // console.log('UPDATEPROFILEPIC RESULT: ', rows);
+  //     console.log('UPDATE RESULT: ', 'TBD');
+  //     cb(null, rows);
+  //   } catch (err) {
+  //     cb(err);
+  //   }
+  // },
 
   updateBio: async (userid, newBio, cb) => {
     try {

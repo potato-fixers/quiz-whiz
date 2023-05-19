@@ -29,5 +29,15 @@ module.exports = {
     }
   },
 
+  updatePassword: async (user) => {
+    const query = `
+      UPDATE users SET password = '${user.password}', salt = '${user.salt}' WHERE id = '${user.id}'`;
+    try {
+      await db.query(query);
+      return Promise.resolve('success at updating password')
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  }
 
 };
