@@ -1,33 +1,10 @@
-import { useState, useEffect } from 'react';
-import { Stack, Typography, Box } from '@mui/material'
-import React, { useContext } from 'react';
-import { UserContext } from '../../global/UserContext';
+import { useContext } from 'react';
+import { Stack, Typography, Box } from '@mui/material';
+import { CountsContext } from '../context/CountsContext';
 
 const QuizCounts = (props) => {
 
-  const { profile } = useContext(UserContext);
-
-  const [counts, setCounts] = useState({
-    quizzes: 0,
-    plays: 0,
-    favorites: 0
-  });
-
-  const getCounts = (userId) => {
-    const url = process.env.REACT_APP_API_URI;
-    fetch(`${url}/dashboard/counts/?userId=${userId}`)
-    .then(async res => {
-      setCounts(await res.json());
-    })
-    .catch(err => {
-      console.error(err.stack);
-    });
-  };
-
-  useEffect(() => {
-    getCounts(profile.userId || 1);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [profile]);
+  const { counts } = useContext(CountsContext);
 
   const Counts = ({name, count}) => <Box>
     <Typography variant='h5'>{count}</Typography>

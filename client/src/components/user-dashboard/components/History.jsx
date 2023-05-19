@@ -1,14 +1,14 @@
 import { Typography, TableBody, TableCell, TableHead, TableRow, Table, Stack } from '@mui/material';
 import { Link } from 'react-router-dom';
 import FilterBar from './subComponents/FilterBar.jsx';
-import FavoriteIcon from '@mui/icons-material/Favorite';
 import useQuizzes from '../hooks/useQuizzes';
 import useFilter from '../hooks/useFilter';
 import useSort from '../hooks/useSort';
+import LikeIcon from './subComponents/LikeIcon';
 
 const Plays = (props) => {
 
-  const quizzes = useQuizzes('history');
+  const { quizzes, getQuizzes } = useQuizzes('history');
   const { filteredData, handleFilterChange, filter } = useFilter(quizzes);
   const { sortedData, sortData } = useSort(filteredData);
 
@@ -20,10 +20,6 @@ const Plays = (props) => {
     'Best Time': 'duration',
     'Finished?': 'finished',
     'Last Played': 'date'
-  };
-
-  const handleLike = (e) => {
-    console.log('like/unlike');
   };
 
   const handleClick = (e) => {
@@ -55,7 +51,7 @@ const Plays = (props) => {
               key={row.id}
             >
               <TableCell align='left' sx={{ border: 0 }}>
-                <Link to={`/quiz/${row.id}/start`}> {row.quiz_name} </Link>
+                <Link to={`/quiz/${row.quiz_id}/start`}> {row.quiz_name} </Link>
               </TableCell>
               <TableCell align='center' sx={{ border: 0 }}>
                 {row.category}
@@ -73,7 +69,7 @@ const Plays = (props) => {
                 {row.date}
               </TableCell>
               <TableCell align='center' sx={{ border: 0 }}>
-                <FavoriteIcon onClick={handleLike}></FavoriteIcon>
+                <LikeIcon liked={row.liked} quizId={row.quiz_id} getQuizzes={getQuizzes} ></LikeIcon>
               </TableCell>
             </TableRow>
           ))) || <TableRow><Typography component='td' align='center'> No quiz found </Typography></TableRow>}
