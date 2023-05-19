@@ -1,4 +1,4 @@
-import { Typography, TableBody, TableCell, TableHead, TableRow, Table, Stack } from '@mui/material';
+import { Typography, TableBody, TableCell, TableHead, TableRow, Table, Stack, Grid } from '@mui/material';
 import { Link } from 'react-router-dom';
 import FilterBar from './subComponents/FilterBar.jsx';
 import useQuizzes from '../hooks/useQuizzes';
@@ -13,35 +13,39 @@ const Plays = (props) => {
   const { sortedData, sortData } = useSort(filteredData);
 
   const headersMapping = {
-    'Quiz': 'quiz_name',
-    'Category': 'category',
-    'Plays': 'plays',
-    'Best Score': 'score',
-    'Best Time': 'duration',
-    'Finished?': 'finished',
-    'Last Played': 'date'
+    'quiz': 'quiz_name',
+    'category': 'category',
+    'plays': 'plays',
+    'score (%)': 'score',
+    'time (m)': 'duration',
+    'played at': 'date'
   };
 
   const handleClick = (e) => {
-    const key = headersMapping[e.target.innerText];
+    const key = headersMapping[e.target.innerText.toLowerCase()];
     sortData(key);
   };
 
+  const headers = ['Quiz', 'Category', 'Score (%)', 'Time (m)', 'Played At'];
+  const noBorder = {border: 0};
+  const inherit = { color: 'inherit', textDecoration: 'inherit', fontWeight: 'bold'};
+
   return (
-    <>
+    <Grid>
       <Stack direction='row' >
-        <Typography variant='h4' sx={{ flexGrow: 1}}>History</Typography>
+        <Typography variant='h5' sx={{ flexGrow: 1}}>History</Typography>
         <FilterBar onFilterChange={handleFilterChange} category={filter.category} />
       </Stack>
       <Table sx={{ width: '100%' }} aria-label='simple table'>
         <TableHead >
-          <TableRow>
-            <TableCell align='left' onClick={handleClick} >Quiz</TableCell>
-            <TableCell align='center' onClick={handleClick} >Category</TableCell>
-            <TableCell align='center' onClick={handleClick} >Score</TableCell>
-            <TableCell align='center' onClick={handleClick} >Time</TableCell>
-            <TableCell align='center' onClick={handleClick} >Finished?</TableCell>
-            <TableCell align='right' onClick={handleClick} >Played At</TableCell>
+          <TableRow hover={true}>
+            {headers.map((header, idx) => {
+              const alignment = idx < 1 ? 'left' : idx === headers.length - 1 ? 'right' : 'center';
+              return <TableCell key={idx} align={alignment} onClick={handleClick} >
+              <Typography variant='h6'> {header} </Typography>
+            </TableCell>
+            })}
+            <TableCell> {/*Placeholder*/} </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -49,9 +53,10 @@ const Plays = (props) => {
             sortedData.map((row) => (
             <TableRow
               key={row.id}
+              hover={true}
             >
               <TableCell align='left' sx={{ border: 0 }}>
-                <Link to={`/quiz/${row.quiz_id}/start`}> {row.quiz_name} </Link>
+                <Link to={`/quiz/${row.quiz_id}/start`} style={inherit}> {row.quiz_name} </Link>
               </TableCell>
               <TableCell align='center' sx={{ border: 0 }}>
                 {row.category}
@@ -62,9 +67,9 @@ const Plays = (props) => {
               <TableCell align='center' sx={{ border: 0 }}>
                 {row.duration}
               </TableCell>
-              <TableCell align='center' sx={{ border: 0 }}>
+              {/* <TableCell align='center' sx={{ border: 0 }}>
                 {row.finished ? 'v' : ''}
-              </TableCell>
+              </TableCell> */}
               <TableCell align='right' sx={{ border: 0 }} >
                 {row.date}
               </TableCell>
@@ -76,7 +81,7 @@ const Plays = (props) => {
         </TableBody>
       </Table>
 
-    </>
+    </Grid>
   );
 };
 

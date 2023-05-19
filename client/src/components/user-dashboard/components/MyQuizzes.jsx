@@ -1,7 +1,7 @@
-import { Typography, TableBody, TableCell, TableHead, TableRow, Table, Stack } from '@mui/material';
+import { Typography, TableBody, TableCell, TableHead, TableRow, Table, Stack, Grid } from '@mui/material';
 import { Link } from 'react-router-dom';
 import FilterBar from './subComponents/FilterBar';
-import ClearIcon from '@mui/icons-material/Clear';
+import DeleteRounded from '@mui/icons-material/DeleteRounded';
 import useQuizzes from '../hooks/useQuizzes';
 import useFilter from '../hooks/useFilter';
 import useSort from '../hooks/useSort';
@@ -46,21 +46,27 @@ const MyQuizzes = (props) => {
     sortData(key);
   };
 
+  const headers = ['Quiz', 'Category', 'Plays', 'Likes', 'Created At'];
+  const noBorder = {border: 0};
+  const inherit = { color: 'inherit', textDecoration: 'inherit', fontWeight: 'bold'};
+
   return (
-    <>
+    <Grid>
       <Stack direction='row' >
-        <Typography variant='h4' sx={{ flexGrow: 1}}>My Quizzes</Typography>
+        <Typography variant='h5' sx={{ flexGrow: 1}}>Quizzes</Typography>
         <FilterBar onFilterChange={handleFilterChange} category={filter.category} />
       </Stack>
 
       <Table sx={{ width: '100%' }} aria-label="simple table">
         <TableHead >
-          <TableRow>
-            <TableCell align='left' onClick={handleClick} >Quiz</TableCell>
-            <TableCell align='center' onClick={handleClick} >Category</TableCell>
-            <TableCell align='center' onClick={handleClick} >Plays</TableCell>
-            <TableCell align='center' onClick={handleClick} >Likes</TableCell>
-            <TableCell align='right' onClick={handleClick} >Created At</TableCell>
+          <TableRow hover={true}>
+            {headers.map((header, idx) => {
+              const alignment = idx < 1 ? 'left' : idx === headers.length - 1 ? 'right' : 'center';
+              return <TableCell key={idx} align={alignment} onClick={handleClick} >
+              <Typography variant='h6'> {header} </Typography>
+            </TableCell>
+            })}
+            <TableCell>{/* Placeholder */}</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -68,31 +74,32 @@ const MyQuizzes = (props) => {
             sortedData.map((row) => (
             <TableRow
               key={row.id}
+              hover={true}
             >
-              <TableCell align='left' sx={{ border: 0 }}>
-                <Link to={`/quiz/${row.id}/start`}> {row.quiz_name} </Link>
+              <TableCell align='left' sx={noBorder}>
+                <Link to={`/quiz/${row.id}/start`} style={inherit}> {row.quiz_name} </Link>
               </TableCell>
-              <TableCell align='center' sx={{ border: 0 }}>
+              <TableCell align='center' sx={noBorder}>
                 {row.category}
               </TableCell>
-              <TableCell align='center' sx={{ border: 0 }}>
+              <TableCell align='center' sx={noBorder}>
                 {row.plays}
               </TableCell>
-              <TableCell align='center' sx={{ border: 0 }}>
+              <TableCell align='center' sx={noBorder}>
                 {row.likes}
               </TableCell>
-              <TableCell align='right' sx={{ border: 0 }} >
+              <TableCell align='right' sx={noBorder} >
                 {row.created_at}
               </TableCell>
-              <TableCell align='center' sx={{ border: 0 }}>
-                <ClearIcon onClick={() => handleDelete(row.id)}></ClearIcon>
+              <TableCell align='center' sx={noBorder}>
+                <DeleteRounded id='delete-icon' onClick={() => handleDelete(row.id)} color='action'></DeleteRounded>
               </TableCell>
-            </TableRow>
+            </TableRow >
           ))) || <TableRow><Typography component='td' align='center'> No quiz found </Typography></TableRow>}
         </TableBody>
       </Table>
 
-    </>
+    </Grid>
   );
 };
 

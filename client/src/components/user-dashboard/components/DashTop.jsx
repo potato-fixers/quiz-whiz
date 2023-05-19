@@ -1,4 +1,4 @@
-import { Avatar, Typography, IconButton, Stack } from '@mui/material';
+import { Avatar, Typography, IconButton, Grid } from '@mui/material';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import { Link } from 'react-router-dom';
 import { useContext, useState, useEffect } from 'react';
@@ -34,15 +34,27 @@ const DashTop = (props) => {
   const profileImg = userInfo.profile_img ? `data:image/jpeg;base64,${Buffer.from(userInfo.profile_img.data).toString('base64')}` : '';
 
   return (
-    <Stack direction='row' spacing={3} sx={{ mt: 5, mb: 3, alignItems: 'center'} }>
-      <Avatar src={profileImg} sx={{ width: 100, height: 100 }} />
-      <Typography variant='h2'>{profile.username}</Typography >
-      <IconButton size='small' sx={{ width: 50, height: 50 }} >
-        <Link to='/settings' style={{ color: 'inherit', textDecoration: 'inherit' }}>
-          <EditOutlinedIcon />
-        </Link>
-      </IconButton >
-    </Stack >
+    <Grid
+    container
+    direction='row'
+    justifyContent='center'
+    columnSpacing={5}
+    sx={{ mt: 4, mb: 2}}
+    >
+      <Grid item>
+        <Avatar src={profileImg} sx={{ width: 75, height: 75 }} />
+      </Grid>
+      <Grid item>
+        <Typography variant='h3'>{profile.username}</Typography >
+      </Grid>
+      <Grid item>
+        <IconButton sx={{ width: 40, height: 40 }} >
+          <Link to='/settings' style={{ color: 'inherit', textDecoration: 'inherit' }}>
+            <EditOutlinedIcon color='primary' fontSize='large'/>
+          </Link>
+        </IconButton >
+      </Grid>
+    </Grid>
   )
 }
 

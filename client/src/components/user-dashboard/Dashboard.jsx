@@ -1,5 +1,5 @@
 import './styles/dashboard.css';
-import { Container } from '@mui/material';
+import { Grid, Container } from '@mui/material';
 import DashTop from './components/DashTop.jsx';
 import TabsBar from './components/TabsBar.jsx';
 import QuizCounts from './components/QuizCounts.jsx';
@@ -26,10 +26,18 @@ const Dashboard = (props) => {
 
   return (
     <Container maxWidth='xl'>
-      <DashTop />
-      <TabsBar activeTab={activeTab} setActiveTab={setActiveTab} />
-      <QuizCounts activeTab={activeTab}/>
-      <TabPanel activeTab={activeTab} />
+      <Grid item xs={12}>
+        <DashTop />
+      </Grid>
+      <Grid item xs={12}>
+        <TabsBar activeTab={activeTab} setActiveTab={setActiveTab} />
+      </Grid>
+      <Grid item xs={12}>
+        <QuizCounts activeTab={activeTab}/>
+      </Grid>
+      <Grid item xs={12}>
+        <TabPanel activeTab={activeTab} />
+      </Grid>
     </Container>
   );
 };

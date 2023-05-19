@@ -1,4 +1,4 @@
-import { Typography, TableBody, TableCell, TableHead, TableRow, Table, Stack } from '@mui/material';
+import { Typography, TableBody, TableCell, TableHead, TableRow, Table, Stack, Grid } from '@mui/material';
 import { Link } from 'react-router-dom';
 import FilterBar from './subComponents/FilterBar.jsx';
 import useQuizzes from '../hooks/useQuizzes';
@@ -13,33 +13,39 @@ const Favorites = (props) => {
   const { sortedData, sortData } = useSort(filteredData);
 
     const headersMapping = {
-    'Quiz': 'quiz_name',
-    'Category': 'category',
-    'Total Plays': 'totalPlays',
-    'Total Likes': 'totalLikes',
-    'Date Liked': 'date',
+    'quiz': 'quiz_name',
+    'category': 'category',
+    'total plays': 'totalplays',
+    'total likes': 'totallikes',
+    'date liked': 'date',
   };
 
   const handleClick = (e) => {
-    const key = headersMapping[e.target.innerText];
+    const key = headersMapping[e.target.innerText.toLowerCase()];
     sortData(key);
   };
 
+  const headers = ['Quiz', 'Category', 'Total Plays', 'Total Likes', 'Date Liked'];
+  const noBorder = {border: 0};
+  const inherit = { color: 'inherit', textDecoration: 'inherit', fontWeight: 'bold'};
+
   return (
-    <>
+    <Grid>
       <Stack direction='row' >
-        <Typography variant='h4' sx={{ flexGrow: 1}}>Favorites</Typography>
+        <Typography variant='h5' sx={{ flexGrow: 1}}>Favorites</Typography>
         <FilterBar onFilterChange={handleFilterChange} category={filter.category} />
       </Stack>
 
       <Table sx={{ width: '100%' }} aria-label="simple table">
         <TableHead >
-          <TableRow>
-            <TableCell align='left' onClick={handleClick} >Quiz</TableCell>
-            <TableCell align='center' onClick={handleClick} >Category</TableCell>
-            <TableCell align='center' onClick={handleClick} >Total Plays</TableCell>
-            <TableCell align='center' onClick={handleClick} >Total Likes</TableCell>
-            <TableCell align='right' onClick={handleClick} >Date Liked</TableCell>
+          <TableRow hover={true}>
+            {headers.map((header, idx) => {
+              const alignment = idx < 1 ? 'left' : idx === headers.length - 1 ? 'right' : 'center';
+              return <TableCell key={idx} align={alignment} onClick={handleClick} >
+              <Typography variant='h6'> {header} </Typography>
+            </TableCell>
+            })}
+            <TableCell>{/* Placeholder */}</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -47,23 +53,24 @@ const Favorites = (props) => {
             sortedData.map((row) => (
             <TableRow
               key={row.id}
+              hover={true}
             >
-              <TableCell align='left' sx={{ border: 0 }} >
-                <Link to={`/quiz/${row.quiz_id}/start`}> {row.quiz_name} </Link>
+              <TableCell align='left' sx={noBorder} >
+                <Link to={`/quiz/${row.quiz_id}/start`} style={inherit}> {row.quiz_name} </Link>
               </TableCell>
-              <TableCell align='center' sx={{ border: 0 }}>
+              <TableCell align='center' sx={noBorder}>
                 {row.category}
               </TableCell>
-              <TableCell align='center' sx={{ border: 0 }}>
+              <TableCell align='center' sx={noBorder}>
                 {row.totalplays}
               </TableCell>
-              <TableCell align='center' sx={{ border: 0 }}>
+              <TableCell align='center' sx={noBorder}>
                 {row.totallikes}
               </TableCell>
-              <TableCell align='right' sx={{ border: 0 }}>
+              <TableCell align='right' sx={noBorder}>
                 {row.liked_at}
               </TableCell>
-              <TableCell align='center' sx={{ border: 0 }}>
+              <TableCell align='center' sx={noBorder}>
                 <LikeIcon liked={true} favoriteId={row.id} getQuizzes={getQuizzes}></LikeIcon>
               </TableCell>
             </TableRow>
@@ -71,7 +78,7 @@ const Favorites = (props) => {
         </TableBody>
       </Table>
 
-    </>
+    </Grid>
   );
 };
 

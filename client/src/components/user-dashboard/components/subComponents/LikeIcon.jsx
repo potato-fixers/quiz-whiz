@@ -62,9 +62,9 @@ const LikeIcon = ({liked, quizId, getQuizzes, favoriteId}) => {
   };
 
   if (liked) {
-    return <FavoriteIcon onClick={() => unlikeQuiz(favoriteId, profile.userId, quizId)}> </FavoriteIcon>;
+    return <FavoriteIcon color='secondary' onClick={() => unlikeQuiz(favoriteId, profile.userId, quizId)}> </FavoriteIcon>;
   }
-  return <FavoriteBorderIcon onClick={() => likeQuiz(profile.userId, quizId)}> </FavoriteBorderIcon>;
+  return <FavoriteBorderIcon color='secondary' onClick={() => likeQuiz(profile.userId, quizId)}> </FavoriteBorderIcon>;
 
 }
 

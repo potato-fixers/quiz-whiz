@@ -1,4 +1,4 @@
-import { Typography, TableBody, TableCell, TableHead, TableRow, Table } from '@mui/material';
+import { Typography, TableBody, TableCell, TableHead, TableRow, Table, Grid } from '@mui/material';
 import useQuizzes from '../hooks/useQuizzes';
 import { Link } from 'react-router-dom';
 
@@ -6,16 +6,25 @@ const Overview = (props) => {
 
   const { quizzes } = useQuizzes('');
 
+  const headers = ['Quiz', 'Score (%)', 'Last Play'];
+
+  const noBorder = { border: 0 };
+  const inherit = { color: 'inherit', textDecoration: 'inherit', fontWeight: 'bold'};
+
   return (
-    <>
+    <Grid>
       <Typography variant='h5'>Recent plays</Typography>
 
       <Table sx={{ width: '100%' }} aria-label='simple table'>
         <TableHead >
-          <TableRow>
-            <TableCell align='left'>Quiz</TableCell>
-            <TableCell align='center'>Score</TableCell>
-            <TableCell align='right'>Last Played</TableCell>
+          <TableRow hover={true}>
+            {headers.map((header, idx) => {
+              const alignment = idx < 1 ? 'left' : idx === headers.length - 1 ? 'right' : 'center';
+              return <TableCell key={idx} align={alignment}>
+                <Typography variant='h6' > {header} </Typography>
+              </TableCell>
+            })}
+            <TableCell>{/* Placeholder */}</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -23,14 +32,15 @@ const Overview = (props) => {
             quizzes.map((quiz) => (
             <TableRow
               key={quiz.id}
+              hover={true}
             >
-              <TableCell align='left' sx={{ border: 0 }}>
-                <Link to={`/quiz/${quiz.quiz_id}/start`}> {quiz.quiz_name} </Link>
+              <TableCell align='left' sx={noBorder}>
+                <Link to={`/quiz/${quiz.quiz_id}/start`} style={inherit}> {quiz.quiz_name} </Link>
               </TableCell>
-              <TableCell align='center' sx={{ border: 0 }}>
+              <TableCell align='center' sx={noBorder}>
                 {quiz.score}
               </TableCell>
-              <TableCell align='right' sx={{ border: 0 }} >
+              <TableCell align='right' sx={noBorder} >
                 {quiz.date}
               </TableCell>
             </TableRow>
@@ -38,7 +48,7 @@ const Overview = (props) => {
         </TableBody>
       </Table>
 
-    </>
+    </Grid>
   );
 };
 
