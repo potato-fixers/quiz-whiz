@@ -31,9 +31,9 @@ function Answers({ page, answers }) {
               <Button
                 key={index}
                 className='btn'
+                sx={{margin: "1rem"}}
                 variant="contained"
                 color="secondary"
-                style={{}}
                 onClick={handleClick}
               >
                 {answers[index]}

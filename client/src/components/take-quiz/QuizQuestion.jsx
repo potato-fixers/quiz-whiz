@@ -46,27 +46,24 @@ function QuizQuestion() {
               />
             </Grid>
   
-            <Grid item xs={6}>
+            <Grid id="answers" item xs={6}>
               <Answers page={page} answers={questions[page - 1]} />
             </Grid>
   
-            <Grid item xs={6}>
-              <Typography>
-                {page}/{questions.length} Questions
-              </Typography>
-            </Grid>
-          </Grid>
-  
-          <Grid justifyContent="center" direction="row" container>
-            <Grid item xs={6}>
-              <Pagination
-                quizId={id}
-                onPageChange={onPageChange}
-                currentPage={page}
-                totalQuestions={questions.length}
-                pageSize={1}
-              />
-            </Grid>
+            <div className="footer flex-se">
+                <Typography id="questions-remaining">
+                  {page}/{questions.length} Questions
+                </Typography>
+              
+                <Pagination
+                  quizId={id}
+                  onPageChange={onPageChange}
+                  currentPage={page}
+                  totalQuestions={questions.length}
+                  pageSize={1}
+                />
+            </div> 
+
           </Grid>
         </>
       );

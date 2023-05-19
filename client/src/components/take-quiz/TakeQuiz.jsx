@@ -12,7 +12,7 @@ function TakeQuiz() {
   const { id } = useContext(QuizContext);
 
   return (
-    <div className="container">
+    <div className="quiz-container">
       <Routes>
         <Route path="/start" element={<Begin quizId={id} />}></Route>
         <Route path="/question" element={<QuizQuestion quizId={id} />}></Route>

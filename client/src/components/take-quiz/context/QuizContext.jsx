@@ -165,11 +165,11 @@ export const QuizProvider = ({ children }) => {
     } else {
       setOpen(false);
 
-      if (buttonText === 'Create an Account') {
+      if (buttonText === 'Sign Up') {
         window.location.href = "/register";
       } else if (buttonText === 'Login') {
         window.location.href = "/login";
-      } else if (buttonText === 'No, Take Me Home') {
+      } else if (buttonText === 'Home') {
         window.location.href = "/";
       } else {
         console.log('There was a problem in Quiz Modal');

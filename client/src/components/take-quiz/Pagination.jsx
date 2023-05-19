@@ -64,7 +64,7 @@ const Pagination = (props) => {
 
   return (
     currentPage &&
-    <ul id="pagination">
+    <ul id="pagination" className="flex-sb">
       <li className="arrow left" onClick={onPrevious}>
         {(currentPage === 1) ?(<BasicModal type='abandon-quiz' message="&lt;" />) :
         (<Button variant="contained">&lt;</Button>)}
