@@ -2,15 +2,16 @@ const db = require('../../index.js');
 
 module.exports = {
 
-  get: (userId) => {
+  getAll: (userId) => {
 
     const queryString = `
       SELECT
-        q.id,
+        f.id,
         q.quiz_name,
+        f.quiz_id,
         q.category,
-        COUNT(DISTINCT h.id) AS totalPlays,
-        COUNT(DISTINCT f.id) AS totalLikes,
+        (SELECT COUNT(*) FROM history WHERE quiz_id = f.quiz_id) AS totalPlays,
+        (SELECT COUNT(*) FROM favorites WHERE quiz_id = f.quiz_id) AS totalLikes,
         to_char(f.liked_at, 'FMMonth, FMDDth, YYYY') AS liked_at
       FROM
         favorites f
@@ -21,8 +22,10 @@ module.exports = {
       WHERE
         f.user_id = ${userId}
       GROUP BY
-        q.id,
-        f.liked_at
+        f.id,
+        f.liked_at,
+        q.quiz_name,
+        q.category
     `;
 
     return db.query(queryString)
@@ -35,12 +38,59 @@ module.exports = {
     });
   },
 
-  like: (/* TBD */) => {
-    // query logic
+  getOne: (userId, quizId) => {
+    const queryString =`
+      SELECT
+        *
+      FROM
+        favorites
+      WHERE
+        user_id = ${userId} AND quiz_id = ${quizId}
+    `;
+
+    return db.query(queryString)
+    .then(res => {
+      return res.rows[0];
+    })
+    .catch(err => {
+      console.error(err.stack);
+    })
   },
 
-  delete: (/* TBD */) => {
-    // query logic
+  like: (userId, quizId) => {
+
+    const queryString = `
+      INSERT INTO
+        favorites (user_id, quiz_id)
+      VALUES
+        (${userId}, ${quizId})
+    `;
+
+    return db.query(queryString)
+    .then(res => {
+      return res;
+    })
+    .catch(err => {
+      console.error(err.stack);
+    })
+  },
+
+  unlike: (id) => {
+
+    const queryString = `
+      DELETE FROM
+        favorites
+      WHERE
+        id = ${id}
+    `;
+
+    return db.query(queryString)
+    .then(res => {
+      return res;
+    })
+    .catch(err => {
+      console.error(err.stack);
+    })
   },
 
 };
