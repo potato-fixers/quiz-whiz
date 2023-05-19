@@ -5,14 +5,17 @@ import { useContext } from 'react';
 import handleSignOutClick from './components/user-auth/utils/handleSignOut.js';
 import useSession from './components/user-auth/hooks/useSession';
 import { useLayoutEffect, useState } from 'react';
+import useDeviceDetect from './components/user-dashboard/hooks/useDeviceDetect';
 
 const Nav = () => {
 
-  const styles = { color: 'inherit', textDecoration: 'inherit' };
   const { isLoggedIn } = useContext(UserContext);
   const { updateSession } = useSession();
   const [isReady, setIsReady] = useState(false);
 
+  const styles = { color: 'inherit', textDecoration: 'inherit', fontWeight: 'bold' };
+  const margin = {mr: 2, ml: 2};
+  const loggedInStyle = !isLoggedIn ? {flexGrow: 1} : {};
 
   useLayoutEffect(() => {
     let fetch = async () => {
@@ -31,7 +34,7 @@ const Nav = () => {
   return (
     <AppBar position='static'>
       <Toolbar>
-        <Typography variant="h4" >
+        <Typography variant="h4" sx={loggedInStyle}>
           <Link to='/' style={styles}>
             Quiz Whiz
           </Link>
@@ -39,11 +42,11 @@ const Nav = () => {
 
         {(isReady && !isLoggedIn) ? <></> :
           <>
-            <Typography variant='h6' >
-              <Link to='/dashboard' style={styles}>Dashboard</Link>
+            <Typography variant='h6' sx={margin}>
+              <Link to='/dashboard' style={{...styles, fontSize: 15}}>Dashboard</Link>
             </Typography>
-            <Typography variant='h6' sx={{ flexGrow: 1 }} >
-              <Link to='/createQuiz' style={styles}>Create</Link>
+            <Typography variant='h6' sx={{...margin, flexGrow: 1 }} >
+              <Link to='/createQuiz' style={{...styles, fontSize: 15}}>Create</Link>
             </Typography>
           </>
         }

@@ -3,12 +3,14 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { useContext } from 'react';
 import { UserContext } from '../../../global/UserContext';
 import { CountsContext } from '../../context/CountsContext';
+import useDeviceDetect from '../../hooks/useDeviceDetect';
 
 const LikeIcon = ({liked, quizId, getQuizzes, favoriteId}) => {
 
   const url = process.env.REACT_APP_API_URI;
   const { profile } = useContext(UserContext);
   const { getCounts } = useContext(CountsContext);
+  const { isMobile } = useDeviceDetect();
 
   const likeQuiz = async (userId, quizId) => {
 
@@ -61,10 +63,20 @@ const LikeIcon = ({liked, quizId, getQuizzes, favoriteId}) => {
     }
   };
 
+  const style = isMobile ? {fontSize: 15} : {};
+
   if (liked) {
-    return <FavoriteIcon color='secondary' onClick={() => unlikeQuiz(favoriteId, profile.userId, quizId)}> </FavoriteIcon>;
+    return <FavoriteIcon
+      className='pointer'
+      color='secondary'
+      onClick={() => unlikeQuiz(favoriteId, profile.userId, quizId)}
+      sx={style}/>;
   }
-  return <FavoriteBorderIcon color='secondary' onClick={() => likeQuiz(profile.userId, quizId)}> </FavoriteBorderIcon>;
+  return <FavoriteBorderIcon
+    className='pointer'
+    color='secondary'
+    onClick={() => likeQuiz(profile.userId, quizId)}
+    sx={style}/>
 
 }
 

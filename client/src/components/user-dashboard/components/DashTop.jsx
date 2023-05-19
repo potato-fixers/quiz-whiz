@@ -7,8 +7,9 @@ import { Buffer } from 'buffer';
 
 const DashTop = (props) => {
 
-  const { profile } = useContext(UserContext);
+  const { profile, isLoggedIn } = useContext(UserContext);
   const [userInfo, setUserInfo] = useState({});
+  const userId = profile.userId;
 
   const getUserInfo = async (userId) => {
 
@@ -27,11 +28,10 @@ const DashTop = (props) => {
   }
 
   useEffect(() => {
-    getUserInfo(profile.userId);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
-  const profileImg = userInfo.profile_img ? `data:image/jpeg;base64,${Buffer.from(userInfo.profile_img.data).toString('base64')}` : '';
+    isLoggedIn && getUserInfo(userId);
+
+  }, [isLoggedIn, userId]);
 
   return (
     <Grid
@@ -39,10 +39,13 @@ const DashTop = (props) => {
     direction='row'
     justifyContent='center'
     columnSpacing={5}
-    sx={{ mt: 4, mb: 2}}
+    sx={{ mt: 10, mb: 5}}
     >
       <Grid item>
-        <Avatar src={profileImg} sx={{ width: 75, height: 75 }} />
+        <Avatar
+          src={userInfo.profile_img ? `data:image/jpeg;base64,${Buffer.from(userInfo.profile_img.data).toString('base64')}` : ''}
+          sx={{ width: 75, height: 75 }}
+        />
       </Grid>
       <Grid item>
         <Typography variant='h3'>{profile.username}</Typography >

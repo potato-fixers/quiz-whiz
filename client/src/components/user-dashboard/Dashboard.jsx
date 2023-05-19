@@ -14,18 +14,23 @@ const Dashboard = (props) => {
   const tabs = ['', 'quizzes', 'history', 'favorites']; // Overview is default dashboard
 
   const { getCounts } = useContext(CountsContext);
-  const { profile } = useContext(UserContext);
+  const { profile, isLoggedIn } = useContext(UserContext);
   const [activeTab, setActiveTab] = useState(0);
   const navigate = useNavigate();
 
+  const userId = profile.userId;
+
   useEffect(() => {
     navigate(tabs[activeTab]);
-    getCounts(profile.userId);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeTab]);
 
+  useEffect(() => {
+    isLoggedIn && getCounts(userId);
+  }, [userId, isLoggedIn]);
+
   return (
-    <Container maxWidth='xl'>
+    <Container maxWidth={false}>
       <Grid item xs={12}>
         <DashTop />
       </Grid>

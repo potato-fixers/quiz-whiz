@@ -6,12 +6,14 @@ const TabsBar = (props) => {
     props.setActiveTab(newValue);
   };
 
+  const style = {fontSize: 15, fontWeight: 900};
+
   return (
-    <Tabs variant="fullWidth" flexWrap="wrap" value={props.activeTab} onChange={handleChange} >
-      <Tab label="Overview" />
-      <Tab label="My Quizzes" />
-      <Tab label="History" />
-      <Tab label="Favorites" />
+    <Tabs variant="fullWidth" value={props.activeTab} onChange={handleChange} >
+      <Tab label="Overview" sx={style}/>
+      <Tab label="Quizzes" sx={style}/>
+      <Tab label="History" sx={style}/>
+      <Tab label="Favorites" sx={style}/>
     </Tabs>
   );
 };
