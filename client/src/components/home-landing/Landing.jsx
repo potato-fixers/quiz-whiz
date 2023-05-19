@@ -1,7 +1,7 @@
 import './styles/home.css';
 import CategoryList from './components/CategoryList.jsx';
 import QuizList from './components/QuizList.jsx';
-import Pages from './components/Pages.jsx';
+import Pagination from './components/Pagination.jsx';
 import SearchBar from './components/SearchBar.jsx';
 // import freeQuiz from './mock_data/freeQuiz.js';
 import { useContext } from 'react'
@@ -61,20 +61,25 @@ const Landing = (props) => {
   if (profile.userId === undefined) {
     return (
       <div className="Landing">
-        <h1> Welcome to Quiz Whiz </h1>
+        <div className="landing_title">
+          <h1> Welcome to Quiz Whiz </h1>
+        </div>
         <CategoryList setCategory={setCategory}/>
-        <p> Login to see all Quizzes</p>
+        <p id="landing_subtitle"> Login to see all Quizzes</p>
         <QuizList category={category} quizzes={quizzes}/>
       </div>
     );
   } else {
     return (
       <div className="Home">
-        <h1> Hi, {profile.username}</h1>
+        <div className="landing_title">
+          <h1>  Hi, <em>{profile.username}</em></h1>
+        </div>
         <SearchBar setQuizzes={setQuizzes} setUserCategory={setUserCategory} setDifficulty={setDifficulty}
           difficulty={difficulty} categoryList={categoryList} userCategory={userCategory} setCurrent={setCurrent} id={profile.userId}/>
+        <p id="landing_subtitle"></p>
         <QuizList category={'all'} quizzes={currentQuizzes} />
-        <Pages page={page} setPage={setPage} quizzes={quizzes} setCurrent={setCurrent} />
+        <Pagination page={page} setPage={setPage} quizzes={quizzes} setCurrent={setCurrent} />
       </div>
     );
   }

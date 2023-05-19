@@ -5,11 +5,10 @@ const QuizList = (props) => (
     <table>
       <thead className="landing_quiz_head">
         <tr>
-          <th>Name</th>
-          <th>Category</th>
-          <th>Difficulty</th>
-          <th>Type</th>
-          <th> </th>
+          <th id="landing_table_name_th">Name</th>
+          <th className="landing_table_category">Category</th>
+          <th className="landing_table_difficulty">Difficulty</th>
+          <th className="landing_table_preview"> </th>
         </tr>
       </thead>
       <tbody className="landing_quiz_body">

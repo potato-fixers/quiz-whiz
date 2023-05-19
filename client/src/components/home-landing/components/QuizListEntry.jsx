@@ -4,11 +4,10 @@ const QuizListEntry = (props) => {
     let link = `/quiz/${props.quiz.id}/start`;
     return (
       <tr>
-        <td>{props.quiz.quiz_name}</td>
-        <td>{props.quiz.category}</td>
-        <td>{props.quiz.difficulty}</td>
-        <td>{props.quiz.type}</td>
-        <td><Link to={link} >Preview</Link></td>
+        <td id="landing_table_name_td">{props.quiz.quiz_name}</td>
+        <td className="landing_table_category">{props.quiz.category}</td>
+        <td className="landing_table_difficulty">{props.quiz.difficulty}</td>
+        <td className="landing_table_preview"><Link to={link} id="landing_preview_td">Preview</Link></td>
       </tr>
     );
   } else {

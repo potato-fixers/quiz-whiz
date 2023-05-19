@@ -76,7 +76,7 @@ const SearchBar = (props) => {
 
   return (
     <div className="landing_searchbar">
-      <input className="search-bar" type="text" size="50" onChange={debounceSetQuery}/>
+      <input className="search_bar" type="text" size="50" onChange={debounceSetQuery}/>
       <select className="landing_category_select" onChange={handlingCategorySelect}>
         {props.categoryList.map((category) => <option value={category} key={category}>{category}</option>)}
       </select>
