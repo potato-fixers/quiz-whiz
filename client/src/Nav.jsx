@@ -1,3 +1,4 @@
+import './styles/Nav.css';
 import { AppBar, Typography, Toolbar, Button } from '@mui/material'
 import { Link } from 'react-router-dom';
 import { UserContext } from './components/global/UserContext';
@@ -12,8 +13,6 @@ const Nav = () => {
   const { updateSession } = useSession();
   const [isReady, setIsReady] = useState(false);
 
-  const styles = { color: 'inherit', textDecoration: 'inherit', fontWeight: 'bold' };
-  const margin = {mr: 2, ml: 2};
   const loggedInStyle = !isLoggedIn ? {flexGrow: 1} : {};
 
   useLayoutEffect(() => {
@@ -34,28 +33,28 @@ const Nav = () => {
     <AppBar position='static'>
       <Toolbar>
         <Typography variant="h4" sx={loggedInStyle}>
-          <Link to='/' style={styles}>
+          <Link to='/' className='nav-link'>
             Quiz Whiz
           </Link>
         </Typography>
 
         {(isReady && !isLoggedIn) ? <></> :
           <>
-            <Typography variant='h6' sx={margin}>
-              <Link to='/dashboard' style={{...styles, fontSize: 15}}>Dashboard</Link>
+            <Typography variant='h6'>
+              <Link to='/dashboard' className='nav-link nav-title'>Dashboard</Link>
             </Typography>
-            <Typography variant='h6' sx={{...margin, flexGrow: 1 }} >
-              <Link to='/createQuiz' style={{...styles, fontSize: 15}}>Create</Link>
+            <Typography variant='h6' className='flex-grow'>
+              <Link to='/createQuiz' className='nav-link nav-title'>Create</Link>
             </Typography>
           </>
         }
         {!isReady ? <></> : !isLoggedIn ?
           <>
             <Button color='inherit' >
-              <Link to='/register' style={styles}>Sign Up</Link>
+              <Link to='/register' className='nav-link'>Sign Up</Link>
             </Button>
             <Button color='inherit' >
-              <Link to='/login' style={styles}>Sign In</Link>
+              <Link to='/login' className='nav-link'>Sign In</Link>
             </Button>
           </>
           :

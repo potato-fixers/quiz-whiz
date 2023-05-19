@@ -4,12 +4,14 @@ import { Link } from 'react-router-dom';
 import { useContext, useState, useEffect } from 'react';
 import { UserContext } from '../../global/UserContext';
 import { Buffer } from 'buffer';
+import useDeviceDetect from '../hooks/useDeviceDetect';
 
 const DashTop = (props) => {
 
   const { profile, isLoggedIn } = useContext(UserContext);
   const [userInfo, setUserInfo] = useState({});
   const userId = profile.userId;
+  const { isMobile } = useDeviceDetect();
 
   const getUserInfo = async (userId) => {
 
@@ -33,22 +35,26 @@ const DashTop = (props) => {
 
   }, [isLoggedIn, userId]);
 
+  const style = isMobile ?
+   { width: 70, height: 70, border: 1, borderColor: 'primary.main', } :
+   { width: 120, height: 120, border: 3, borderColor: 'primary.main' };
+
   return (
     <Grid
     container
     direction='row'
     justifyContent='center'
-    columnSpacing={5}
+    columnSpacing={isMobile ? 5 : 10}
     sx={{ mt: 10, mb: 5}}
     >
       <Grid item>
         <Avatar
           src={userInfo.profile_img ? `data:image/jpeg;base64,${Buffer.from(userInfo.profile_img.data).toString('base64')}` : ''}
-          sx={{ width: 75, height: 75 }}
+          sx={style}
         />
       </Grid>
       <Grid item>
-        <Typography variant='h3'>{profile.username}</Typography >
+        <Typography variant='h3' sx={isMobile ? {} : {fontSize: 70, letterSpacing: 5}}>{profile.username}</Typography >
       </Grid>
       <Grid item>
         <IconButton sx={{ width: 40, height: 40 }} >
