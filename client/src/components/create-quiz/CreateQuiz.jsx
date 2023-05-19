@@ -359,10 +359,13 @@ const CreateQuiz = (props) => {
     }
 
     return (
-      <Grid container className="createQuiz" spacing={2}>
+      <Grid container className="createQuiz" spacing={2} sx={{paddingLeft: 10, paddingRight: 10, paddingTop: 5, paddingBottom: 5}}>
+        <Grid item>
+          <Typography variant="h2"> Create Your Quiz ! </Typography>
+        </Grid>
         <Grid item xs={12} sx={{borderBottom: "solid #CEC9C9", borderWidth: 0.1}} pb={5}>
           <div id="quizName">
-            <Typography sx={{marginTop: 2.5, marginBottom: 2.5}} variant="h4">Name Your Quiz!</Typography>
+            <Typography sx={{marginTop: 2.5, marginBottom: 2.5}} variant="h4">Name Your Quiz</Typography>
             <TextField
               value={quizName}
               placeholder={"Enter Quiz Name Here"}
