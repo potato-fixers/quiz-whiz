@@ -10,8 +10,8 @@ router.get('/user', userController.getUserInfo);
 // Update the username
 router.put('/updateUsername', userController.updateUsername);
 
-// Update the password
-router.put('/updatePassword', userController.updatePassword);
+// // Update the password
+// router.put('/updatePassword', userController.updatePassword);
 
 // Update the bio
 router.put('/updateBio', userController.updateBio);

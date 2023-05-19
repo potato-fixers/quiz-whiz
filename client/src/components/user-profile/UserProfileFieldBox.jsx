@@ -1,12 +1,17 @@
 import { Box, Button, TextField } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import './styles/profile.css';
 import ProfilePicBox from './ProfilePicBox.jsx';
 import axios from 'axios';
+import { UserContext } from '../../components/global/UserContext';
+
 
 const UserProfileFieldBox = (props) => {
   // TODO: Update this with the logged in userid.
-  const userid = 1;
+  // const userid = 1;
+  const { profile } = useContext(UserContext);
+  const loggedInUserId = profile.userId;
+
 
   const [editing, setEditing] = useState(false);
   const [field, setField] = useState(props.initial_value ? props.initial_value : props.default_value);
@@ -26,27 +31,41 @@ const UserProfileFieldBox = (props) => {
     setEditing(false);
   };
 
+
   const handleSaveClick = () => {
     // TODO: if it's the password field, need to check password first before updating
     axios.put(`${process.env.REACT_APP_API_URI}${props.saveRoute}`, {
-    updatedField: field
+    updatedField: field,
+    oldPassword: oldPassword,
+    email: props.profile.email,
+    id: loggedInUserId
   }, {
     headers: {
       'Content-Type': 'application/json'
     },
     params: {
-      id: userid
+      id: loggedInUserId
     }
   })
   .then(res => {
     if (res.status === 200) {
       console.log(`${props.field_title} updated successfully!`);
+      alert(`${props.field_title} updated successfully!`);
     } else {
       console.error(`Failed to update ${props.field_title}.`);
     }
   })
   .catch(error => {
-    console.error(error);
+    if (error.response && error.response.data) {
+      const errorMessage = error.response.data;
+      console.error(errorMessage);
+      // Display the error message on the screen using an alert or a notification component
+      // Replace the following line with your own implementation
+      alert(errorMessage);
+    } else {
+      console.error(error);
+      alert('Something went wrong during update.');
+    }
   });
   setEditing(false);
 };
@@ -90,9 +109,13 @@ const UserProfileFieldBox = (props) => {
             <Button variant="contained" onClick={handleCancelClick}>
               Cancel
             </Button>
-            <Button variant="contained" color="primary" onClick={handleSaveClick}>
-              Save
-            </Button>
+            { props.field_title === "Profile Picture" ? (
+              <></>
+            ) : (
+              <Button variant="contained" color="primary" onClick={handleSaveClick}>
+                Save
+              </Button>
+            )}
           </div>
         </>
       ) : (

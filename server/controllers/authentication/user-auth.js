@@ -1,5 +1,5 @@
 const bcrypt = require("bcrypt");
-const { users } = require("../../database/models/index");
+const { users, userProfile } = require("../../database/models/index");
 
 const saltRounds = 9;
 const memoryFactor = 256;
@@ -53,5 +53,40 @@ module.exports = {
     } else {
       res.status(401).json('no active session');
     }
-  }
+  },
+
+  updatePassword: async (req, res) => {
+    try {
+      // pull password and salt from users table via email
+      console.log('this is the body:', req.body);
+      var { id, password } = await userProfile.getUserInfo(req.body.id);
+      console.log('this is the id', id);
+
+      // hash password w/ salt and compare - check if typed in password matches - if not, error
+      if (!id || !await bcrypt.compare(req.body.oldPassword, password)) {
+        res.status(401).send('Current password incorrect.');
+        return;
+      }
+
+      // If password matches, then update password -- make request to update password
+      // salt password
+      salt = await bcrypt.genSalt(saltRounds);
+      hash = await bcrypt.hash(req.body.updatedField, salt, null, memoryFactor, parallelismFactor);
+      // store hash including generated salt
+      req.body.updatedField = hash;
+      req.body.password = hash;
+      req.body.oldPassword = hash;
+      req.body.salt = salt;
+      // update password
+
+      console.log('this is the req body: ', req.body);
+      await users.updatePassword(req.body);
+
+      res.status(200).end();
+    } catch (err) {
+      console.log(err);
+      res.status(401).json('Uh Oh, you entered the incorrect password')
+    }
+    //send appropiate responses
+  },
 }
