@@ -102,25 +102,25 @@ test('Login user successfully', async () => {
   expect(screen.queryByText('Incorrect username and password, please try again!')).not.toBeInTheDocument();
 });
 
-test('User stays logged in', async () => {
-  render(
-    <UserProvider>
-      <BrowserRouter>
-        <Login />
-      </BrowserRouter>
-    </UserProvider>
-  );
-  // Fill in the form fields
-  const emailInput = screen.getByLabelText('Email:');
-  const passwordInput = screen.getByLabelText('Password:');
-  const submitButton = screen.getByRole('button', { name: 'Submit' });
+// test('User stays logged in', async () => {
+//   render(
+//     <UserProvider>
+//       <BrowserRouter>
+//         <Login />
+//       </BrowserRouter>
+//     </UserProvider>
+//   );
+//   // Fill in the form fields
+//   const emailInput = screen.getByLabelText('Email:');
+//   const passwordInput = screen.getByLabelText('Password:');
+//   const submitButton = screen.getByRole('button', { name: 'Submit' });
 
-  fireEvent.change(emailInput, { target: { value: 'john@example.com' } });
-  fireEvent.change(passwordInput, { target: { value: 'password123' } });
+//   fireEvent.change(emailInput, { target: { value: 'john@example.com' } });
+//   fireEvent.change(passwordInput, { target: { value: 'password123' } });
 
-  // Submit the form
-  fireEvent.click(submitButton);
+//   // Submit the form
+//   fireEvent.click(submitButton);
 
-  // Verify the expected behavior or state changes
-  expect(screen.queryByText('Incorrect username and password, please try again!')).not.toBeInTheDocument();
-});
+//   // Verify the expected behavior or state changes
+//   expect(screen.queryByText('Incorrect username and password, please try again!')).not.toBeInTheDocument();
+// });

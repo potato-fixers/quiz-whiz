@@ -1,9 +1,10 @@
 import { Typography, TableBody, TableCell, TableHead, TableRow, Table } from '@mui/material';
 import useQuizzes from '../hooks/useQuizzes';
+import { Link } from 'react-router-dom';
 
 const Overview = (props) => {
 
-  const quizzes = useQuizzes('');
+  const { quizzes } = useQuizzes('');
 
   return (
     <>
@@ -24,7 +25,7 @@ const Overview = (props) => {
               key={quiz.id}
             >
               <TableCell align='left' sx={{ border: 0 }}>
-                {quiz.quiz_name}
+                <Link to={`/quiz/${quiz.quiz_id}/start`}> {quiz.quiz_name} </Link>
               </TableCell>
               <TableCell align='center' sx={{ border: 0 }}>
                 {quiz.score}

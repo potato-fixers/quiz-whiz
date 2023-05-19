@@ -1,10 +1,20 @@
 import LoginForm from '../components/user-auth/Login-Form';
+import { Box, Container } from '@mui/material';
+import '../components/user-auth/styles/register.css';
 
 export default function Login() {
   return (
     <>
-      <h1>login page</h1>
-      <LoginForm />
+      <Container maxWidth="sm">
+        <Box
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          minHeight="100vh"
+        >
+          <LoginForm />
+        </Box>
+      </Container>
     </>
   )
 }

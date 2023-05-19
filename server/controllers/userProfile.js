@@ -1,17 +1,12 @@
 // import User
 const User = require('../database/models/userProfile');
 
-var user = {'username': 'johndoe',
-  'password': 'password',
-  'profilePicture': 'pic',
-  'bio': 'bio'};
-
 
 module.exports = {
 
   getUserInfo: (req, res) => {
     console.log('this is the userid', req.query.id);
-    User.getUserInfo(req.query.id, (err, data) => {
+    User.getUserInfoCb(req.query.id, (err, data) => {
       if (err) {
         console.log(err);
         res.status(500).send('Server Error getting user info');
@@ -39,20 +34,6 @@ module.exports = {
     })
   },
 
-  updatePassword: (req, res) => {
-    const id = req.query.id;
-    const newPassword = req.body.updatedField;
-
-    User.updatePassword(id, newPassword, (err, data) => {
-      if (err) {
-        console.log(err);
-        res.status(500).send('Server Error updating password');
-      } else {
-        console.log('here is the data from update password', data);
-        res.status(200).json(data);
-      }
-    })
-  },
 
   updateBio: (req, res) => {
     const id = req.query.id;
