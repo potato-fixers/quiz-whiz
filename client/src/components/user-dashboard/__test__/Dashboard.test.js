@@ -2,6 +2,7 @@ import React from 'react';
 import { render, fireEvent, waitFor, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import { UserProvider } from '../../global/UserContext.jsx';
+import { CountsProvider } from '../context/CountsContext';
 import Dashboard from '../Dashboard';
 import { setupServer } from 'msw/node';
 import { handlers } from './handlers.js';
@@ -16,7 +17,9 @@ test('renders dashboard component', () => {
   render(
     <UserProvider>
       <BrowserRouter>
-        <Dashboard />
+        <CountsProvider>
+          <Dashboard />
+        </CountsProvider>
       </BrowserRouter>
     </UserProvider>
   );
@@ -33,7 +36,9 @@ test('changes active tab on tab click', async () => {
   render(
     <UserProvider>
       <BrowserRouter>
-        <Dashboard />
+        <CountsProvider>
+          <Dashboard />
+        </CountsProvider>
       </BrowserRouter>
     </UserProvider>
   );
@@ -58,7 +63,9 @@ test('overview tab', async () => {
   render(
     <UserProvider>
       <BrowserRouter>
-        <Dashboard />
+        <CountsProvider>
+          <Dashboard />
+        </CountsProvider>
       </BrowserRouter>
     </UserProvider>
   );
@@ -77,7 +84,9 @@ test('my quizzes tab', async () => {
   render(
     <UserProvider>
       <BrowserRouter>
-        <Dashboard />
+        <CountsProvider>
+          <Dashboard />
+        </CountsProvider>
       </BrowserRouter>
     </UserProvider>
   );
@@ -109,7 +118,9 @@ test('history tab', async () => {
   render(
     <UserProvider>
       <BrowserRouter>
-        <Dashboard />
+        <CountsProvider>
+          <Dashboard />
+        </CountsProvider>
       </BrowserRouter>
     </UserProvider>
   );
@@ -141,7 +152,9 @@ test('favorites tab', async () => {
   render(
     <UserProvider>
       <BrowserRouter>
-        <Dashboard />
+        <CountsProvider>
+          <Dashboard />
+        </CountsProvider>
       </BrowserRouter>
     </UserProvider>
   );

@@ -5,12 +5,17 @@ import ClearIcon from '@mui/icons-material/Clear';
 import useQuizzes from '../hooks/useQuizzes';
 import useFilter from '../hooks/useFilter';
 import useSort from '../hooks/useSort';
+import { useContext } from 'react';
+import { UserContext } from '../../global/UserContext';
+import { CountsContext } from '../context/CountsContext';
 
 const MyQuizzes = (props) => {
 
-  const quizzes = useQuizzes('quizzes');
+  const { quizzes, getQuizzes } = useQuizzes('quizzes');
   const { filteredData, handleFilterChange, filter } = useFilter(quizzes);
   const { sortedData, sortData } = useSort(filteredData);
+  const { profile } = useContext(UserContext);
+  const { getCounts } = useContext(CountsContext);
 
   const headersMapping = {
     'Quiz': 'quiz_name',
@@ -22,8 +27,18 @@ const MyQuizzes = (props) => {
   };
 
   // handle deleting quiz
-  const handleDelete = (e) => {
-    console.log('delete');
+  const handleDelete = async (quizId) => {
+    const endpoint = `${process.env.REACT_APP_API_URI}/dashboard/quizzes/${quizId}`;
+    try {
+      const response = await fetch(endpoint, {method: 'delete'})
+      if (response.ok) {
+        getQuizzes(profile.userId);
+        getCounts(profile.userId);
+      }
+    } catch (err) {
+      console.error(err.stack);
+      alert('Failed to delete quiz');
+    }
   };
 
   const handleClick = (e) => {
@@ -70,7 +85,7 @@ const MyQuizzes = (props) => {
                 {row.created_at}
               </TableCell>
               <TableCell align='center' sx={{ border: 0 }}>
-                <ClearIcon onClick={handleDelete}></ClearIcon>
+                <ClearIcon onClick={() => handleDelete(row.id)}></ClearIcon>
               </TableCell>
             </TableRow>
           ))) || <TableRow><Typography component='td' align='center'> No quiz found </Typography></TableRow>}

@@ -194,6 +194,12 @@ export const handlers = [
     ];
     return res(ctx.json(data));
   }),
+  rest.get('http://localhost:8080/settings/user', (req, res, ctx) => {
+    const data = [
+      {}
+    ];
+    return res(ctx.json(data));
+  }),
 ];
 
 test('dummy test', function() {

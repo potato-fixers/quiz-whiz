@@ -3,7 +3,7 @@ const db = require('../config/index');
 
 db.query('CREATE TABLE quizzes (id SERIAL, user_id INT, category TEXT, difficulty TEXT, quiz_name TEXT, PRIMARY KEY(id))', (err, res) => {
   if (err) {
-    console.log('Quiz Table creation failed:', process.env.DB, err)
+    console.log('Quiz Table creation failed:', process.env.DB_HOST, err)
   } else {
     db.query('CREATE TABLE questions (id SERIAL, quiz_id INT, questions TEXT, PRIMARY KEY(id), CONSTRAINT fk_questions FOREIGN KEY(quiz_id) REFERENCES quizzes(id))', (err, res) => {
       if (err) {
