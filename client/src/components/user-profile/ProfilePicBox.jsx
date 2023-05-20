@@ -1,14 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import './styles/profile.css';
 import { Button } from '@mui/material';
 import axios from 'axios';
-
+import { UserContext } from '../../components/global/UserContext';
 
 
 
 const ProfilePicBox = (props) => {
   // TODO: Update this with the logged in userid.
-  const userid = 1;
+  // const userid = 1;
+  const { profile } = useContext(UserContext);
+
+  const loggedInUserId = profile.userId;
 
   const [selectedFile, setSelectedFile] = useState(null);
 
@@ -26,7 +29,7 @@ const ProfilePicBox = (props) => {
         "Content-Type": "multipart/form-data",
       },
       params: {
-        id: userid
+        id: loggedInUserId
       }
     })
     .then(res => {
