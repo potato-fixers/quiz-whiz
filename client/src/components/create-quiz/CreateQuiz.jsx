@@ -361,7 +361,7 @@ const CreateQuiz = (props) => {
     return (
       <Grid container className="createQuiz" spacing={2} sx={{paddingLeft: 10, paddingRight: 10, paddingTop: 5, paddingBottom: 5}}>
         <Grid item>
-          <Typography variant="h2"> Create Your Quiz ! </Typography>
+          <Typography variant="h2"> Create Your Quiz </Typography>
         </Grid>
         <Grid item xs={12} sx={{borderBottom: "solid #CEC9C9", borderWidth: 0.1}} pb={5}>
           <div id="quizName">
