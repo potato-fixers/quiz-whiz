@@ -13,7 +13,7 @@ import { QuizContext } from "../take-quiz/context/QuizContext";
 
 const Pagination = (props) => {
   const { isLoggedIn } = useContext(UserContext);
-  const { resetStyles } = useContext(QuizContext);
+  const { setFinished, resetStyles } = useContext(QuizContext);
 
   const {
     onPageChange,
@@ -38,6 +38,7 @@ const Pagination = (props) => {
 
   const onNext = () => {
     resetStyles();
+
     // If the user didn't Answer the Question, 
     // Submit a default answer for rendering the Review Section
     if (!localStorage.getItem(currentPage)) {
@@ -50,6 +51,7 @@ const Pagination = (props) => {
     } else {
       // If page is last, redirect to Quiz Summary + deactivate Quiz
       localStorage.setItem('quizActive', 1);
+      setFinished(true);
       window.location.href = `/quiz/${props.quizId}/summary`;
     }
   };
@@ -64,14 +66,14 @@ const Pagination = (props) => {
     currentPage &&
     <ul id="pagination">
       <li className="arrow left" onClick={onPrevious}>
-        {(currentPage === 1) ?(<BasicModal message="&lt;" />) :
+        {(currentPage === 1) ?(<BasicModal type='abandon-quiz' message="&lt;" />) :
         (<Button variant="contained">&lt;</Button>)}
       </li>
 
       {isLoggedIn ? (
-        <BasicModal message="Dashboard" />
+        <BasicModal type='abandon-quiz' message="Dashboard" />
       ) : (
-        <BasicModal message="Back Home" />
+        <BasicModal type='abandon-quiz' message="Back Home" />
       )}
 
       <li className="arrow right" onClick={onNext}>

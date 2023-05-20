@@ -2,6 +2,8 @@ import { useState, useEffect, useContext, createContext } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 
+// Context
+// import { GlobalContext } from "../../global/GlobalContext"
 import { UserContext } from "../../global/UserContext";
 
 // Create the context object
@@ -9,7 +11,7 @@ export const QuizContext = createContext();
 
 // Create the provider component
 export const QuizProvider = ({ children }) => {
-
+ 
   // Set up state variables here
   let { id } = useParams();
   const { isLoggedIn } = useContext(UserContext);
@@ -17,10 +19,9 @@ export const QuizProvider = ({ children }) => {
  
   const [quizDetails, setQuizDetails] = useState([{}]);
   const [quizStart, setQuizStart] = useState(null);
-  const [quizEnd, setQuizEnd] = useState(null);
   
+  const [quizEnd, setQuizEnd] = useState(null);
   const [time, setTime] = useState(300000);
-
   const [questions, setQuestions] = useState([{}]);
   const [userAnswers, setUserAnswers] = useState([]);
   const [correctAs, setCorrectAs] = useState(0);
@@ -114,7 +115,6 @@ export const QuizProvider = ({ children }) => {
     }
   };
 
-
   const saveHistory = async (payload) => {
     let body = {
       user_id: parseInt(payload.user),
@@ -126,62 +126,12 @@ export const QuizProvider = ({ children }) => {
 
     try {
       let res = await axios.post(`${process.env.REACT_APP_API_URI}/quiz/${payload.quiz_id}`, body);
-      res.status === 200 ? setSaved(true) : setSaved(false) ;
+      if (res.status === 200) {
+        setSaved(true);
+      }
     } catch (err) {
-      console.log('Couldn\'t Save Score', err);
+      console.log(err);
     }
-  };
-
-  // =============================================
-  //             Quiz Timer Utilities
-  // =============================================
-  const setTimer = (time) => {
-    /* check if element exists  */
-    let timer = document.getElementById("timer");
-    
-    if (timer) {
-      // Set up the Timer
-      let timeRemaining = time;
-
-      // let dur = 0;
-      let minutes = Math.ceil((timeRemaining / 1000 / 60) << 0);
-      let seconds = Math.ceil((timeRemaining / 1000) % 60);
-
-      let updateTimerString = (minutes, seconds) => {
-        timer.innerHTML = `${minutes} : ${
-          seconds === 0
-            ? "00"
-            : seconds.toString().length < 2
-            ? "0" + seconds
-            : seconds
-        } left`;
-      };
-
-      updateTimerString(minutes, seconds);
-
-      // Update the Timer Based On Time Remaining
-      var quizTimer = setInterval(() => {
-        minutes = Math.floor((timeRemaining / 1000 / 60) << 0);
-        seconds = Math.floor((timeRemaining / 1000) % 60);
-
-        updateTimerString(minutes, seconds);
-
-        // Decrement Time Remaining by 1 second
-        timeRemaining -= 1000;
-        // dur += 1000;
-
-        // Handle User ran out of time before finishing the quiz
-        if (timeRemaining <= 0) {
-          clearInterval(quizTimer);
-          setFinished(false);
-          window.location.href = `/quiz/${id}/summary`;
-        }
-      }, 1000);
-    }
-  };
-
-  const handleTimerChange = (e) => {
-    setTime(e.target.value);
   };
 
   const formatDuration = (duration) => {
@@ -197,17 +147,33 @@ export const QuizProvider = ({ children }) => {
   //             Quiz Modal Utils
   // =============================================
   const abandonQuiz = (e, message) => {
-    if (e.currentTarget.value === "Yes") {
+    const buttonText = e.currentTarget.value;
+
+    if (buttonText === "Yes") {
       resetQuiz();
+
       if (message === "Back Home") {
         window.location.href = "/";
       } if (message === "Dashboard") {
         window.location.href = isLoggedIn ? "/dashboard" : "/";
-      } else {
+      } else if (message === 'Restart Quiz') {
         window.location.href = `/quiz/${id}/start`;
+      } else {
+        console.log('There was a problem abandoning the quiz');
       } 
+
     } else {
       setOpen(false);
+
+      if (buttonText === 'Create an Account') {
+        window.location.href = "/register";
+      } else if (buttonText === 'Login') {
+        window.location.href = "/login";
+      } else if (buttonText === 'No, Take Me Home') {
+        window.location.href = "/";
+      } else {
+        console.log('There was a problem in Quiz Modal');
+      }
     }
   };
   const handleOpen = () => setOpen(true);
@@ -216,7 +182,7 @@ export const QuizProvider = ({ children }) => {
   const handleQuizStart = () => {
     resetQuiz();
     localStorage.setItem(`start`, JSON.stringify(Date.now()));
-    localStorage.setItem(`quizActive`, 0);
+    localStorage.setItem(`quizActive`, 1);
   };
 
   const resetStyles = () => {
@@ -240,11 +206,13 @@ export const QuizProvider = ({ children }) => {
   }, [id]);
 
   useEffect(() => {
-    if (quizStart && quizEnd) { 
-      setDuration(quizEnd - quizStart);
+    if (quizStart) { 
+      if (quizEnd) {
+        setDuration(quizEnd - quizStart);
+      }
     };
   }, [quizStart, quizEnd]);
-
+  
   // Set Summary Message based on User's Quiz Score
   useEffect(() => {
     if (finished) {
@@ -256,7 +224,7 @@ export const QuizProvider = ({ children }) => {
     } else {
       setMsg("Oh no! You ran out of time. Would you like to try again?");
     }
-  }, [finished, score, setMsg, duration]);
+  }, [finished, score, setMsg, saved]);
 
   // Context to be used in other components
   const ctx = {
@@ -267,6 +235,9 @@ export const QuizProvider = ({ children }) => {
 
     quizDetails,
     setQuizDetails,
+    
+    time, 
+    setTime,
 
     resetQuiz,
     handleQuizStart,
@@ -290,12 +261,9 @@ export const QuizProvider = ({ children }) => {
     duration,
     formatDuration,
 
-    time,
-    setTimer,
-    handleTimerChange,
-
     abandonQuiz,
     open,
+    setOpen,
     handleOpen,
     handleClose,
 
