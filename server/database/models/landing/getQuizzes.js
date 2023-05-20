@@ -20,7 +20,7 @@ let getQuizzes = (query, callback) => {
     name = query.query;
   }
 
-  var getQuery = `SELECT * FROM quizzes WHERE user_id = ${query.id} AND quiz_name LIKE '%${name}%' AND category LIKE '%${cate}%' and difficulty LIKE '%${diff}%';`;
+  var getQuery = `SELECT * FROM quizzes WHERE user_id in (${query.id}, 1) AND quiz_name LIKE '%${name}%' AND category LIKE '%${cate}%' and difficulty LIKE '%${diff}%';`;
   db.query(getQuery, (err, rows) => {
     if (err) {
       callback(err, null)

@@ -9,6 +9,7 @@ function Timer({ id }) {
 
   useEffect(() => {
     setTimer(time);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

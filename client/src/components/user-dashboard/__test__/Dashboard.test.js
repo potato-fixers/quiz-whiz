@@ -26,7 +26,7 @@ test('renders dashboard component', () => {
 
   // Assert that the tab component is rendered
   expect(screen.getByText(/Overview/i)).toBeInTheDocument();
-  expect(screen.getByText(/My Quizzes/i)).toBeInTheDocument();
+  expect(screen.getAllByText(/Quizzes/i)[0]).toBeInTheDocument();
   expect(screen.getByText(/History/i)).toBeInTheDocument();
   expect(screen.getAllByText(/Favorites/i)[0]).toBeInTheDocument();
 
@@ -47,8 +47,8 @@ test('changes active tab on tab click', async () => {
   expect(screen.getByRole('tab', {selected: true})).toHaveTextContent('Overview');
 
   // Simulate clicking on the 'my quizzes' tab
-  fireEvent.click(screen.getByText(/My Quizzes/i));
-  await waitFor(() =>  expect(screen.getByRole('tab', {selected: true})).toHaveTextContent('My Quizzes'));
+  fireEvent.click(screen.getAllByText(/Quizzes/i)[0]);
+  await waitFor(() =>  expect(screen.getByRole('tab', {selected: true})).toHaveTextContent('Quizzes'));
 
   // Simulate clicking on the 'history' tab
   fireEvent.click(screen.getByText(/History/i));
@@ -92,10 +92,10 @@ test('my quizzes tab', async () => {
   );
 
   // Simulate clicking on the 'my quizzes' tab
-  fireEvent.click(screen.getByText(/My Quizzes/i));
+  fireEvent.click(screen.getAllByText(/Quizzes/i)[0]);
 
-  // Assert that the My Quizzes component is rendered
-  expect(screen.getAllByText('My Quizzes').length).toBe(2);
+  // Assert that the Quizzes component is rendered
+  expect(screen.getAllByText('Quizzes').length).toBe(3);
 
   // Assert that the quiz data is displayed correctly
   expect(await screen.findByText('Math Quiz')).toBeInTheDocument();
@@ -128,7 +128,7 @@ test('history tab', async () => {
   // Simulate clicking on the 'my quizzes' tab
   fireEvent.click(screen.getByText(/History/i));
 
-  // Assert that the My Quizzes component is rendered
+  // Assert that the Quizzes component is rendered
   expect(screen.getAllByText('History').length).toBe(2);
 
   // Assert that the quiz data is displayed correctly
@@ -162,7 +162,7 @@ test('favorites tab', async () => {
   // Simulate clicking on the 'my quizzes' tab
   fireEvent.click(screen.getAllByText(/Favorites/i)[0]);
 
-  // Assert that the My Quizzes component is rendered
+  // Assert that the Quizzes component is rendered
   expect(screen.getAllByText('Favorites').length).toBe(3);
 
   // Assert that the quiz data is displayed correctly
@@ -179,5 +179,5 @@ test('favorites tab', async () => {
   expect(await screen.findByText(/CATEGORY/i)).toBeInTheDocument();
 
   // Simulate clicking headers
-  fireEvent.click(screen.getByText(/Total Likes/i));
+  fireEvent.click(screen.getByText(/Total Plays/i));
 });
