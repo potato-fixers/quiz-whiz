@@ -7,16 +7,16 @@ const QuizListEntry = (props) => {
     let link = `/quiz/${props.quiz.id}/start`;
     return (
         <TableRow sx={{ width: '100%' }} aria-label='simple table'>
-          <TableCell align='left' sx={{ border: 0, fontSize: 20 }}>
+          <TableCell align='left' sx={{ border: 0, fontSize: 14 }}>
             {props.quiz.quiz_name}
           </TableCell>
-          <TableCell align='center' sx={{ border: 0, fontSize: 20 }}>
+          <TableCell align='center' sx={{ border: 0, fontSize: 14 }}>
             {props.quiz.category}
           </TableCell>
-          <TableCell align='center' sx={{ border: 0, fontSize: 20 }} >
+          <TableCell align='center' sx={{ border: 0, fontSize: 14 }} >
             {props.quiz.difficulty}
           </TableCell>
-          <TableCell align='center' sx={{ border: 0, fontSize: 20 }} >
+          <TableCell align='center' sx={{ border: 0, fontSize: 14 }} >
             <Link to={link} id="landing_preview_td">Take Quiz</Link>
           </TableCell>
         </TableRow>
