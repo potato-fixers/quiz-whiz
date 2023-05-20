@@ -1,17 +1,69 @@
+import { Button, Grid} from '@mui/material';
 const CategoryList = (props) => {
 
   const handleClick = (event) => {
-    props.setCategory(event.target.innerText);
+    props.setCategory(event.target.name);
   }
 
   return (
-      <div className="landing_category_list">
-        <button onClick={handleClick}>General Knowledge</button>
-        <button onClick={handleClick}>Art</button>
-        <button onClick={handleClick}>History</button>
-        <button onClick={handleClick}>Policits</button>
-        <button onClick={handleClick}>Sports</button>
-      </div>
+    <Grid className="landing_category_list" container spacing={2} alignItems="center"
+    justifyContent="center">
+      <Grid item>
+        <Button
+          variant="contained"
+          name="Art"
+          id={`category1${props.category === "Art" ? "chosen" : ""}`}
+          onClick={handleClick}
+        >
+          {" "}
+          Art{" "}
+        </Button>
+      </Grid>
+      <Grid item>
+        <Button
+          variant="contained"
+          name="General Knowledge"
+          id={`category1${props.category === "General Knowledge" ? "chosen" : ""}`}
+          onClick={handleClick}
+        >
+          {" "}
+          General Knowledge{" "}
+        </Button>
+      </Grid>
+      <Grid item>
+        <Button
+          variant="contained"
+          name="History"
+          id={`category1${props.category === "History" ? "chosen" : ""}`}
+          onClick={handleClick}
+        >
+          {" "}
+          History{" "}
+        </Button>
+      </Grid>
+      <Grid item>
+        <Button
+          variant="contained"
+          name="Politics"
+          id={`category1${props.category === "Politics" ? "chosen" : ""}`}
+          onClick={handleClick}
+        >
+          {" "}
+          Politics{" "}
+        </Button>
+      </Grid>
+      <Grid item>
+        <Button
+          variant="contained"
+          name="Sports"
+          id={`category1${props.category === "Sports" ? "chosen" : ""}`}
+          onClick={handleClick}
+        >
+          {" "}
+          Sports{" "}
+        </Button>
+      </Grid>
+    </Grid>
   );
 };
 

@@ -1,5 +1,7 @@
 import axios from 'axios';
 import { useState, useCallback } from 'react';
+import { Stack, OutlinedInput, Select, MenuItem, InputLabel, FormControl } from '@mui/material';
+
 const SearchBar = (props) => {
 
   const [query, setQuery] = useState('');
@@ -75,18 +77,39 @@ const SearchBar = (props) => {
   const debounceSetQuery = useCallback(debounce(handlingQuery), []);
 
   return (
-    <div className="landing_searchbar">
-      <input className="search-bar" type="text" size="50" onChange={debounceSetQuery}/>
-      <select className="landing_category_select" onChange={handlingCategorySelect}>
-        {props.categoryList.map((category) => <option value={category} key={category}>{category}</option>)}
-      </select>
-      <select className="landing_difficulty_select" onChange={handlingDifficultySelect}>
-         <option value={'All'} >All</option>
-         <option value={'easy'} >Easy</option>
-         <option value={'medium'} >Medium</option>
-         <option value={'hard'} >Hard</option>
-      </select>
-    </div>
+    <Stack direction='row' spacing={1} justifyContent='center'>
+    <OutlinedInput fullWidth size='large' placeholder='Search quizzes' data-testid="search-input" onChange={debounceSetQuery}/>
+    <FormControl sx={{ m: 1, minWidth: 120 }} size="large">
+      <InputLabel id="select-label-category">Categories</InputLabel>
+      <Select
+        labelId='select-label-category'
+        label='Categories'
+        name='category'
+        value={props.userCategory}
+        onChange={handlingCategorySelect}
+        size='large'
+        data-testid="category-select"
+      >
+        {props.categoryList.map((category) => <MenuItem value={category} key={category}>{category}</MenuItem>)}
+      </Select>
+    </FormControl>
+    <FormControl sx={{ m: 1, minWidth: 120 }} size="large">
+    <InputLabel id="select-label-difficulty">Difficulty</InputLabel>
+      <Select
+        labelId='select-label-difficulty'
+        label='Difficulty'
+        name='difficulty'
+        value={props.difficulty}
+        onChange={handlingDifficultySelect}
+        size='large'
+      >
+          <MenuItem value='All'>All</MenuItem>
+          <MenuItem value='easy'>Easy</MenuItem>
+          <MenuItem value='medium'>Medium</MenuItem>
+          <MenuItem value='hard'>Hard</MenuItem>
+      </Select>
+    </FormControl>
+  </Stack>
   );
 };
 
