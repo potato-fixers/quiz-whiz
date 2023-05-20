@@ -28,9 +28,26 @@ const UserProfileFieldBox = (props) => {
   };
 
   const handleCancelClick = () => {
+    if (props.field_title === 'Profile Picture') {
+      // Handle cancel logic for Profile Picture
+    } else {
+      // Reset the field value to props.initial_value
+      setField(props.initial_value ? props.initial_value : props.default_value);
+    }
     setEditing(false);
   };
 
+  const handleCurrentPasswordFocus = () => {
+    if (oldPassword === 'Enter current password') {
+      setOldPassword('');
+    }
+  };
+
+  const handleDefaultNewPasswordFocus = () => {
+    if (field === props.default_value) {
+      setField('');
+    }
+  };
 
   const handleSaveClick = () => {
     // TODO: if it's the password field, need to check password first before updating
@@ -83,15 +100,16 @@ const UserProfileFieldBox = (props) => {
       <h3>{props.field_title}</h3>
       { editing ? (
         <>
-          {props.field_title === "Password" ? (
+          {props.field_title === 'Password' ? (
             <TextField
               className="input"
               label="Current password"
               variant="outlined"
               value={oldPassword}
               onChange={handleCurrentPasswordChange}
+              onFocus={handleCurrentPasswordFocus}
             />
-          ) : null }
+          ) : null}
 
           {props.field_title === "Profile Picture" ? (
             <ProfilePicBox saveRoute={props.saveRoute} img={field}/>
@@ -102,6 +120,7 @@ const UserProfileFieldBox = (props) => {
               variant="outlined"
               value={field}
               onChange={handleFieldChange}
+              onFocus={handleDefaultNewPasswordFocus}
             />
           )}
 

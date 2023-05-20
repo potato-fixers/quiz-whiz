@@ -17,7 +17,16 @@ module.exports = {
   },
 
   delete: (req, res) => {
-    res.send('remove or modify quiz owner to admin');
+    const { id } = req.params;
+
+    models.myQuizzes.delete(id)
+    .then(() => {
+      res.sendStatus(204);
+    })
+    .catch(err => {
+      console.error('Failed to delete quiz', err.stack);
+      res.sendStatus(500);
+    })
   },
 
 }

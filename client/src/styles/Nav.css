@@ -1,0 +1,13 @@
+.nav-link {
+  color: inherit;
+  text-decoration: inherit;
+  font-weight: bold;
+}
+
+.nav-title {
+  margin-left: 10px;
+}
+
+.flex-grow {
+  flex-grow: 1;
+}

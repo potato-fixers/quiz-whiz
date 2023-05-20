@@ -12,6 +12,7 @@ router.get('/', (req, res) => {
 
 router.get('/:id/start', (req, res) => {
   let id = req.params.id;
+
   fetch(id, "quizzes", (err, payload) => {
     if (err) {
       console.log(`Error from /quiz/${id}/start`, err);
@@ -20,7 +21,8 @@ router.get('/:id/start', (req, res) => {
       // console.log('Quiz Start Payload', payload);
       res.status(200).json({
         title: payload[0].quiz_name, 
-        category: payload[0].category, 
+        category: payload[0].category,
+        user_id: payload[0].user_id,  
         difficulty: payload[0].difficulty
       });
     }
@@ -29,6 +31,7 @@ router.get('/:id/start', (req, res) => {
 
 router.get('/:id/question', (req, res) => {
   let id = req.params.id;
+  
   fetch(id, "questions", (err, payload) => {
     if (err) {
       console.log(`Error from /quiz/${id}/question`, err);
@@ -39,6 +42,7 @@ router.get('/:id/question', (req, res) => {
       res.status(200).json(questions);
     }
   });
+
 });
 
 router.get('/:id/summary', (req, res) => {

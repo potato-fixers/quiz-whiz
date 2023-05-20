@@ -6,15 +6,16 @@ module.exports = {
 
     const queryString = `
       SELECT
-        quizzes.id,
+        history.id,
         quizzes.quiz_name,
+        history.quiz_id,
         history.score,
         to_char(history.date, 'FMMonth FMDDth, YYYY') AS date
       FROM
-        quizzes
-        INNER JOIN history ON quizzes.id = history.quiz_id
+        history
+        INNER JOIN quizzes ON quizzes.id = history.quiz_id
       WHERE
-        quizzes.user_id = ${userId}
+        history.user_id = ${userId}
       ORDER BY
         history.date DESC
       LIMIT 10

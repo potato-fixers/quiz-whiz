@@ -1,3 +1,4 @@
+import './styles/Nav.css';
 import { AppBar, Typography, Toolbar, Button } from '@mui/material'
 import { Link } from 'react-router-dom';
 import { UserContext } from './components/global/UserContext';
@@ -8,11 +9,11 @@ import { useLayoutEffect, useState } from 'react';
 
 const Nav = () => {
 
-  const styles = { color: 'inherit', textDecoration: 'inherit' };
   const { isLoggedIn } = useContext(UserContext);
   const { updateSession } = useSession();
   const [isReady, setIsReady] = useState(false);
 
+  const loggedInStyle = !isLoggedIn ? {flexGrow: 1} : {};
 
   useLayoutEffect(() => {
     let fetch = async () => {
@@ -31,29 +32,29 @@ const Nav = () => {
   return (
     <AppBar position='static'>
       <Toolbar>
-        <Typography variant="h4" >
-          <Link to='/' style={styles}>
+        <Typography variant="h4" sx={loggedInStyle}>
+          <Link to='/' className='nav-link'>
             Quiz Whiz
           </Link>
         </Typography>
 
         {(isReady && !isLoggedIn) ? <></> :
           <>
-            <Typography variant='h6' >
-              <Link to='/dashboard' style={styles}>Dashboard</Link>
+            <Typography variant='h6'>
+              <Link to='/dashboard' className='nav-link nav-title'>Dashboard</Link>
             </Typography>
-            <Typography variant='h6' sx={{ flexGrow: 1 }} >
-              <Link to='/createQuiz' style={styles}>Create</Link>
+            <Typography variant='h6' className='flex-grow'>
+              <Link to='/createQuiz' className='nav-link nav-title'>Create</Link>
             </Typography>
           </>
         }
         {!isReady ? <></> : !isLoggedIn ?
           <>
             <Button color='inherit' >
-              <Link to='/register' style={styles}>Sign Up</Link>
+              <Link to='/register' className='nav-link'>Sign Up</Link>
             </Button>
             <Button color='inherit' >
-              <Link to='/login' style={styles}>Sign In</Link>
+              <Link to='/login' className='nav-link'>Sign In</Link>
             </Button>
           </>
           :

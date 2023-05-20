@@ -19,8 +19,10 @@ import CreateQuiz from "./components/create-quiz/CreateQuiz.jsx";
 import useSession from './components/user-auth/hooks/useSession';
 
 // Context
+import { GlobalProvider } from './components/global/GlobalContext';
 import { QuizProvider } from "./components/take-quiz/context/QuizContext";
 import { UserContext } from './components/global/UserContext';
+import { CountsProvider } from './components/user-dashboard/context/CountsContext';
 
 function App() {
   const { isLoggedIn } = useContext(UserContext);
@@ -28,10 +30,6 @@ function App() {
   const { updateSession } = useSession();
 
   useLayoutEffect(() => {
-    if (localStorage.getItem('quizSaved') === 'true') {
-      localStorage.clear();
-    }
-
     let fetch = async () => {
       try {
         await updateSession();
@@ -46,27 +44,36 @@ function App() {
 
   return (
     <Router>
-      <Nav />
-      <Routes>
-        <Route path="/*" element={<Landing />}></Route>
-        <Route path="/login/" element={<Login />}></Route>
-        <Route path="/register/" element={<Register />}></Route>
-        {isReady && !isLoggedIn ? <></> :
-          <>
-            <Route path="/settings/" element={<UserProfilePage />}></Route>
-            <Route path="dashboard/*" element={<Dashboard />}></Route>
-            <Route path="/createQuiz/" element={<CreateQuiz />}></Route>
-          </>
-        }
-        <Route
-          path="/quiz/:id/*"
-          element={
-            <QuizProvider>
-              <TakeQuiz />
-            </QuizProvider>
+        <GlobalProvider>
+        <Nav />
+        <Routes>
+          <Route path="/*" element={<Landing />}></Route>
+          <Route path="/login/" element={<Login />}></Route>
+          <Route path="/register/" element={<Register />}></Route>
+          {isReady && !isLoggedIn ? <></> :
+            <>
+              <Route path="/settings/" element={<UserProfilePage />}></Route>
+              <Route
+              path="dashboard/*"
+              element={
+                <CountsProvider>
+                  <Dashboard />
+                </CountsProvider>
+              }>
+            </Route>
+              <Route path="/createQuiz/" element={<CreateQuiz />}></Route>
+            </>
           }
-        ></Route>
-      </Routes>
+          <Route
+            path="/quiz/:id/*"
+            element={
+              <QuizProvider>
+                <TakeQuiz />
+              </QuizProvider>
+            }
+            ></Route>
+        </Routes>
+      </GlobalProvider>
     </Router>
   );
 }

@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { Grid, Typography, Button } from "@mui/material";
 
 import Review from "./Review.jsx";
+import BasicModal from '../Modal'
 
 import { QuizContext } from "../context/QuizContext";
 import { UserContext } from "../../global/UserContext";
@@ -12,6 +13,7 @@ import { UserContext } from "../../global/UserContext";
 function Summary({ quizId }) {
   const {
     resetQuiz,
+    quizDetails,
 
     userAnswers,
     getUserAnswers,
@@ -25,7 +27,6 @@ function Summary({ quizId }) {
     saveHistory,
 
     finished,
-    setFinished,
     duration,
     formatDuration,
     calculateDuration,
@@ -33,9 +34,9 @@ function Summary({ quizId }) {
   } = useContext(QuizContext);
   const { profile, isLoggedIn } = useContext(UserContext);
 
+  
   useEffect(() => {
     getUserAnswers();
-    setFinished(true);
     // eslint-disable-next-line
   }, []);
 
@@ -65,44 +66,49 @@ function Summary({ quizId }) {
     // eslint-disable-next-line
   }, [userAnswers, correctAs]);
 
-  return (
-    <Grid
-      alignItems="center"
-      justifyContent="center"
-      container
-      direction="column"
-      rowSpacing={1}
-      columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-    >
-      <Grid item xs={6}>
-        <Typography variant="h6">{msg && msg}</Typography>
+  if (isLoggedIn || quizDetails.user_id === 1) {
+    return (
+      <Grid
+        alignItems="center"
+        justifyContent="center"
+        container
+        direction="column"
+        rowSpacing={1}
+        columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+      >
+        <Grid item xs={6}>
+          <Typography variant="h6">{msg && msg}</Typography>
+        </Grid>
+  
+        <Grid item xs={6}>
+          <Typography variant="h4">{score && score}%</Typography>
+        </Grid>
+  
+        <Grid item xs={6}>
+          <Review userAnswers={userAnswers} />
+        </Grid>
+  
+        <Grid item xs={6}>
+          <Link to={`/quiz/${quizId}/start`}>
+            <Button onClick={resetQuiz} variant="contained">
+              Retake Quiz
+            </Button>
+          </Link>
+        </Grid>
+  
+        <Grid item xs={6}>
+          <Link to="/">
+            <Button onClick={resetQuiz} variant="contained">
+              More Quizzes
+            </Button>
+          </Link>
+        </Grid>
       </Grid>
+    );
+  } else if (!quizDetails || quizDetails.user_id !== 1) {
+    return (<BasicModal type='private-quiz'></BasicModal>)
+  } 
 
-      <Grid item xs={6}>
-        <Typography variant="h4">{score && score}%</Typography>
-      </Grid>
-
-      <Grid item xs={6}>
-        <Review userAnswers={userAnswers} />
-      </Grid>
-
-      <Grid item xs={6}>
-        <Link to={`/quiz/${quizId}/start`}>
-          <Button onClick={resetQuiz} variant="contained">
-            Retake Quiz
-          </Button>
-        </Link>
-      </Grid>
-
-      <Grid item xs={6}>
-        <Link to="/">
-          <Button onClick={resetQuiz} variant="contained">
-            More Quizzes
-          </Button>
-        </Link>
-      </Grid>
-    </Grid>
-  );
 }
 
 export default Summary;
