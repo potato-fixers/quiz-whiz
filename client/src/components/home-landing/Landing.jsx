@@ -7,6 +7,7 @@ import SearchBar from './components/SearchBar.jsx';
 import { useContext } from 'react'
 import { UserContext } from '../global/UserContext.jsx'
 import axios from 'axios';
+import { Container, Typography } from '@mui/material';
 
 import { useState, useEffect } from 'react';
 
@@ -60,27 +61,22 @@ const Landing = (props) => {
 
   if (profile.userId === undefined) {
     return (
-      <div className="Landing">
-        <div className="landing_title">
-          <h1> Welcome to Quiz Whiz </h1>
-        </div>
-        <CategoryList setCategory={setCategory}/>
-        <p id="landing_subtitle"> Login to see all Quizzes</p>
+      <Container className="Landing" align="center">
+        <Typography variant="h2" align="left" sx={{fontWeight: 400, marginBottom: 2.5}}> Welcome to Quiz Whiz </Typography>
+        <CategoryList setCategory={setCategory} category={category}/>
+        <Typography variant="h6" align="center" sx={{fontWeight: 400, marginBottom: 2.5}}> Login to see all Quizzes </Typography>
         <QuizList category={category} quizzes={quizzes}/>
-      </div>
+      </Container>
     );
   } else {
     return (
-      <div className="Home">
-        <div className="landing_title">
-          <h1>  Hi, <em>{profile.username}</em></h1>
-        </div>
+      <Container className="Home" align="center" >
+        <Typography variant="h2" align="left" sx={{fontWeight: 400, marginBottom: 2.5}}> Hi, <em>{profile.username}</em> </Typography>
         <SearchBar setQuizzes={setQuizzes} setUserCategory={setUserCategory} setDifficulty={setDifficulty}
           difficulty={difficulty} categoryList={categoryList} userCategory={userCategory} setCurrent={setCurrent} id={profile.userId}/>
-        <p id="landing_subtitle"></p>
         <QuizList category={'all'} quizzes={currentQuizzes} />
         <Pagination page={page} setPage={setPage} quizzes={quizzes} setCurrent={setCurrent} />
-      </div>
+      </Container>
     );
   }
 };

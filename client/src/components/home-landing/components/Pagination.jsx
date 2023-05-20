@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
+import { Pagination } from '@mui/material';
+import Stack from '@mui/material/Stack';
 
-const Pagination = (props) => {
+const LandingPagination = (props) => {
   const [limit, setLimit] = useState(0);
   useEffect(() => {
     let newLimit = Math.floor(props.quizzes.length / 5);
@@ -12,14 +14,9 @@ const Pagination = (props) => {
   }, [props.quizzes]);
 
   const handleClick = (event) => {
-    let newpage;
-    if (event.target.innerText === '≺ Prev') {
-      newpage = props.page - 1;
-    } else if (event.target.innerText === 'Next ≻') {
-      newpage = props.page + 1;
-    } else {
-      newpage = parseInt(event.target.innerText) - 1;
-    }
+    console.log(event.target.innerText);
+    let newpage = parseInt(event.target.innerText) - 1;
+
 
     let arr = [];
     if (props.quizzes.length >= newpage * 5 + 5) {
@@ -37,20 +34,10 @@ const Pagination = (props) => {
 
 
   return (
-      <div className="landing_pages">
-        <div id="landing_page_prev">{props.page > 0 ? <span onClick={handleClick}>&#8826; Prev</span> : null}</div>
-        <div className="landing_page_pages">
-            {props.page - 1 > 0 ? <span id="landing_page_first" onClick={handleClick}>1</span> : null}
-            {props.page - 1 > 0 ? <span id="landing_page_dot">...</span> : null}
-            {props.page > 0 ? <span id="landing_page_leftone" onClick={handleClick}>{props.page}</span> : null}
-            {limit === 1 || limit === 0 ? null: <span id="landing_page_currentone"><strong>{props.page + 1}</strong></span>}
-            {props.page + 1 < limit ?  <span id="landing_page_rightone" onClick={handleClick}>{props.page + 2}</span> : null}
-            {props.page + 2 < limit ?  <span id="landing_page_dot">...</span> : null}
-            {props.page + 2 < limit ? <span id="landing_page_last" onClick={handleClick}>{limit}</span> : null}
-            <div id="landing_page_next">{props.page + 1 < limit ? <span onClick={handleClick}>Next &#8827;</span> : null }</div>
-        </div>
-      </div>
+    <Stack alignItems="center">
+      <Pagination count={limit} onClick={handleClick} size="large" hidePrevButton hideNextButton />
+    </Stack>
   );
 };
 
-export default Pagination;
+export default LandingPagination;
