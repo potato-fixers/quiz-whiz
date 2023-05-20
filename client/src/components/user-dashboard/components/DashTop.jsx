@@ -1,14 +1,17 @@
-import { Avatar, Typography, IconButton, Stack } from '@mui/material';
+import { Avatar, Typography, IconButton, Grid } from '@mui/material';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import { Link } from 'react-router-dom';
 import { useContext, useState, useEffect } from 'react';
 import { UserContext } from '../../global/UserContext';
 import { Buffer } from 'buffer';
+import useDeviceDetect from '../hooks/useDeviceDetect';
 
 const DashTop = (props) => {
 
-  const { profile } = useContext(UserContext);
+  const { profile, isLoggedIn } = useContext(UserContext);
   const [userInfo, setUserInfo] = useState({});
+  const userId = profile.userId;
+  const { isMobile } = useDeviceDetect();
 
   const getUserInfo = async (userId) => {
 
@@ -27,22 +30,40 @@ const DashTop = (props) => {
   }
 
   useEffect(() => {
-    getUserInfo(profile.userId);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
-  const profileImg = userInfo.profile_img ? `data:image/jpeg;base64,${Buffer.from(userInfo.profile_img.data).toString('base64')}` : '';
+    isLoggedIn && getUserInfo(userId);
+
+  }, [isLoggedIn, userId]);
+
+  const style = isMobile ?
+   { width: 70, height: 70, border: 1, borderColor: 'primary.main', } :
+   { width: 120, height: 120, border: 3, borderColor: 'primary.main' };
 
   return (
-    <Stack direction='row' spacing={3} sx={{ mt: 5, mb: 3, alignItems: 'center'} }>
-      <Avatar src={profileImg} sx={{ width: 100, height: 100 }} />
-      <Typography variant='h2'>{profile.username}</Typography >
-      <IconButton size='small' sx={{ width: 50, height: 50 }} >
-        <Link to='/settings' style={{ color: 'inherit', textDecoration: 'inherit' }}>
-          <EditOutlinedIcon />
-        </Link>
-      </IconButton >
-    </Stack >
+    <Grid
+    container
+    direction='row'
+    justifyContent='center'
+    columnSpacing={isMobile ? 5 : 10}
+    sx={{ mt: 10, mb: 5}}
+    >
+      <Grid item>
+        <Avatar
+          src={userInfo.profile_img ? `data:image/jpeg;base64,${Buffer.from(userInfo.profile_img.data).toString('base64')}` : ''}
+          sx={style}
+        />
+      </Grid>
+      <Grid item>
+        <Typography variant='h3' sx={isMobile ? {} : {fontSize: 70, letterSpacing: 5}}>{profile.username}</Typography >
+      </Grid>
+      <Grid item>
+        <IconButton sx={{ width: 40, height: 40 }} >
+          <Link to='/settings' style={{ color: 'inherit', textDecoration: 'inherit' }}>
+            <EditOutlinedIcon color='primary' fontSize='large'/>
+          </Link>
+        </IconButton >
+      </Grid>
+    </Grid>
   )
 }
 
