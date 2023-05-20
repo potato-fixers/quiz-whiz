@@ -32,7 +32,7 @@ const MCQuestions = (props) => {
                       </Typography>
                     </Grid>
                     <Grid container spacing={2} sx={{marginBottom: 2.5}}>
-                      <Grid item xs={2.5} sm={3} lg={3.4} xl={3.95}>
+                      <Grid item xs={12} sm={3} lg={3.4} xl={3.95}>
                         <TextField
                           id="MC"
                           multiline

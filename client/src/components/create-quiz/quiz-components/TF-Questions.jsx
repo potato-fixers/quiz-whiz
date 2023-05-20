@@ -33,7 +33,7 @@ const TFQuestions = (props) => {
                       </Typography>
                     </Grid>
                     <Grid container spacing={2} sx={{marginBottom: 2.5}}>
-                      <Grid item xs={2.5} sm={3} lg={4.6} xl={6}>
+                      <Grid item xs={12} sm={3} lg={4.6} xl={6}>
                         <TextField
                           id="TF"
                           multiline
@@ -50,7 +50,7 @@ const TFQuestions = (props) => {
                         </TextField>
                       </Grid>
                     </Grid>
-                      <Grid item xs={1.75} sm={2.75} md={6}>
+                      <Grid item xs={12} sm={2.75} md={6}>
                         <Grid container spacing={2} name="answers">
                           <Grid item>
                             <TextField
