@@ -9,7 +9,7 @@ module.exports = {
         history.id,
         quizzes.quiz_name,
         history.quiz_id,
-        CONCAT(history.score, '%') AS score,
+        history.score,
         to_char(history.date, 'FMMonth FMDDth, YYYY') AS date
       FROM
         history

@@ -1,4 +1,4 @@
-import { Stack, OutlinedInput, Select, MenuItem, InputLabel, FormControl } from '@mui/material';
+import { Grid, OutlinedInput, Select, MenuItem, InputLabel, FormControl } from '@mui/material';
 
 const FilterBar = (props) => {
 
@@ -8,8 +8,19 @@ const FilterBar = (props) => {
   };
 
   return (
-    <Stack direction='row' spacing={1} justifyContent='flex-end'>
-      <OutlinedInput size='small' placeholder='Search quiz' name='name' onChange={handleChange}/>
+    <Grid
+      container
+      direction='row'
+      spacing={1}
+      justifyContent='flex-end'
+      alignItems='center'
+    >
+      <OutlinedInput
+        size='small'
+        placeholder='Search quiz'
+        name='name'
+        onChange={handleChange}
+      />
       <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
         <InputLabel id="select-label">Categories</InputLabel>
         <Select
@@ -28,7 +39,7 @@ const FilterBar = (props) => {
           <MenuItem value='politics'>Politics</MenuItem>
         </Select>
       </FormControl>
-    </Stack>
+    </Grid>
   )
 }
 

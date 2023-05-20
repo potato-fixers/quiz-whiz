@@ -1,69 +1,81 @@
-import { Typography, TableBody, TableCell, TableHead, TableRow, Table, Stack } from '@mui/material';
+import { Typography, TableBody, TableCell, TableHead, TableRow, Table, Stack, Grid } from '@mui/material';
 import { Link } from 'react-router-dom';
 import FilterBar from './subComponents/FilterBar.jsx';
 import useQuizzes from '../hooks/useQuizzes';
 import useFilter from '../hooks/useFilter';
 import useSort from '../hooks/useSort';
 import LikeIcon from './subComponents/LikeIcon';
+import useDeviceDetect from '../hooks/useDeviceDetect';
 
 const Favorites = (props) => {
 
   const { quizzes, getQuizzes } = useQuizzes('favorites');
   const { filteredData, handleFilterChange, filter } = useFilter(quizzes);
   const { sortedData, sortData } = useSort(filteredData);
+  const { isMobile } = useDeviceDetect();
 
     const headersMapping = {
-    'Quiz': 'quiz_name',
-    'Category': 'category',
-    'Total Plays': 'totalPlays',
-    'Total Likes': 'totalLikes',
-    'Date Liked': 'date',
+    'quiz': 'quiz_name',
+    'category': 'category',
+    'total plays': 'totalplays',
+    'total likes': 'totallikes',
+    'date liked': 'date',
   };
 
   const handleClick = (e) => {
-    const key = headersMapping[e.target.innerText];
+    const text = e.target.innerText || '';
+    const key = headersMapping[text.toLowerCase()];
     sortData(key);
   };
 
+  const headers = ['Quiz', 'Category', 'Total Plays', 'Total Likes', 'Date Liked'];
+  const responsiveHeaderStyles = isMobile ? {fontSize: '0.9rem'} : {fontSize: '1.5rem'};
+  const responsiveStyles = isMobile ? {border:0, fontSize: '0.8rem'} : {border: 0, fontSize: '1.1rem'};
+  const inherit = { color: 'inherit', textDecoration: 'inherit', fontWeight: 'bold'};
+
   return (
-    <>
+    <Grid>
       <Stack direction='row' >
-        <Typography variant='h4' sx={{ flexGrow: 1}}>Favorites</Typography>
+        <Typography variant='h5' sx={{ flexGrow: 1}}>Favorites</Typography>
         <FilterBar onFilterChange={handleFilterChange} category={filter.category} />
       </Stack>
 
-      <Table sx={{ width: '100%' }} aria-label="simple table">
+      <Table aria-label="simple table" padding={isMobile ? 'none' : 'normal'}>
         <TableHead >
-          <TableRow>
-            <TableCell align='left' onClick={handleClick} >Quiz</TableCell>
-            <TableCell align='center' onClick={handleClick} >Category</TableCell>
-            <TableCell align='center' onClick={handleClick} >Total Plays</TableCell>
-            <TableCell align='center' onClick={handleClick} >Total Likes</TableCell>
-            <TableCell align='right' onClick={handleClick} >Date Liked</TableCell>
+          <TableRow hover={true}>
+            {headers.map((header, idx) => {
+              const alignment = idx < 1 ? 'left' : idx === headers.length - 1 ? 'right' : 'center';
+              return <TableCell key={idx} align={alignment} onClick={handleClick} >
+              <Typography variant='h6' sx={responsiveHeaderStyles}> {header} </Typography>
+            </TableCell>
+            })}
+            <TableCell>{/* Placeholder */}</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {(sortedData.length &&
-            sortedData.map((row) => (
+            sortedData.map((row, idx) => (
             <TableRow
+              className={ idx % 2 === 0 ? 'stripe': '' }
               key={row.id}
+              hover={true}
             >
-              <TableCell align='left' sx={{ border: 0 }} >
-                <Link to={`/quiz/${row.quiz_id}/start`}> {row.quiz_name} </Link>
+              <TableCell align='left' sx={responsiveStyles} >
+                <Link to={`/quiz/${row.quiz_id}/start`} style={inherit}> {row.quiz_name} </Link>
               </TableCell>
-              <TableCell align='center' sx={{ border: 0 }}>
+              <TableCell align='center' sx={responsiveStyles}>
                 {row.category}
               </TableCell>
-              <TableCell align='center' sx={{ border: 0 }}>
+              <TableCell align='center' sx={responsiveStyles}>
                 {row.totalplays}
               </TableCell>
-              <TableCell align='center' sx={{ border: 0 }}>
+              <TableCell align='center' sx={responsiveStyles}>
                 {row.totallikes}
               </TableCell>
-              <TableCell align='right' sx={{ border: 0 }}>
+              <TableCell align='right' sx={responsiveStyles}>
                 {row.liked_at}
               </TableCell>
-              <TableCell align='center' sx={{ border: 0 }}>
+              <TableCell align='center' sx={responsiveStyles}>
                 <LikeIcon liked={true} favoriteId={row.id} getQuizzes={getQuizzes}></LikeIcon>
               </TableCell>
             </TableRow>
@@ -71,7 +83,7 @@ const Favorites = (props) => {
         </TableBody>
       </Table>
 
-    </>
+    </Grid>
   );
 };
 

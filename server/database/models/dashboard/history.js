@@ -10,8 +10,8 @@ module.exports = {
         h.quiz_id,
         q.quiz_name,
         q.category,
-        CONCAT(h.score, '%') AS score,
-        CONCAT(CAST(EXTRACT(epoch FROM h.duration) / 60 AS integer), ' minutes') AS duration,
+        h.score,
+        CAST(EXTRACT(epoch FROM h.duration) / 60 AS integer) AS duration,
         h.finished,
         to_char(h.date, 'FMMonth FMDDth, YYYY') AS date,
         CASE WHEN f.id IS NOT NULL THEN true ELSE false END AS liked
