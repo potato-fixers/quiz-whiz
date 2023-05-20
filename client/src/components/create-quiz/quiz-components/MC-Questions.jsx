@@ -14,8 +14,7 @@ const MCQuestions = (props) => {
             <Button
               variant="contained"
               name="MCButton"
-              onClick={props.addFields}
-            >
+              onClick={props.addFields}>
               {" "}
               Add More Multiple Choice Questions!
               {" "}
