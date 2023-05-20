@@ -5,10 +5,10 @@ const QuizList = (props) => (
   <Table className="landing_quiz_table" sx={{ width: '100%'}} aria-label='simple table'>
     <TableHead >
       <TableRow>
-        <TableCell align='center' sx={{ fontSize: 20 }}>Name</TableCell>
-        <TableCell align='center' sx={{ fontSize: 30 }}>Category</TableCell>
-        <TableCell align='center' sx={{ fontSize: 30 }}>Difficulty</TableCell>
-        <TableCell align='center' sx={{ fontSize: 30 }}> </TableCell>
+        <TableCell align='center' sx={{ fontSize: 14 }}>Name</TableCell>
+        <TableCell align='center' sx={{ fontSize: 14 }}>Category</TableCell>
+        <TableCell align='center' sx={{ fontSize: 14 }}>Difficulty</TableCell>
+        <TableCell align='center' sx={{ fontSize: 14 }}> </TableCell>
       </TableRow>
     </TableHead>
       <TableBody>
