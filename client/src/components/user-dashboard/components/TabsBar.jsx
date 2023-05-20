@@ -1,6 +1,4 @@
-import Box from '@mui/material/Box';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
+import  { Tabs, Tab }  from '@mui/material';
 
 const TabsBar = (props) => {
 
@@ -8,15 +6,15 @@ const TabsBar = (props) => {
     props.setActiveTab(newValue);
   };
 
+  const style = {fontSize: 15, fontWeight: 900};
+
   return (
-    <Box sx={{ width: 'auto', bgcolor: 'background.paper' }}>
-      <Tabs value={props.activeTab} onChange={handleChange} >
-        <Tab label="Overview" />
-        <Tab label="My Quizzes" />
-        <Tab label="History" />
-        <Tab label="Favorites" />
-      </Tabs>
-    </Box>
+    <Tabs variant="fullWidth" value={props.activeTab} onChange={handleChange} >
+      <Tab label="Overview" sx={style}/>
+      <Tab label="Quizzes" sx={style}/>
+      <Tab label="History" sx={style}/>
+      <Tab label="Favorites" sx={style}/>
+    </Tabs>
   );
 };
 
