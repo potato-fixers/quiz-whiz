@@ -78,24 +78,25 @@ const SearchBar = (props) => {
 
   return (
     <Stack direction='row' spacing={1} justifyContent='center'>
-    <OutlinedInput fullWidth size='large' placeholder='Search quizzes' onChange={debounceSetQuery}/>
+    <OutlinedInput fullWidth size='large' placeholder='Search quizzes' data-testid="search-input" onChange={debounceSetQuery}/>
     <FormControl sx={{ m: 1, minWidth: 120 }} size="large">
-      <InputLabel id="select-label">Categories</InputLabel>
+      <InputLabel id="select-label-category">Categories</InputLabel>
       <Select
-        labelId='select-label'
+        labelId='select-label-category'
         label='Categories'
         name='category'
         value={props.userCategory}
         onChange={handlingCategorySelect}
         size='large'
+        data-testid="category-select"
       >
         {props.categoryList.map((category) => <MenuItem value={category} key={category}>{category}</MenuItem>)}
       </Select>
     </FormControl>
     <FormControl sx={{ m: 1, minWidth: 120 }} size="large">
-    <InputLabel id="select-label">Difficulty</InputLabel>
+    <InputLabel id="select-label-difficulty">Difficulty</InputLabel>
       <Select
-        labelId='select-label'
+        labelId='select-label-difficulty'
         label='Difficulty'
         name='difficulty'
         value={props.difficulty}
@@ -103,7 +104,7 @@ const SearchBar = (props) => {
         size='large'
       >
           <MenuItem value='All'>All</MenuItem>
-          <MenuItem value='easy'>easy</MenuItem>
+          <MenuItem value='easy'>Easy</MenuItem>
           <MenuItem value='medium'>Medium</MenuItem>
           <MenuItem value='hard'>Hard</MenuItem>
       </Select>

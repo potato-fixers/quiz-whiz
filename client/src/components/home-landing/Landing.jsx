@@ -3,7 +3,6 @@ import CategoryList from './components/CategoryList.jsx';
 import QuizList from './components/QuizList.jsx';
 import Pagination from './components/Pagination.jsx';
 import SearchBar from './components/SearchBar.jsx';
-// import freeQuiz from './mock_data/freeQuiz.js';
 import { useContext } from 'react'
 import { UserContext } from '../global/UserContext.jsx'
 import axios from 'axios';

@@ -14,22 +14,23 @@ const LandingPagination = (props) => {
   }, [props.quizzes]);
 
   const handleClick = (event) => {
-    console.log(event.target.innerText);
-    let newpage = parseInt(event.target.innerText) - 1;
+    if (event.target.innerText !== '…') {
+      let newpage = parseInt(event.target.innerText) - 1;
 
 
-    let arr = [];
-    if (props.quizzes.length >= newpage * 5 + 5) {
-      for (var i = newpage * 5; i < newpage * 5 + 5; i ++) {
-        arr.push(props.quizzes[i]);
+      let arr = [];
+      if (props.quizzes.length >= newpage * 5 + 5) {
+        for (var i = newpage * 5; i < newpage * 5 + 5; i ++) {
+          arr.push(props.quizzes[i]);
+        }
+      } else {
+        for (var j = newpage * 5; j < props.quizzes.length; j ++) {
+          arr.push(props.quizzes[j]);
+        }
       }
-    } else {
-      for (var j = newpage * 5; j < props.quizzes.length; j ++) {
-        arr.push(props.quizzes[j]);
-      }
+      props.setCurrent(arr);
+      props.setPage(newpage);
     }
-    props.setCurrent(arr);
-    props.setPage(newpage);
   }
 
 

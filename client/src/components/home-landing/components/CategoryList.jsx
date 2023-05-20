@@ -44,12 +44,12 @@ const CategoryList = (props) => {
       <Grid item>
         <Button
           variant="contained"
-          name="Policits"
-          id={`category1${props.category === "Policits" ? "chosen" : ""}`}
+          name="Politics"
+          id={`category1${props.category === "Politics" ? "chosen" : ""}`}
           onClick={handleClick}
         >
           {" "}
-          Policits{" "}
+          Politics{" "}
         </Button>
       </Grid>
       <Grid item>
