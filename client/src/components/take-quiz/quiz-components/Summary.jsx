@@ -87,22 +87,25 @@ function Summary({ quizId }) {
         <Grid item xs={6}>
           <Review userAnswers={userAnswers} />
         </Grid>
-  
-        <Grid item xs={6}>
-          <Link to={`/quiz/${quizId}/start`}>
-            <Button onClick={resetQuiz} variant="contained">
-              Retake Quiz
-            </Button>
-          </Link>
-        </Grid>
-  
-        <Grid item xs={6}>
-          <Link to="/">
-            <Button onClick={resetQuiz} variant="contained">
-              More Quizzes
-            </Button>
-          </Link>
-        </Grid>
+
+        <div className="buttons flex-sb ms">
+          <Grid item xs={6}>
+            <Link to={`/quiz/${quizId}/start`}>
+              <Button onClick={resetQuiz} variant="contained">
+                Retake Quiz
+              </Button>
+            </Link>
+          </Grid>
+    
+          <Grid item xs={6}>
+            <Link to="/">
+              <Button onClick={resetQuiz} variant="contained">
+                More Quizzes
+              </Button>
+            </Link>
+          </Grid>
+        </div>
+
       </Grid>
     );
   } else if (!quizDetails || quizDetails.user_id !== 1) {

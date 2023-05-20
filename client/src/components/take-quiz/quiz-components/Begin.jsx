@@ -26,7 +26,6 @@ function Begin() {
     return (
       quizDetails &&
       <Grid
-        id="quiz-grid"
         alignItems="center"
         justifyContent="center"
         container
@@ -51,7 +50,6 @@ function Begin() {
         </Grid>
   
         <Grid id="difficulty" item xs={6}>
-          {/* <Typography>Difficulty</Typography> */}
           <Typography>
             {typeof quizDetails.difficulty === "string" &&
               `${quizDetails.difficulty}`.toUpperCase()}
@@ -61,7 +59,7 @@ function Begin() {
         {/* User Timer Settings */}
         <Grid id="set-timer" item xs={6}>
           <FormControl fullWidth>
-            {/* <InputLabel id="time">Timer</InputLabel> */}
+            <Typography id="timer-label">Set A Timer?</Typography>
             <Select
               labelId="time"
               id="time"
@@ -77,18 +75,18 @@ function Begin() {
         </Grid>
   
         {/* Navigation  */}
-        <div className="flex ms" id="abandon-quiz">
+        <div className="buttons flex-sb mmt">
           <Grid item xs={6}>
             <Link to="/dashboard">
               <Button variant="contained" color="primary">
-                &lt; {buttonText}
+                {buttonText}
               </Button>
             </Link>
           </Grid>
   
           <Grid item xs={6}>
             <Link to={`/quiz/${id}/question`}>
-              <Button onClick={handleQuizStart} variant="contained" color="primary">
+              <Button  onClick={handleQuizStart} variant="contained" color="primary">
                 Begin &gt;
               </Button>
             </Link>

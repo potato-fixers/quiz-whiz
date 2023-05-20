@@ -45,34 +45,34 @@ function App() {
   return (
     <Router>
         <GlobalProvider>
-        <Nav />
-        <Routes>
-          <Route path="/*" element={<Landing />}></Route>
-          <Route path="/login/" element={<Login />}></Route>
-          <Route path="/register/" element={<Register />}></Route>
-          {isReady && !isLoggedIn ? <></> :
-            <>
-              <Route path="/settings/" element={<UserProfilePage />}></Route>
+          <Nav />
+            <Routes>
+              <Route path="/*" element={<Landing />}></Route>
+              <Route path="/login/" element={<Login />}></Route>
+              <Route path="/register/" element={<Register />}></Route>
+              {isReady && !isLoggedIn ? <></> :
+                <>
+                  <Route path="/settings/" element={<UserProfilePage />}></Route>
+                  <Route
+                  path="dashboard/*"
+                  element={
+                    <CountsProvider>
+                      <Dashboard />
+                    </CountsProvider>
+                  }>
+                </Route>
+                  <Route path="/createQuiz/" element={<CreateQuiz />}></Route>
+                </>
+              }
               <Route
-              path="dashboard/*"
-              element={
-                <CountsProvider>
-                  <Dashboard />
-                </CountsProvider>
-              }>
-            </Route>
-              <Route path="/createQuiz/" element={<CreateQuiz />}></Route>
-            </>
-          }
-          <Route
-            path="/quiz/:id/*"
-            element={
-              <QuizProvider>
-                <TakeQuiz />
-              </QuizProvider>
-            }
-            ></Route>
-        </Routes>
+                path="/quiz/:id/*"
+                element={
+                  <QuizProvider>
+                    <TakeQuiz />
+                  </QuizProvider>
+                }
+                ></Route>
+            </Routes>
       </GlobalProvider>
     </Router>
   );

@@ -20,35 +20,37 @@ function Review() {
         <Button onClick={handleClick} variant="contained" color="info">
           Review Your Answers
         </Button>
-
-        {visible &&
-          userAnswers.map((a, index) => {
-            if (a.key !== "corrAns") {
-              return (
-                <div
-                  key={index}
-                  className={a.key === "corrAns" ? "right" : "wrong"}
-                >
-                  #{a.question} Your Answer: {a.value}{" "}
-                  <Typography sx={{ color: "var(--charcoal)" }}>
-                    Correct Answer: {questions[index]["corrAns"]}
-                  </Typography>
-                  <hr />
-                </div>
-              );
-            } else {
-              return (
-                <div key={index}>
-                  <Typography
-                    className={a.key === "corrAns" ? "right" : "wrong"}
+        <div className="review">
+          {visible &&
+            userAnswers.map((a, index) => {
+              if (a.key !== "corrAns") {
+                return (
+                  <div
+                    key={index}
+                    className={a.key === "corrAns" ? "review-item right" : "review-item"}
                   >
-                    #{index + 1} Your Answer: {a.value}
-                  </Typography>
-                  <hr />
-                </div>
-              );
-            }
-          })}
+                    #{a.question} Your Answer: {a.value}{" "}
+                    <Typography sx={{ color: "var(--green)" }}>
+                      Correct Answer: {questions[index]["corrAns"]}
+                    </Typography>
+                    <hr />
+                  </div>
+                );
+              } else {
+                return (
+                  <div key={index}>
+                    <Typography
+                      className={a.key === "corrAns" ? "review-item right" : "review-item"}
+                    >
+                      #{index + 1} Your Answer: {a.value}
+                    </Typography>
+                    <hr />
+                  </div>
+                );
+              }
+            })}
+
+        </div>
       </>
     )
   );

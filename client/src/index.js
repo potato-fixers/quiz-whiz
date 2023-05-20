@@ -18,7 +18,12 @@ const theme = createTheme({
     secondary: {
       main: "#FF7778", // pink
     }
-  }
+  },
+  typography: {
+    button: {
+      margin: "0.5rem"
+    },
+  },
 });
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

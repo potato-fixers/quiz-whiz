@@ -6,7 +6,7 @@ function QuestionText({ quizId, question, currentKey }) {
   return (
     question && (
       <>
-        <Typography variant="h4">{question}</Typography>
+        <Typography id="question-text" variant="h4">{question}</Typography>
       </>
     )
   );
