@@ -50,7 +50,7 @@ const TFQuestions = (props) => {
                         </TextField>
                       </Grid>
                     </Grid>
-                      <Grid item xs={2} sm={6}>
+                      <Grid item xs={1.75} sm={2.75} md={6}>
                         <Grid container spacing={2} name="answers">
                           <Grid item>
                             <TextField
