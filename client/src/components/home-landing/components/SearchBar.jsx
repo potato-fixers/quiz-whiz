@@ -20,7 +20,7 @@ const SearchBar = (props) => {
 
   const handlingCategorySelect = (event) => {
     props.setUserCategory(event.target.value);
-    axios.get(`${process.env.REACT_APP_API_URI}/get/getQuizzes`, { params: { id : props.id, difficulty: props.difficulty, category: event.target.value, query: query}})
+    axios.get(`${import.meta.env.VITE_APP_API_URI}/get/getQuizzes`, { params: { id : props.id, difficulty: props.difficulty, category: event.target.value, query: query}})
     .then((response) => {
       props.setQuizzes(response.data.rows);
       var arr = [];
@@ -38,7 +38,7 @@ const SearchBar = (props) => {
   }
   const handlingDifficultySelect = (event) => {
     props.setDifficulty(event.target.value);
-    axios.get(`${process.env.REACT_APP_API_URI}/get/getQuizzes`, { params: { id : props.id, difficulty: event.target.value, category: props.userCategory, query: query}})
+    axios.get(`${import.meta.env.VITE_APP_API_URI}/get/getQuizzes`, { params: { id : props.id, difficulty: event.target.value, category: props.userCategory, query: query}})
     .then((response) => {
       props.setQuizzes(response.data.rows);
       var arr = [];
@@ -56,7 +56,7 @@ const SearchBar = (props) => {
   }
   const handlingQuery = (event) => {
     setQuery(event.target.value);
-    axios.get(`${process.env.REACT_APP_API_URI}/get/getQuizzes`, { params: { id : props.id, difficulty: props.difficulty, category:props.userCategory, query: event.target.value}})
+    axios.get(`${import.meta.env.VITE_APP_API_URI}/get/getQuizzes`, { params: { id : props.id, difficulty: props.difficulty, category:props.userCategory, query: event.target.value}})
     .then((response) => {
       props.setQuizzes(response.data.rows);
       var arr = [];

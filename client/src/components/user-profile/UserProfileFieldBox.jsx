@@ -51,7 +51,7 @@ const UserProfileFieldBox = (props) => {
 
   const handleSaveClick = () => {
     // TODO: if it's the password field, need to check password first before updating
-    axios.put(`${process.env.REACT_APP_API_URI}${props.saveRoute}`, {
+    axios.put(`${import.meta.env.VITE_APP_API_URI}${props.saveRoute}`, {
     updatedField: field,
     oldPassword: oldPassword,
     email: props.profile.email,

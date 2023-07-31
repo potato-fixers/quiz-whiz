@@ -7,7 +7,7 @@ import useDeviceDetect from '../../hooks/useDeviceDetect';
 
 const LikeIcon = ({liked, quizId, getQuizzes, favoriteId}) => {
 
-  const url = process.env.REACT_APP_API_URI;
+  const url = import.meta.env.VITE_APP_API_URI;
   const { profile } = useContext(UserContext);
   const { getCounts } = useContext(CountsContext);
   const { isMobile } = useDeviceDetect();

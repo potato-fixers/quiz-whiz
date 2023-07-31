@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export default async function getSession() {
   try {
-    var { data } = await axios.get(`${process.env.REACT_APP_API_URI}/auth/session`, {
+    var { data } = await axios.get(`${import.meta.env.VITE_APP_API_URI}/auth/session`, {
       withCredentials: true
     });
     return Promise.resolve(data);

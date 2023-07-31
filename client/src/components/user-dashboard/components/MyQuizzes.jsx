@@ -30,7 +30,7 @@ const MyQuizzes = (props) => {
 
   // handle deleting quiz
   const handleDelete = async (quizId) => {
-    const endpoint = `${process.env.REACT_APP_API_URI}/dashboard/quizzes/${quizId}`;
+    const endpoint = `${import.meta.env.VITE_APP_API_URI}/dashboard/quizzes/${quizId}`;
     try {
       const response = await fetch(endpoint, {method: 'delete'})
       if (response.ok) {

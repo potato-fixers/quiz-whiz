@@ -7,8 +7,8 @@ const TFQuestions = (props) => {
   return (
     <Grid container className="TFQuestions">
       <Grid item xs={12}>
-        <Typography variant="h4" sx={{fontWeight: 400, marginBottom: 2}}> Enter True / False Questions Here </Typography>
-        <Typography variant="h6" sx={{fontWeight: 400, marginBottom: 2.5}}> Please Enter only True / False Answer Choices </Typography>
+        <Typography variant="h4" sx={{ fontWeight: 400, marginBottom: 2 }}> Enter True / False Questions Here </Typography>
+        <Typography variant="h6" sx={{ fontWeight: 400, marginBottom: 2.5 }}> Please Enter only True / False Answer Choices </Typography>
       </Grid>
       <Grid item xs={12}>
         <Grid container spacing={2}>
@@ -32,7 +32,7 @@ const TFQuestions = (props) => {
                         Q{index + 1}
                       </Typography>
                     </Grid>
-                    <Grid container spacing={2} sx={{marginBottom: 2.5}}>
+                    <Grid container spacing={2} sx={{ marginBottom: 2.5 }}>
                       <Grid item xs={12} sm={3} lg={4.6} xl={6}>
                         <TextField
                           id="TF"
@@ -45,51 +45,51 @@ const TFQuestions = (props) => {
                           rows={4}
                           cols={40}
                           placeholder='Type Question Here'
-                          onChange={(e) => {props.handleFormChange(e, index)}}>
+                          onChange={(e) => { props.handleFormChange(e, index) }}
                         >
                         </TextField>
                       </Grid>
                     </Grid>
-                      <Grid item xs={12} sm={2.75} md={6}>
-                        <Grid container spacing={2} name="answers">
-                          <Grid item>
-                            <TextField
+                    <Grid item xs={12} sm={2.75} md={6}>
+                      <Grid container spacing={2} name="answers">
+                        <Grid item>
+                          <TextField
                             id="TC"
                             required
                             name='corrAns'
                             value={props.inputFields[index]['corrAns']}
                             placeholder='Correct Answer'
-                            onChange={(e) => {props.handleFormChange(e, index)}}>
-                            </TextField>
-                          </Grid>
-                          <Grid item>
-                            <TextField
-                              id="TF"
-                              required
-                              name='incAns'
-                              value={props.inputFields[index]['incAns']}
-                              placeholder='Incorrect Answer'
-                              onChange={(e) => {props.handleFormChange(e, index)}}>
-                              </TextField>
-                          </Grid>
-                          <Grid item>
-                            <Button
-                              variant="contained"
-                              endIcon={<DeleteIcon/>}
-                              name="TFRemoveButton"
-                              onClick={ (e) => {
-                                if(window.confirm('Are you sure?')) {
-                                  props.removeFields(e, index);
-                                }
-                              }}
-                            >
-                              {" "}
-                              Remove
-                              {" "}
-                            </Button>
-                          </Grid>
+                            onChange={(e) => { props.handleFormChange(e, index) }}>
+                          </TextField>
+                        </Grid>
+                        <Grid item>
+                          <TextField
+                            id="TF"
+                            required
+                            name='incAns'
+                            value={props.inputFields[index]['incAns']}
+                            placeholder='Incorrect Answer'
+                            onChange={(e) => { props.handleFormChange(e, index) }}>
+                          </TextField>
+                        </Grid>
+                        <Grid item>
+                          <Button
+                            variant="contained"
+                            endIcon={<DeleteIcon />}
+                            name="TFRemoveButton"
+                            onClick={(e) => {
+                              if (window.confirm('Are you sure?')) {
+                                props.removeFields(e, index);
+                              }
+                            }}
+                          >
+                            {" "}
+                            Remove
+                            {" "}
+                          </Button>
                         </Grid>
                       </Grid>
+                    </Grid>
                   </Grid>
                 );
               })}

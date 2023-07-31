@@ -17,7 +17,7 @@ export default function LoginForm() {
     event.preventDefault();
     // TODO: Handle form submission
     try {
-      var { data } = await axios.post(`${process.env.REACT_APP_API_URI}/auth/login`, {
+      var { data } = await axios.post(`${import.meta.env.VITE_APP_API_URI}/auth/login`, {
         email: email.value,
         password: password.value,
       }, {

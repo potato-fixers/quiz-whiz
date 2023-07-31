@@ -29,7 +29,7 @@ const Landing = (props) => {
     } else {
       user_id = profile.userId ;
     }
-    axios.get(`${process.env.REACT_APP_API_URI}/get/getQuizzes`, { params: { id : user_id}})
+    axios.get(`${import.meta.env.VITE_APP_API_URI}/get/getQuizzes`, { params: { id : user_id}})
     .then((response) => {
       setQuizzes(response.data.rows);
       var arr = [];

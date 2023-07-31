@@ -24,7 +24,7 @@ const ProfilePicBox = (props) => {
     console.log(selectedFile);
     const formData = new FormData();
     formData.append("image", selectedFile);
-    axios.put(`${process.env.REACT_APP_API_URI}${props.saveRoute}`, formData, {
+    axios.put(`${import.meta.env.VITE_APP_API_URI}${props.saveRoute}`, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },

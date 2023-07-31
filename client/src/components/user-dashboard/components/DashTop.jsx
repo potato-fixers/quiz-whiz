@@ -15,7 +15,7 @@ const DashTop = (props) => {
 
   const getUserInfo = async (userId) => {
 
-    const url = process.env.REACT_APP_API_URI;
+    const url = import.meta.env.VITE_APP_API_URI;
 
     try {
       const response = await fetch(`${url}/settings/user?id=${userId}`);

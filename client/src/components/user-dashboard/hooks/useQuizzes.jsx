@@ -7,7 +7,7 @@ const useQuizzes = (tab) => {
   const { profile } = useContext(UserContext);
 
   const getQuizzes = (userId) => {
-    const url = process.env.REACT_APP_API_URI;
+    const url = import.meta.env.VITE_APP_API_URI;
 
     const query = (tab === '' ? '' : '/') + `?userId=${userId}`;
 

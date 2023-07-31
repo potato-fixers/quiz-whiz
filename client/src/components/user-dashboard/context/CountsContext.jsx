@@ -11,7 +11,7 @@ export const CountsProvider = ({ children }) => {
   });
 
   const getCounts = (userId) => {
-    const url = process.env.REACT_APP_API_URI;
+    const url = import.meta.env.VITE_APP_API_URI;
     fetch(`${url}/dashboard/counts/?userId=${userId}`)
     .then(async res => {
       setCounts(await res.json());

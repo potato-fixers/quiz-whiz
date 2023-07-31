@@ -17,7 +17,7 @@ function UserProfilePage() {
 
   useEffect(() => {
     if (isLoggedIn) {
-      axios.get(`${process.env.REACT_APP_API_URI}/settings/user`, {
+      axios.get(`${import.meta.env.VITE_APP_API_URI}/settings/user`, {
         params: {
           id: loggedInUserId
         }
