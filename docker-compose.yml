@@ -1,0 +1,22 @@
+version: '0.0'
+
+services:
+  pg_db:
+    image: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: pw
+      POSTGRES_DB: quizwhiz
+    volumes:
+      - ./server/database/init.sql:/docker-entrypoint-initdb.d/init.sql
+    container_name: portfolio_pg
+
+  server:
+    build:
+      context: ./server
+      dockerfile: ./server.dockerfile
+    container_name: portfolio_server
+    ports:
+      - "8080:8080"

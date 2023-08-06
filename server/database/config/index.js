@@ -12,8 +12,17 @@ let DB_PORT = process.env.DB_PORT;
 // Connection String Pattern
 // schema://user:password@host:port/db_name
 let dbString = `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}`;
+console.log(dbString)
 // let dbString = `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:35000/${DB_NAME}`;
 let pool = new Pool({ connectionString: dbString });
+
+pool.connect()
+  .then(()=>{
+    console.log('db connected')
+  })
+  .catch((err) => {
+    console.log('db not connected', err)
+  })
 
 module.exports = pool;
 
