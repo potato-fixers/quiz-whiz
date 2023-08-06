@@ -267,13 +267,16 @@ const CreateQuiz = (props) => {
             body: JSON.stringify(quizDataMC),
           }
 
-          fetch(`${process.env.REACT_APP_API_URI}/create/createQuiz`, optionsMC)
-          .then( (response) => {
-            if (response.status === 200) {
-              alert("Quiz Succesfully Created!");
-              window.location.href = "/";
-            }
-          })
+          fetch(`${import.meta.VITE_APP_API_URI}/create/createQuiz`, optionsMC)
+            .then( (response) => {
+              if (response.status === 200) {
+                alert("Quiz Succesfully Created!");
+                window.location.href = "/";
+              }
+            })
+            .catch((err) => {
+              console.log(err, 'err')
+            })
         } else {
           alert("Please Fill Out All MC Question Fields!")
         }
@@ -306,7 +309,7 @@ const CreateQuiz = (props) => {
             body: JSON.stringify(quizDataTF),
           }
 
-          fetch(`${process.env.REACT_APP_API_URI}/create/createQuiz`, optionsTF)
+          fetch(`${import.meta.env.VITE_APP_API_URI}/create/createQuiz`, optionsTF)
           .then( (response) => {
             if (response.status === 200) {
               alert("Quiz Succesfully Created!");
@@ -345,7 +348,7 @@ const CreateQuiz = (props) => {
             body: JSON.stringify(quizDataMCTF)
           }
 
-          fetch(`${process.env.REACT_APP_API_URI}/create/createQuiz`, optionsMCTF)
+          fetch(`${import.meta.env.VITE_APP_API_URI}/create/createQuiz`, optionsMCTF)
           .then( (response) => {
             if (response.status === 200) {
               alert("Quiz Succesfully Created!");
