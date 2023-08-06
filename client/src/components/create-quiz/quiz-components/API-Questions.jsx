@@ -125,7 +125,7 @@ const APIQuestions = (props) => {
                           <div>
                             {currQuestion.incorrect_answers.map( (currAns, index ) => {
                               return (
-                                <Typography> Incorrect Answer: {currAns}</Typography>
+                                <Typography key={index}> Incorrect Answer: {currAns}</Typography>
                               )
                             })
                             }
